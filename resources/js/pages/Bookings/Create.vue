@@ -235,9 +235,11 @@ const submit = () => {
                                     <span class="font-semibold text-gray-900">{{ form.number_of_participants }}</span>
                                 </div>
 
-                                <div class="flex items-center justify-between border-t border-gray-200 pt-4">
-                                    <span class="text-lg font-bold text-gray-900">Total Amount</span>
-                                    <span class="text-2xl font-extrabold text-red-600">{{ formatCurrency(totalAmount) }}</span>
+                                <div class="mt-6 rounded-lg bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 p-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-base font-bold text-gray-900">Total Amount</span>
+                                        <span class="text-xl font-extrabold text-red-700">{{ formatCurrency(totalAmount) }}</span>
+                                    </div>
                                 </div>
                             </div>
 

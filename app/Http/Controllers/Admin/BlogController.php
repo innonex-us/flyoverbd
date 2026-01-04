@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -71,8 +72,9 @@ class BlogController extends Controller
             'slug' => 'nullable|string|max:255|unique:blogs,slug',
             'excerpt' => 'nullable|string',
             'content' => 'required|string',
-            'featured_image' => 'nullable|string',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'author' => 'nullable|string|max:255',
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
@@ -91,6 +93,27 @@ class BlogController extends Controller
 
         if (empty($validated['author']) && auth()->check()) {
             $validated['author'] = auth()->user()->name;
+        }
+
+        // Handle featured image upload
+        if ($request->hasFile('featured_image')) {
+            $featuredImage = $request->file('featured_image');
+            $featuredImagePath = $featuredImage->store('blogs/featured', 'public');
+            $validated['featured_image'] = Storage::url($featuredImagePath);
+        } else {
+            unset($validated['featured_image']);
+        }
+
+        // Handle additional images upload
+        $uploadedImages = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('blogs/images', 'public');
+                $uploadedImages[] = Storage::url($imagePath);
+            }
+            $validated['images'] = $uploadedImages;
+        } else {
+            unset($validated['images']);
         }
 
         Blog::create($validated);
@@ -135,8 +158,9 @@ class BlogController extends Controller
             'slug' => 'nullable|string|max:255|unique:blogs,slug,' . $id,
             'excerpt' => 'nullable|string',
             'content' => 'required|string',
-            'featured_image' => 'nullable|string',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'author' => 'nullable|string|max:255',
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
@@ -147,10 +171,59 @@ class BlogController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
+            'remove_featured_image' => 'nullable|boolean',
+            'remove_images' => 'nullable|array',
         ]);
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['title']);
+        }
+
+        // Handle featured image upload or removal
+        if ($request->hasFile('featured_image')) {
+            // Delete old featured image if exists
+            if ($blog->featured_image) {
+                $oldPath = str_replace('/storage/', '', $blog->featured_image);
+                Storage::disk('public')->delete($oldPath);
+            }
+            $featuredImage = $request->file('featured_image');
+            $featuredImagePath = $featuredImage->store('blogs/featured', 'public');
+            $validated['featured_image'] = Storage::url($featuredImagePath);
+        } elseif ($request->boolean('remove_featured_image') && $blog->featured_image) {
+            $oldPath = str_replace('/storage/', '', $blog->featured_image);
+            Storage::disk('public')->delete($oldPath);
+            $validated['featured_image'] = null;
+        } else {
+            unset($validated['featured_image']);
+        }
+
+        // Handle additional images upload
+        $currentImages = $blog->images ?? [];
+        $uploadedImages = [];
+        
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('blogs/images', 'public');
+                $uploadedImages[] = Storage::url($imagePath);
+            }
+        }
+
+        // Remove images that are marked for removal
+        $imagesToRemove = $request->input('remove_images', []);
+        $currentImages = array_filter($currentImages, function($image) use ($imagesToRemove) {
+            return !in_array($image, $imagesToRemove);
+        });
+
+        // Delete removed images from storage
+        foreach ($imagesToRemove as $imageToRemove) {
+            $oldPath = str_replace('/storage/', '', $imageToRemove);
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        // Merge current images with newly uploaded ones
+        $validated['images'] = array_merge($currentImages, $uploadedImages);
+        if (empty($validated['images'])) {
+            $validated['images'] = null;
         }
 
         $blog->update($validated);
@@ -165,6 +238,21 @@ class BlogController extends Controller
     public function destroy(string $id)
     {
         $blog = Blog::findOrFail($id);
+
+        // Delete featured image
+        if ($blog->featured_image) {
+            $oldPath = str_replace('/storage/', '', $blog->featured_image);
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        // Delete additional images
+        if ($blog->images) {
+            foreach ($blog->images as $image) {
+                $oldPath = str_replace('/storage/', '', $image);
+                Storage::disk('public')->delete($oldPath);
+            }
+        }
+
         $blog->delete();
 
         return redirect()->route('admin.blogs.index')

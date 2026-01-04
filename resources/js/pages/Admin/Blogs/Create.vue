@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ArrowLeft } from 'lucide-vue-next';
+import { ArrowLeft, X, Upload } from 'lucide-vue-next';
 import { ref } from 'vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -33,13 +33,18 @@ const removeTag = (index: number) => {
     tags.value.splice(index, 1);
 };
 
+const featuredImageFile = ref<File | null>(null);
+const featuredImagePreview = ref<string | null>(null);
+const additionalImages = ref<File[]>([]);
+const additionalImagesPreview = ref<string[]>([]);
+
 const form = useForm({
     title: '',
     slug: '',
     excerpt: '',
     content: '',
-    featured_image: '',
-    images: [] as string[],
+    featured_image: null as File | null,
+    images: [] as File[],
     author: '',
     published_at: '',
     is_published: false,
@@ -51,11 +56,52 @@ const form = useForm({
     meta_keywords: '',
 });
 
+const handleFeaturedImageChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+        featuredImageFile.value = target.files[0];
+        form.featured_image = target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            featuredImagePreview.value = e.target?.result as string;
+        };
+        reader.readAsDataURL(target.files[0]);
+    }
+};
+
+const removeFeaturedImage = () => {
+    featuredImageFile.value = null;
+    featuredImagePreview.value = null;
+    form.featured_image = null;
+};
+
+const handleAdditionalImagesChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files) {
+        Array.from(target.files).forEach((file) => {
+            additionalImages.value.push(file);
+            form.images.push(file);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                additionalImagesPreview.value.push(e.target?.result as string);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+};
+
+const removeAdditionalImage = (index: number) => {
+    additionalImages.value.splice(index, 1);
+    additionalImagesPreview.value.splice(index, 1);
+    form.images.splice(index, 1);
+};
+
 const submit = () => {
     // Filter out empty tags
     form.tags = tags.value.filter(tag => tag.trim() !== '');
     form.post('/cp/blogs', {
         preserveScroll: true,
+        forceFormData: true,
     });
 };
 </script>
@@ -147,15 +193,42 @@ const submit = () => {
                             <CardTitle>Media & Metadata</CardTitle>
                         </CardHeader>
                         <CardContent class="space-y-4">
-                            <div class="grid gap-4 md:grid-cols-2">
-                                <div class="grid gap-2">
-                                    <Label for="featured_image">Featured Image URL</Label>
+                            <!-- Featured Image Upload -->
+                            <div class="grid gap-2">
+                                <Label for="featured_image">Featured Image</Label>
+                                <div v-if="featuredImagePreview" class="relative">
+                                    <img
+                                        :src="featuredImagePreview"
+                                        alt="Featured image preview"
+                                        class="h-48 w-full rounded-lg object-cover"
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="destructive"
+                                        size="icon"
+                                        class="absolute right-2 top-2"
+                                        @click="removeFeaturedImage"
+                                    >
+                                        <X class="h-4 w-4" />
+                                    </Button>
+                                </div>
+                                <div v-else>
                                     <Input
                                         id="featured_image"
-                                        v-model="form.featured_image"
-                                        placeholder="https://example.com/image.jpg"
+                                        type="file"
+                                        accept="image/*"
+                                        @change="handleFeaturedImageChange"
                                     />
+                                    <p class="mt-1 text-xs text-muted-foreground">
+                                        Upload a featured image (max 2MB, jpeg, png, jpg, gif, webp)
+                                    </p>
                                 </div>
+                                <p v-if="form.errors.featured_image" class="text-sm text-destructive">
+                                    {{ form.errors.featured_image }}
+                                </p>
+                            </div>
+
+                            <div class="grid gap-4 md:grid-cols-2">
 
                                 <div class="grid gap-2">
                                     <Label for="author">Author</Label>
@@ -216,6 +289,46 @@ const submit = () => {
                                         + Add Tag
                                     </Button>
                                 </div>
+                            </div>
+
+                            <!-- Additional Images Upload -->
+                            <div class="grid gap-2">
+                                <Label>Additional Images</Label>
+                                <div v-if="additionalImagesPreview.length > 0" class="grid grid-cols-2 gap-4 md:grid-cols-4">
+                                    <div
+                                        v-for="(preview, index) in additionalImagesPreview"
+                                        :key="index"
+                                        class="relative"
+                                    >
+                                        <img
+                                            :src="preview"
+                                            :alt="`Image ${index + 1}`"
+                                            class="h-32 w-full rounded-lg object-cover"
+                                        />
+                                        <Button
+                                            type="button"
+                                            variant="destructive"
+                                            size="icon"
+                                            class="absolute right-2 top-2"
+                                            @click="removeAdditionalImage(index)"
+                                        >
+                                            <X class="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                </div>
+                                <Input
+                                    id="additional_images"
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    @change="handleAdditionalImagesChange"
+                                />
+                                <p class="text-xs text-muted-foreground">
+                                    Upload additional images (max 2MB each, jpeg, png, jpg, gif, webp)
+                                </p>
+                                <p v-if="form.errors.images" class="text-sm text-destructive">
+                                    {{ form.errors.images }}
+                                </p>
                             </div>
 
                             <div class="flex items-center gap-4">

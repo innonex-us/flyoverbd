@@ -13,17 +13,61 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { Link, usePage } from '@inertiajs/vue3';
+import {
+    BookOpen,
+    Folder,
+    LayoutGrid,
+    Package,
+    Globe,
+    MessageSquare,
+    Calendar,
+} from 'lucide-vue-next';
+import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
+const page = usePage();
+const isAdmin = computed(() => {
+    const path = page.url;
+    return path.startsWith('/admin');
+});
+
+const mainNavItems = computed<NavItem[]>(() => {
+    const items: NavItem[] = [
+        {
+            title: 'Dashboard',
+            href: isAdmin.value ? '/admin/dashboard' : dashboard(),
+            icon: LayoutGrid,
+        },
+    ];
+
+    if (isAdmin.value) {
+        items.push(
+            {
+                title: 'Tour Packages',
+                href: '/admin/tours',
+                icon: Package,
+            },
+            {
+                title: 'Visa Requirements',
+                href: '/admin/visas',
+                icon: Globe,
+            },
+            {
+                title: 'Inquiries',
+                href: '/admin/inquiries',
+                icon: MessageSquare,
+            },
+            {
+                title: 'Bookings',
+                href: '/admin/bookings',
+                icon: Calendar,
+            }
+        );
+    }
+
+    return items;
+});
 
 const footerNavItems: NavItem[] = [
     {

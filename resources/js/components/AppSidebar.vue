@@ -27,9 +27,11 @@ import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
 const page = usePage();
+const auth = computed(() => page.props.auth);
+
+// Show admin navigation for all authenticated users
 const isAdmin = computed(() => {
-    const path = page.url;
-    return path.startsWith('/cp');
+    return !!auth.value?.user;
 });
 
 const mainNavItems = computed<NavItem[]>(() => {
@@ -89,7 +91,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="dashboard()">
+                        <Link :href="isAdmin ? '/cp/dashboard' : dashboard()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>

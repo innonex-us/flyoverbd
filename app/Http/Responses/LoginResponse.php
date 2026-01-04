@@ -3,6 +3,7 @@
 namespace App\Http\Responses;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 
 class LoginResponse implements LoginResponseContract
@@ -15,7 +16,15 @@ class LoginResponse implements LoginResponseContract
      */
     public function toResponse($request): RedirectResponse
     {
-        return redirect()->intended('/cp/dashboard');
+        // Get the intended URL if it exists
+        $intended = $request->session()->pull('url.intended', '/cp/dashboard');
+        
+        // If intended URL is the old dashboard, redirect to admin dashboard
+        if ($intended === '/dashboard' || $intended === url('/dashboard')) {
+            $intended = '/cp/dashboard';
+        }
+        
+        return redirect($intended);
     }
 }
 

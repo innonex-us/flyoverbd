@@ -11,7 +11,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
+    // Redirect to admin dashboard
+    return redirect('/cp/dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/admin.php';

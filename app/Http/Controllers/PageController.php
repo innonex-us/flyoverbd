@@ -110,11 +110,12 @@ class PageController extends Controller
             'phone' => 'nullable|string|max:20',
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
-            'tour_id' => 'nullable|exists:tour_packages,id',
+            'tour_id' => 'nullable|exists:tours,id',
+            'visa_id' => 'nullable|exists:visa_requirements,id',
         ]);
 
         // Determine inquiry type
-        $type = $request->has('tour_id') ? 'tour' : 'general';
+        $type = $request->has('tour_id') ? 'tour' : ($request->has('visa_id') ? 'visa' : 'general');
 
         // Create inquiry
         Inquiry::create([
@@ -126,6 +127,7 @@ class PageController extends Controller
             'type' => $type,
             'status' => 'new',
             'tour_package_id' => $validated['tour_id'] ?? null,
+            'visa_requirement_id' => $validated['visa_id'] ?? null,
         ]);
 
         return redirect()->back()->with('success', 'Thank you! Your message has been sent successfully.');

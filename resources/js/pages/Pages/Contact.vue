@@ -22,7 +22,7 @@ withDefaults(
 const page = usePage();
 const successMessage = computed(() => page.props.flash?.success);
 
-// Get tour data from URL query params
+// Get tour/visa data from URL query params
 const getQueryParam = (key: string): string | null => {
     if (typeof window === 'undefined') return null;
     const urlParams = new URLSearchParams(window.location.search);
@@ -31,6 +31,8 @@ const getQueryParam = (key: string): string | null => {
 
 const tourTitle = getQueryParam('tour_title');
 const tourId = getQueryParam('tour_id');
+const visaCountry = getQueryParam('visa_country');
+const visaId = getQueryParam('visa_id');
 const inquiryType = getQueryParam('type');
 const preFilledSubject = getQueryParam('subject');
 
@@ -38,19 +40,24 @@ const form = useForm({
     name: '',
     email: '',
     phone: '',
-    subject: preFilledSubject || (tourTitle ? `Inquiry about ${tourTitle}` : ''),
+    subject: preFilledSubject || (tourTitle ? `Inquiry about ${tourTitle}` : visaCountry ? `Inquiry about ${visaCountry} Visa` : ''),
     message: tourTitle 
         ? (inquiryType === 'booking' 
             ? `I would like to book: ${tourTitle}\n\nPlease provide me with more information about availability and booking process.` 
             : `I'm interested in: ${tourTitle}\n\n`)
-        : '',
+        : visaCountry
+            ? (inquiryType === 'visa_application'
+                ? `I would like to apply for a ${visaCountry} visa.\n\nPlease provide me with more information about the application process and required documents.`
+                : `I'm interested in ${visaCountry} visa services.\n\n`)
+            : '',
 });
 
 const submit = () => {
-    // Include tour_id if available
+    // Include tour_id or visa_id if available
     const submitData = {
         ...form.data(),
         ...(tourId ? { tour_id: tourId } : {}),
+        ...(visaId ? { visa_id: visaId } : {}),
     };
     
     form.transform(() => submitData).post('/contact/submit', {

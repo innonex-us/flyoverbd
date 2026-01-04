@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import TopBar from '@/components/HomePage/TopBar.vue';
@@ -47,6 +47,45 @@ const guidelinesList = computed(() => {
     if (!props.visa.application_guidelines) return [];
     return props.visa.application_guidelines.split('\n').filter(item => item.trim());
 });
+
+const handleShare = () => {
+    if (navigator.share) {
+        navigator.share({
+            title: `${props.visa.country} Visa - Flyover BD`,
+            text: props.visa.description || `Complete visa assistance for ${props.visa.country}`,
+            url: window.location.href,
+        }).catch(() => {
+            // User cancelled or error occurred
+        });
+    } else {
+        // Fallback: Copy to clipboard
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('Link copied to clipboard!');
+        });
+    }
+};
+
+const handleApplyNow = () => {
+    // Navigate to contact page with visa pre-filled
+    router.visit('/contact', {
+        query: {
+            visa_id: props.visa.id,
+            visa_country: props.visa.country,
+            subject: `Visa Application for ${props.visa.country}`,
+            type: 'visa_application',
+        },
+    });
+};
+
+const handleContactUs = () => {
+    router.visit('/contact', {
+        query: {
+            visa_id: props.visa.id,
+            visa_country: props.visa.country,
+            subject: `Inquiry about ${props.visa.country} Visa`,
+        },
+    });
+};
 </script>
 
 <template>
@@ -82,7 +121,12 @@ const guidelinesList = computed(() => {
                                         </div>
                                     </div>
                                 </div>
-                                <Button variant="outline" size="icon">
+                                <Button 
+                                    variant="outline" 
+                                    size="icon" 
+                                    @click="handleShare"
+                                    title="Share"
+                                >
                                     <Share2 class="h-4 w-4" />
                                 </Button>
                             </div>
@@ -172,10 +216,17 @@ const guidelinesList = computed(() => {
                                 </div>
                             </div>
 
-                            <Button class="mt-6 w-full bg-gradient-to-r from-red-600 to-red-700 text-base font-bold text-white shadow-lg transition-all hover:from-red-700 hover:to-red-800 hover:shadow-xl">
+                            <Button 
+                                class="mt-6 w-full bg-gradient-to-r from-red-600 to-red-700 text-base font-bold text-white shadow-lg transition-all hover:from-red-700 hover:to-red-800 hover:shadow-xl"
+                                @click="handleApplyNow"
+                            >
                                 Apply Now
                             </Button>
-                            <Button variant="outline" class="mt-3 w-full">
+                            <Button 
+                                variant="outline" 
+                                class="mt-3 w-full"
+                                @click="handleContactUs"
+                            >
                                 Contact Us
                             </Button>
                         </CardContent>

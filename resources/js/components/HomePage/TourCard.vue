@@ -1,21 +1,34 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Plane, MapPin, ArrowRight } from 'lucide-vue-next';
 
 interface Props {
+    id?: number;
+    slug?: string;
     title: string;
     description: string;
     price: number;
     currency?: string;
     duration: string;
     featured?: boolean;
-    image?: string;
+    image?: string | null;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     currency: 'BDT',
     featured: false,
+    image: null,
+});
+
+// Truncate description if too long
+const truncatedDescription = computed(() => {
+    if (!props.description) return '';
+    return props.description.length > 120 
+        ? props.description.substring(0, 120) + '...' 
+        : props.description;
 });
 </script>
 
@@ -50,7 +63,7 @@ withDefaults(defineProps<Props>(), {
         <CardContent class="p-6">
             <h3 class="text-xl font-bold text-gray-900 transition-colors group-hover:text-red-600">{{ title }}</h3>
             <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-gray-600">
-                {{ description }}
+                {{ truncatedDescription }}
             </p>
             <div class="mt-5 flex items-baseline justify-between border-t border-gray-100 pt-4">
                 <div>
@@ -58,7 +71,20 @@ withDefaults(defineProps<Props>(), {
                     <span class="ml-1 text-sm font-medium text-gray-500">/person</span>
                 </div>
             </div>
-            <Button class="mt-5 w-full bg-gradient-to-r from-red-600 to-red-700 text-sm font-semibold text-white shadow-md transition-all hover:from-red-700 hover:to-red-800 hover:shadow-lg">
+            <Button 
+                v-if="slug"
+                as-child
+                class="mt-5 w-full bg-gradient-to-r from-red-600 to-red-700 text-sm font-semibold text-white shadow-md transition-all hover:from-red-700 hover:to-red-800 hover:shadow-lg"
+            >
+                <Link :href="`/tours/${slug}`">
+                    View Details
+                    <ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+            </Button>
+            <Button 
+                v-else
+                class="mt-5 w-full bg-gradient-to-r from-red-600 to-red-700 text-sm font-semibold text-white shadow-md transition-all hover:from-red-700 hover:to-red-800 hover:shadow-lg"
+            >
                 View Details
                 <ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>

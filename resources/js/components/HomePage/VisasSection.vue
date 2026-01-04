@@ -1,35 +1,35 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
 import VisaServiceCard from './VisaServiceCard.vue';
 import { Globe } from 'lucide-vue-next';
 
 interface VisaService {
-    icon?: any;
-    title: string;
-    description: string;
+    id: number;
+    country: string;
+    slug: string;
+    description?: string | null;
+    processing_time?: string | null;
+    visa_fee?: number | null;
+    currency?: string | null;
 }
 
-const services: VisaService[] = [
-    {
-        icon: Globe,
-        title: 'USA Visa',
-        description: 'Complete assistance for US visa applications',
-    },
-    {
-        icon: Globe,
-        title: 'UK Visa',
-        description: 'Expert guidance for UK visa processing',
-    },
-    {
-        icon: Globe,
-        title: 'UAE Visa',
-        description: 'Fast and reliable UAE visa services',
-    },
-    {
-        icon: Globe,
-        title: 'More Countries',
-        description: 'Visa services for 50+ countries',
-    },
-];
+interface Props {
+    visaServices?: VisaService[];
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    visaServices: () => [],
+});
+
+// Format description for display
+const formatDescription = (visa: VisaService) => {
+    if (visa.description) {
+        return visa.description.length > 100 
+            ? visa.description.substring(0, 100) + '...' 
+            : visa.description;
+    }
+    return `Complete assistance for ${visa.country} visa applications`;
+};
 </script>
 
 <template>
@@ -41,14 +41,19 @@ const services: VisaService[] = [
                     Get expert help with visa applications for countries worldwide
                 </p>
             </div>
-            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div v-if="visaServices.length > 0" class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 <VisaServiceCard
-                    v-for="(service, index) in services"
-                    :key="index"
-                    :icon="service.icon"
-                    :title="service.title"
-                    :description="service.description"
+                    v-for="visa in visaServices"
+                    :key="visa.id"
+                    :id="visa.id"
+                    :slug="visa.slug"
+                    :icon="Globe"
+                    :title="visa.country"
+                    :description="formatDescription(visa)"
                 />
+            </div>
+            <div v-else class="py-12 text-center">
+                <p class="text-lg text-gray-500">No visa services available at the moment. Please check back later.</p>
             </div>
         </div>
     </section>

@@ -4,13 +4,18 @@ import TourCard from './TourCard.vue';
 import { ArrowRight } from 'lucide-vue-next';
 
 interface Tour {
+    id: number;
     title: string;
+    slug: string;
     description: string;
     price: number;
     currency?: string;
     duration: string;
+    duration_days?: number;
     featured?: boolean;
-    image?: string;
+    thumbnail?: string | null;
+    image?: string | null;
+    destination?: string | null;
 }
 
 interface Props {
@@ -18,27 +23,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-    tours: () => [
-        {
-            title: 'Exotic Beach Paradise',
-            description: 'Experience pristine beaches and crystal-clear waters',
-            price: 25000,
-            duration: '5 Days',
-            featured: true,
-        },
-        {
-            title: 'Cultural Heritage Tour',
-            description: 'Explore rich history and cultural landmarks',
-            price: 18000,
-            duration: '3 Days',
-        },
-        {
-            title: 'Adventure Expedition',
-            description: 'Thrilling adventures for the bold travelers',
-            price: 35000,
-            duration: '7 Days',
-        },
-    ],
+    tours: () => [],
 });
 </script>
 
@@ -58,18 +43,23 @@ withDefaults(defineProps<Props>(), {
                     <ArrowRight class="ml-2 h-4 w-4 transition-transform hover:translate-x-1" />
                 </Link>
             </div>
-            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div v-if="tours.length > 0" class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 <TourCard
-                    v-for="(tour, index) in tours"
-                    :key="index"
+                    v-for="tour in tours"
+                    :key="tour.id"
+                    :id="tour.id"
+                    :slug="tour.slug"
                     :title="tour.title"
                     :description="tour.description"
                     :price="tour.price"
                     :currency="tour.currency"
                     :duration="tour.duration"
                     :featured="tour.featured"
-                    :image="tour.image"
+                    :image="tour.image || tour.thumbnail"
                 />
+            </div>
+            <div v-else class="py-12 text-center">
+                <p class="text-lg text-gray-500">No tours available at the moment. Please check back later.</p>
             </div>
         </div>
     </section>

@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\TourPackage;
+use App\Models\VisaRequirement;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Laravel\Fortify\Features;
+
+class HomeController extends Controller
+{
+    /**
+     * Display the home page with real data.
+     */
+    public function index()
+    {
+        // Fetch featured tours (limit to 6, prioritize featured ones)
+        $featuredTours = TourPackage::where('is_active', true)
+            ->orderBy('is_featured', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get()
+            ->map(function ($tour) {
+                return [
+                    'id' => $tour->id,
+                    'title' => $tour->title,
+                    'slug' => $tour->slug,
+                    'description' => $tour->description,
+                    'price' => (float) $tour->price,
+                    'currency' => $tour->currency ?? 'BDT',
+                    'duration' => $tour->duration_days ? $tour->duration_days . ' Days' : 'N/A',
+                    'duration_days' => $tour->duration_days,
+                    'featured' => $tour->is_featured,
+                    'thumbnail' => $tour->thumbnail ? asset('storage/' . $tour->thumbnail) : null,
+                    'image' => $tour->thumbnail ? asset('storage/' . $tour->thumbnail) : null,
+                    'destination' => $tour->destination,
+                ];
+            });
+
+        // Fetch active visa requirements (limit to 8)
+        $visaServices = VisaRequirement::where('is_active', true)
+            ->orderBy('country', 'asc')
+            ->limit(8)
+            ->get()
+            ->map(function ($visa) {
+                return [
+                    'id' => $visa->id,
+                    'country' => $visa->country,
+                    'slug' => $visa->slug,
+                    'description' => $visa->description,
+                    'processing_time' => $visa->processing_time,
+                    'visa_fee' => $visa->visa_fee,
+                    'currency' => $visa->currency ?? 'BDT',
+                ];
+            });
+
+        return Inertia::render('Welcome', [
+            'canRegister' => Features::enabled(Features::registration()),
+            'featuredTours' => $featuredTours,
+            'visaServices' => $visaServices,
+        ]);
+    }
+}
+

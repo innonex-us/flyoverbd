@@ -9,12 +9,41 @@ import VisasSection from '@/components/HomePage/VisasSection.vue';
 import CTASection from '@/components/HomePage/CTASection.vue';
 import Footer from '@/components/HomePage/Footer.vue';
 
+interface Tour {
+    id: number;
+    title: string;
+    slug: string;
+    description: string;
+    price: number;
+    currency?: string;
+    duration: string;
+    duration_days?: number;
+    featured?: boolean;
+    thumbnail?: string | null;
+    image?: string | null;
+    destination?: string | null;
+}
+
+interface VisaService {
+    id: number;
+    country: string;
+    slug: string;
+    description?: string | null;
+    processing_time?: string | null;
+    visa_fee?: number | null;
+    currency?: string | null;
+}
+
 withDefaults(
     defineProps<{
         canRegister: boolean;
+        featuredTours?: Tour[];
+        visaServices?: VisaService[];
     }>(),
     {
         canRegister: true,
+        featuredTours: () => [],
+        visaServices: () => [],
     },
 );
 </script>
@@ -29,8 +58,8 @@ withDefaults(
         <Navigation :can-register="canRegister" />
         <HeroSearch />
         <FeaturesSection />
-        <ToursSection />
-        <VisasSection />
+        <ToursSection :tours="featuredTours" />
+        <VisasSection :visa-services="visaServices" />
         <CTASection :can-register="canRegister" />
         <Footer />
     </div>

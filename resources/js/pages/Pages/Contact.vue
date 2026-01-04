@@ -22,16 +22,38 @@ withDefaults(
 const page = usePage();
 const successMessage = computed(() => page.props.flash?.success);
 
+// Get tour data from URL query params
+const getQueryParam = (key: string): string | null => {
+    if (typeof window === 'undefined') return null;
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(key);
+};
+
+const tourTitle = getQueryParam('tour_title');
+const tourId = getQueryParam('tour_id');
+const inquiryType = getQueryParam('type');
+const preFilledSubject = getQueryParam('subject');
+
 const form = useForm({
     name: '',
     email: '',
     phone: '',
-    subject: '',
-    message: '',
+    subject: preFilledSubject || (tourTitle ? `Inquiry about ${tourTitle}` : ''),
+    message: tourTitle 
+        ? (inquiryType === 'booking' 
+            ? `I would like to book: ${tourTitle}\n\nPlease provide me with more information about availability and booking process.` 
+            : `I'm interested in: ${tourTitle}\n\n`)
+        : '',
 });
 
 const submit = () => {
-    form.post('/contact/submit', {
+    // Include tour_id if available
+    const submitData = {
+        ...form.data(),
+        ...(tourId ? { tour_id: tourId } : {}),
+    };
+    
+    form.transform(() => submitData).post('/contact/submit', {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();

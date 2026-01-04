@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import TopBar from '@/components/HomePage/TopBar.vue';
@@ -7,7 +7,7 @@ import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
 import TourCard from '@/components/HomePage/TourCard.vue';
 import { MapPin, Calendar, Users, Check, X, ArrowLeft, Share2, Heart } from 'lucide-vue-next';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 interface Tour {
     id: number;
@@ -80,6 +80,51 @@ const highlightsList = computed(() => {
     if (!props.tour.highlights) return [];
     return props.tour.highlights.split(',').map(h => h.trim());
 });
+
+const isFavorited = ref(false);
+
+const handleShare = () => {
+    if (navigator.share) {
+        navigator.share({
+            title: props.tour.title,
+            text: props.tour.description?.substring(0, 160) || '',
+            url: window.location.href,
+        }).catch(() => {
+            // User cancelled or error occurred
+        });
+    } else {
+        // Fallback: Copy to clipboard
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('Link copied to clipboard!');
+        });
+    }
+};
+
+const handleFavorite = () => {
+    isFavorited.value = !isFavorited.value;
+    // TODO: Implement favorite functionality with backend
+};
+
+const handleBookNow = () => {
+    // Navigate to contact page with tour pre-filled
+    router.visit('/contact', {
+        query: {
+            tour_id: props.tour.id,
+            tour_title: props.tour.title,
+            type: 'booking',
+        },
+    });
+};
+
+const handleContactUs = () => {
+    router.visit('/contact', {
+        query: {
+            tour_id: props.tour.id,
+            tour_title: props.tour.title,
+            subject: `Inquiry about ${props.tour.title}`,
+        },
+    });
+};
 </script>
 
 <template>
@@ -144,11 +189,20 @@ const highlightsList = computed(() => {
                                         </div>
                                     </div>
                                     <div class="flex space-x-2">
-                                        <Button variant="outline" size="icon">
+                                        <Button variant="outline" size="icon" @click="handleShare" title="Share">
                                             <Share2 class="h-4 w-4" />
                                         </Button>
-                                        <Button variant="outline" size="icon">
-                                            <Heart class="h-4 w-4" />
+                                        <Button 
+                                            variant="outline" 
+                                            size="icon" 
+                                            @click="handleFavorite"
+                                            :class="isFavorited ? 'text-red-600 border-red-300' : ''"
+                                            :title="isFavorited ? 'Remove from favorites' : 'Add to favorites'"
+                                        >
+                                            <Heart 
+                                                class="h-4 w-4" 
+                                                :class="isFavorited ? 'fill-current' : ''"
+                                            />
                                         </Button>
                                     </div>
                                 </div>
@@ -231,10 +285,17 @@ const highlightsList = computed(() => {
                                 </div>
                             </div>
 
-                            <Button class="mt-6 w-full bg-gradient-to-r from-red-600 to-red-700 text-base font-bold text-white shadow-lg transition-all hover:from-red-700 hover:to-red-800 hover:shadow-xl">
+                            <Button 
+                                class="mt-6 w-full bg-gradient-to-r from-red-600 to-red-700 text-base font-bold text-white shadow-lg transition-all hover:from-red-700 hover:to-red-800 hover:shadow-xl"
+                                @click="handleBookNow"
+                            >
                                 Book Now
                             </Button>
-                            <Button variant="outline" class="mt-3 w-full">
+                            <Button 
+                                variant="outline" 
+                                class="mt-3 w-full"
+                                @click="handleContactUs"
+                            >
                                 Contact Us
                             </Button>
                         </CardContent>

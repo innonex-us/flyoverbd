@@ -74,7 +74,7 @@ const truncatedDescription = computed(() => {
             <Link 
                 v-if="slug"
                 :href="`/tours/${slug}`"
-                class="mt-5 flex w-full items-center justify-center rounded-md bg-gradient-to-r from-red-600 to-red-700 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:from-red-700 hover:to-red-800 hover:shadow-lg"
+                class="relative z-10 mt-5 flex w-full items-center justify-center rounded-md bg-gradient-to-r from-red-600 to-red-700 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:from-red-700 hover:to-red-800 hover:shadow-lg"
             >
                 View Details
                 <ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

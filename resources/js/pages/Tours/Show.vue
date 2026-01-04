@@ -252,7 +252,7 @@ const highlightsList = computed(() => {
                         :id="relatedTour.id"
                         :slug="relatedTour.slug"
                         :title="relatedTour.title"
-                        :description=""
+                        :description="''"
                         :price="relatedTour.price"
                         :currency="relatedTour.currency"
                         :duration="relatedTour.duration"

@@ -10,15 +10,14 @@ import { Label } from '@/components/ui/label';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from 'lucide-vue-next';
 import { computed } from 'vue';
 
-defineProps<{
-    canRegister?: boolean;
-}>();
-
-withDefaults(defineProps<{
-    canRegister?: boolean;
-}>(), {
-    canRegister: true,
-});
+withDefaults(
+    defineProps<{
+        canRegister?: boolean;
+    }>(),
+    {
+        canRegister: true,
+    },
+);
 
 const page = usePage();
 const successMessage = computed(() => page.props.flash?.success);

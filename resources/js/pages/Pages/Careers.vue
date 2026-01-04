@@ -7,15 +7,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Briefcase, MapPin, Clock, ArrowRight } from 'lucide-vue-next';
 
-defineProps<{
-    canRegister?: boolean;
-}>();
-
-withDefaults(defineProps<{
-    canRegister?: boolean;
-}>(), {
-    canRegister: true,
-});
+withDefaults(
+    defineProps<{
+        canRegister?: boolean;
+    }>(),
+    {
+        canRegister: true,
+    },
+);
 </script>
 
 <template>

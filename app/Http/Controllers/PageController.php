@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Inquiry;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Laravel\Fortify\Features;
 
 class PageController extends Controller
 {
@@ -12,7 +15,9 @@ class PageController extends Controller
      */
     public function about()
     {
-        return Inertia::render('Pages/About');
+        return Inertia::render('Pages/About', [
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
     }
 
     /**
@@ -20,7 +25,9 @@ class PageController extends Controller
      */
     public function contact()
     {
-        return Inertia::render('Pages/Contact');
+        return Inertia::render('Pages/Contact', [
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
     }
 
     /**
@@ -28,7 +35,9 @@ class PageController extends Controller
      */
     public function careers()
     {
-        return Inertia::render('Pages/Careers');
+        return Inertia::render('Pages/Careers', [
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
     }
 
     /**
@@ -36,7 +45,9 @@ class PageController extends Controller
      */
     public function help()
     {
-        return Inertia::render('Pages/Help');
+        return Inertia::render('Pages/Help', [
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
     }
 
     /**
@@ -44,7 +55,9 @@ class PageController extends Controller
      */
     public function privacy()
     {
-        return Inertia::render('Pages/Privacy');
+        return Inertia::render('Pages/Privacy', [
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
     }
 
     /**
@@ -52,7 +65,9 @@ class PageController extends Controller
      */
     public function terms()
     {
-        return Inertia::render('Pages/Terms');
+        return Inertia::render('Pages/Terms', [
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
     }
 
     /**
@@ -80,13 +95,14 @@ class PageController extends Controller
 
         return Inertia::render('Pages/Blog', [
             'blogs' => $blogs,
+            'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
 
     /**
      * Handle contact form submission.
      */
-    public function submitContact(\Illuminate\Http\Request $request)
+    public function submitContact(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -97,7 +113,7 @@ class PageController extends Controller
         ]);
 
         // Create inquiry
-        \App\Models\Inquiry::create([
+        Inquiry::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,

@@ -5,15 +5,14 @@ import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
 import { Card, CardContent } from '@/components/ui/card';
 
-defineProps<{
-    canRegister?: boolean;
-}>();
-
-withDefaults(defineProps<{
-    canRegister?: boolean;
-}>(), {
-    canRegister: true,
-});
+withDefaults(
+    defineProps<{
+        canRegister?: boolean;
+    }>(),
+    {
+        canRegister: true,
+    },
+);
 </script>
 
 <template>

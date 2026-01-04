@@ -7,15 +7,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { HelpCircle, ChevronDown } from 'lucide-vue-next';
 import { ref } from 'vue';
 
-defineProps<{
-    canRegister?: boolean;
-}>();
-
-withDefaults(defineProps<{
-    canRegister?: boolean;
-}>(), {
-    canRegister: true,
-});
+withDefaults(
+    defineProps<{
+        canRegister?: boolean;
+    }>(),
+    {
+        canRegister: true,
+    },
+);
 
 const openFaq = ref<number | null>(null);
 

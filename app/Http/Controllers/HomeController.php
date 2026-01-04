@@ -55,10 +55,28 @@ class HomeController extends Controller
                 ];
             });
 
+        // Get unique countries and visa types from active visa requirements
+        $visaCountries = VisaRequirement::where('is_active', true)
+            ->select('country')
+            ->distinct()
+            ->orderBy('country', 'asc')
+            ->pluck('country')
+            ->toArray();
+
+        $visaTypes = VisaRequirement::where('is_active', true)
+            ->whereNotNull('visa_type')
+            ->select('visa_type')
+            ->distinct()
+            ->orderBy('visa_type', 'asc')
+            ->pluck('visa_type')
+            ->toArray();
+
         return Inertia::render('Welcome', [
             'canRegister' => Features::enabled(Features::registration()),
             'featuredTours' => $featuredTours,
             'visaServices' => $visaServices,
+            'visaCountries' => $visaCountries,
+            'visaTypes' => $visaTypes,
         ]);
     }
 }

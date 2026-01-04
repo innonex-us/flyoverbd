@@ -3,8 +3,18 @@ import { router } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { MapPin, Calendar, Users, Globe, ChevronDown, Search } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { MapPin, Calendar, Users, Globe, ChevronDown, Search, X } from 'lucide-vue-next';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+
+interface Props {
+    visaCountries?: string[];
+    visaTypes?: string[];
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    visaCountries: () => [],
+    visaTypes: () => [],
+});
 
 const activeTab = ref('tours');
 const destination = ref('');
@@ -12,8 +22,10 @@ const checkIn = ref('');
 const checkOut = ref('');
 const travelers = ref(1);
 const destinationCountry = ref('');
-const nationality = ref('');
-const visaType = ref('Tourist Visa');
+const visaType = ref('');
+const countrySearch = ref('');
+const showCountryDropdown = ref(false);
+const showVisaTypeDropdown = ref(false);
 
 const searchTours = (e: Event) => {
     e.preventDefault();
@@ -35,12 +47,56 @@ const searchTours = (e: Event) => {
     router.get('/tours', params);
 };
 
+const filteredCountries = computed(() => {
+    if (!countrySearch.value) {
+        return props.visaCountries;
+    }
+    return props.visaCountries.filter(country =>
+        country.toLowerCase().includes(countrySearch.value.toLowerCase())
+    );
+});
+
+const selectCountry = (country: string) => {
+    destinationCountry.value = country;
+    countrySearch.value = country;
+    showCountryDropdown.value = false;
+};
+
+const clearCountry = () => {
+    destinationCountry.value = '';
+    countrySearch.value = '';
+    showCountryDropdown.value = false;
+};
+
+const selectVisaType = (type: string) => {
+    visaType.value = type;
+    showVisaTypeDropdown.value = false;
+};
+
+const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.country-dropdown-container')) {
+        showCountryDropdown.value = false;
+    }
+};
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
+
 const searchVisas = (e: Event) => {
     e.preventDefault();
     const params: Record<string, string> = {};
     
     if (destinationCountry.value) {
         params.search = destinationCountry.value;
+    }
+    if (visaType.value) {
+        params.visa_type = visaType.value;
     }
     
     router.get('/visas', params);
@@ -164,45 +220,69 @@ const searchVisas = (e: Event) => {
                     </form>
 
                     <form v-else @submit="searchVisas" class="space-y-6">
-                        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                            <div class="space-y-2">
+                        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-2">
+                            <div class="space-y-2 country-dropdown-container">
                                 <Label for="destination_country" class="text-sm font-semibold text-gray-700">Destination Country</Label>
                                 <div class="relative">
-                                    <Globe class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                    <Globe class="absolute left-3 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
                                         id="destination_country"
-                                        v-model="destinationCountry"
+                                        v-model="countrySearch"
                                         type="text"
                                         placeholder="Select country"
-                                        class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
+                                        class="h-12 border-gray-300 pl-10 pr-10 focus:border-red-500 focus:ring-red-500"
+                                        @focus="showCountryDropdown = true"
+                                        @input="showCountryDropdown = true"
+                                        autocomplete="off"
                                     />
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <Label for="nationality" class="text-sm font-semibold text-gray-700">Your Nationality</Label>
-                                <div class="relative">
-                                    <MapPin class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                                    <Input
-                                        id="nationality"
-                                        v-model="nationality"
-                                        type="text"
-                                        placeholder="Your nationality"
-                                        class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
-                                    />
+                                    <button
+                                        v-if="destinationCountry"
+                                        type="button"
+                                        @click.stop="clearCountry"
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                    >
+                                        <X class="h-4 w-4" />
+                                    </button>
+                                    <div
+                                        v-if="showCountryDropdown && filteredCountries.length > 0"
+                                        class="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-200 bg-white shadow-lg"
+                                        @click.stop
+                                    >
+                                        <div
+                                            v-for="country in filteredCountries"
+                                            :key="country"
+                                            @click="selectCountry(country)"
+                                            class="cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600"
+                                        >
+                                            {{ country }}
+                                        </div>
+                                    </div>
+                                    <div
+                                        v-if="showCountryDropdown && filteredCountries.length === 0 && countrySearch"
+                                        class="absolute z-20 mt-1 w-full rounded-md border border-gray-200 bg-white p-4 text-sm text-gray-500 shadow-lg"
+                                        @click.stop
+                                    >
+                                        No countries found
+                                    </div>
                                 </div>
                             </div>
                             <div class="space-y-2">
                                 <Label for="visa_type" class="text-sm font-semibold text-gray-700">Visa Type</Label>
                                 <div class="relative">
-                                    <ChevronDown class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                                    <ChevronDown class="absolute right-3 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
                                     <select
                                         id="visa_type"
                                         v-model="visaType"
                                         class="h-12 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 pl-3 pr-10 text-sm focus:border-red-500 focus:ring-red-500"
                                     >
-                                        <option>Tourist Visa</option>
-                                        <option>Business Visa</option>
-                                        <option>Transit Visa</option>
+                                        <option value="">All Types</option>
+                                        <option
+                                            v-for="type in visaTypes"
+                                            :key="type"
+                                            :value="type"
+                                        >
+                                            {{ type }}
+                                        </option>
                                     </select>
                                 </div>
                             </div>

@@ -36,6 +36,7 @@ const removeDocument = (index: number) => {
 const form = useForm({
     country: '',
     country_code: '',
+    visa_type: '',
     slug: '',
     description: '',
     required_documents: [] as string[],
@@ -109,6 +110,15 @@ const submit = () => {
                                         v-model="form.country_code"
                                         maxlength="3"
                                         placeholder="e.g., USA, UK, UAE"
+                                    />
+                                </div>
+
+                                <div class="grid gap-2">
+                                    <Label for="visa_type">Visa Type</Label>
+                                    <Input
+                                        id="visa_type"
+                                        v-model="form.visa_type"
+                                        placeholder="e.g., Tourist Visa, Business Visa"
                                     />
                                 </div>
 

@@ -34,16 +34,20 @@ interface VisaService {
     currency?: string | null;
 }
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         canRegister: boolean;
         featuredTours?: Tour[];
         visaServices?: VisaService[];
+        visaCountries?: string[];
+        visaTypes?: string[];
     }>(),
     {
         canRegister: true,
         featuredTours: () => [],
         visaServices: () => [],
+        visaCountries: () => [],
+        visaTypes: () => [],
     },
 );
 </script>
@@ -56,7 +60,7 @@ withDefaults(
     <div class="min-h-screen bg-gray-50">
         <TopBar />
         <Navigation :can-register="canRegister" />
-        <HeroSearch />
+        <HeroSearch :visa-countries="visaCountries" :visa-types="visaTypes" />
         <FeaturesSection />
         <ToursSection :tours="featuredTours" />
         <VisasSection :visa-services="visaServices" />

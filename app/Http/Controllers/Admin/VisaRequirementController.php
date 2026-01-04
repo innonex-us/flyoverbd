@@ -59,6 +59,7 @@ class VisaRequirementController extends Controller
         $validated = $request->validate([
             'country' => 'required|string|max:255',
             'country_code' => 'nullable|string|max:3',
+            'visa_type' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255|unique:visa_requirements,slug',
             'description' => 'nullable|string',
             'required_documents' => 'required|array|min:1',
@@ -119,6 +120,7 @@ class VisaRequirementController extends Controller
         $validated = $request->validate([
             'country' => 'required|string|max:255',
             'country_code' => 'nullable|string|max:3',
+            'visa_type' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255|unique:visa_requirements,slug,' . $id,
             'description' => 'nullable|string',
             'required_documents' => 'required|array|min:1',

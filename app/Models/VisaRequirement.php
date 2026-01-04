@@ -14,6 +14,7 @@ class VisaRequirement extends Model
     protected $fillable = [
         'country',
         'country_code',
+        'visa_type',
         'slug',
         'description',
         'required_documents',

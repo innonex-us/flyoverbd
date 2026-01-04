@@ -25,6 +25,11 @@ class VisaController extends Controller
             });
         }
 
+        // Filter by visa type
+        if ($request->has('visa_type') && $request->visa_type) {
+            $query->where('visa_type', $request->visa_type);
+        }
+
         $visas = $query->orderBy('country', 'asc')
             ->paginate(12)
             ->through(function ($visa) {

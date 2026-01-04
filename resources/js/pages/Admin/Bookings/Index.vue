@@ -43,8 +43,8 @@ const props = defineProps<Props>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Admin',
-        href: '/admin/dashboard',
+        title: 'Dashboard',
+        href: '/cp/dashboard',
     },
     {
         title: 'Bookings',
@@ -57,7 +57,7 @@ const bookingStatus = ref(props.filters.booking_status || 'all');
 const paymentStatus = ref(props.filters.payment_status || 'all');
 
 const handleSearch = () => {
-    router.get('/admin/bookings', {
+    router.get('/cp/bookings', {
         search: search.value || undefined,
         booking_status: bookingStatus.value !== 'all' ? bookingStatus.value : undefined,
         payment_status: paymentStatus.value !== 'all' ? paymentStatus.value : undefined,
@@ -108,7 +108,7 @@ const getPaymentStatusColor = (status: string) => {
                     <p class="text-muted-foreground">Manage tour bookings</p>
                 </div>
                 <Button as-child>
-                    <Link href="/admin/bookings/create">
+                    <Link href="/cp/bookings/create">
                         <Plus class="mr-2 h-4 w-4" />
                         Add Booking
                     </Link>
@@ -228,7 +228,7 @@ const getPaymentStatusColor = (status: string) => {
                                                 size="icon-sm"
                                                 as-child
                                             >
-                                                <Link :href="`/admin/bookings/${booking.id}`">
+                                                <Link :href="`/cp/bookings/${booking.id}`">
                                                     <Eye class="h-4 w-4" />
                                                 </Link>
                                             </Button>
@@ -259,7 +259,7 @@ const getPaymentStatusColor = (status: string) => {
                                 variant="outline"
                                 size="sm"
                                 :disabled="bookings.current_page === 1"
-                                @click="router.get(bookings.current_page > 1 ? `/admin/bookings?page=${bookings.current_page - 1}` : '#')"
+                                @click="router.get(bookings.current_page > 1 ? `/cp/bookings?page=${bookings.current_page - 1}` : '#')"
                             >
                                 Previous
                             </Button>
@@ -267,7 +267,7 @@ const getPaymentStatusColor = (status: string) => {
                                 variant="outline"
                                 size="sm"
                                 :disabled="bookings.current_page === bookings.last_page"
-                                @click="router.get(bookings.current_page < bookings.last_page ? `/admin/bookings?page=${bookings.current_page + 1}` : '#')"
+                                @click="router.get(bookings.current_page < bookings.last_page ? `/cp/bookings?page=${bookings.current_page + 1}` : '#')"
                             >
                                 Next
                             </Button>

@@ -44,7 +44,7 @@ const props = defineProps<Props>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Admin Dashboard',
+        title: 'Dashboard',
         href: '#',
     },
 ];
@@ -146,7 +146,7 @@ const formatCurrency = (amount: number) => {
                         <div class="flex items-center justify-between">
                             <CardTitle>Recent Inquiries</CardTitle>
                             <Button variant="ghost" size="sm" as-child>
-                                <Link href="/admin/inquiries">
+                                <Link href="/cp/inquiries">
                                     View All
                                     <ArrowRight class="ml-2 h-4 w-4" />
                                 </Link>
@@ -184,7 +184,7 @@ const formatCurrency = (amount: number) => {
                         <div class="flex items-center justify-between">
                             <CardTitle>Recent Bookings</CardTitle>
                             <Button variant="ghost" size="sm" as-child>
-                                <Link href="/admin/bookings">
+                                <Link href="/cp/bookings">
                                     View All
                                     <ArrowRight class="ml-2 h-4 w-4" />
                                 </Link>
@@ -227,25 +227,25 @@ const formatCurrency = (amount: number) => {
                 <CardContent>
                     <div class="grid gap-4 md:grid-cols-4">
                         <Button as-child>
-                            <Link href="/admin/tours/create">
+                            <Link href="/cp/tours/create">
                                 <Package class="mr-2 h-4 w-4" />
                                 Add Tour Package
                             </Link>
                         </Button>
                         <Button variant="outline" as-child>
-                            <Link href="/admin/visas/create">
+                            <Link href="/cp/visas/create">
                                 <Globe class="mr-2 h-4 w-4" />
                                 Add Visa Requirement
                             </Link>
                         </Button>
                         <Button variant="outline" as-child>
-                            <Link href="/admin/inquiries">
+                            <Link href="/cp/inquiries">
                                 <MessageSquare class="mr-2 h-4 w-4" />
                                 View Inquiries
                             </Link>
                         </Button>
                         <Button variant="outline" as-child>
-                            <Link href="/admin/bookings">
+                            <Link href="/cp/bookings">
                                 <Calendar class="mr-2 h-4 w-4" />
                                 View Bookings
                             </Link>

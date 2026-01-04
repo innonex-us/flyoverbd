@@ -29,14 +29,14 @@ import AppLogo from './AppLogo.vue';
 const page = usePage();
 const isAdmin = computed(() => {
     const path = page.url;
-    return path.startsWith('/admin');
+    return path.startsWith('/cp');
 });
 
 const mainNavItems = computed<NavItem[]>(() => {
     const items: NavItem[] = [
         {
             title: 'Dashboard',
-            href: isAdmin.value ? '/admin/dashboard' : dashboard(),
+            href: isAdmin.value ? '/cp/dashboard' : dashboard(),
             icon: LayoutGrid,
         },
     ];
@@ -45,22 +45,22 @@ const mainNavItems = computed<NavItem[]>(() => {
         items.push(
             {
                 title: 'Tour Packages',
-                href: '/admin/tours',
+                href: '/cp/tours',
                 icon: Package,
             },
             {
                 title: 'Visa Requirements',
-                href: '/admin/visas',
+                href: '/cp/visas',
                 icon: Globe,
             },
             {
                 title: 'Inquiries',
-                href: '/admin/inquiries',
+                href: '/cp/inquiries',
                 icon: MessageSquare,
             },
             {
                 title: 'Bookings',
-                href: '/admin/bookings',
+                href: '/cp/bookings',
                 icon: Calendar,
             }
         );

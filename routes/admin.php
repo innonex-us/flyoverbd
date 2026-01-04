@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\TourPackageController;
 use App\Http\Controllers\Admin\VisaRequirementController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('cp')->name('admin.')->group(function () {
     // Admin Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

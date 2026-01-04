@@ -41,8 +41,8 @@ const props = defineProps<Props>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Admin',
-        href: '/admin/dashboard',
+        title: 'Dashboard',
+        href: '/cp/dashboard',
     },
     {
         title: 'Tour Packages',
@@ -54,7 +54,7 @@ const search = ref(props.filters.search || '');
 const status = ref(props.filters.status || 'all');
 
 const handleSearch = () => {
-    router.get('/admin/tours', {
+    router.get('/cp/tours', {
         search: search.value || undefined,
         status: status.value !== 'all' ? status.value : undefined,
     }, {
@@ -65,7 +65,7 @@ const handleSearch = () => {
 
 const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this tour package?')) {
-        router.delete(`/admin/tours/${id}`, {
+        router.delete(`/cp/tours/${id}`, {
             preserveScroll: true,
         });
     }
@@ -92,7 +92,7 @@ const formatCurrency = (amount: number, currency: string = 'BDT') => {
                     <p class="text-muted-foreground">Manage your tour packages</p>
                 </div>
                 <Button as-child>
-                    <Link href="/admin/tours/create">
+                    <Link href="/cp/tours/create">
                         <Plus class="mr-2 h-4 w-4" />
                         Add Tour Package
                     </Link>
@@ -212,7 +212,7 @@ const formatCurrency = (amount: number, currency: string = 'BDT') => {
                                                 size="icon-sm"
                                                 as-child
                                             >
-                                                <Link :href="`/admin/tours/${tour.id}`">
+                                                <Link :href="`/cp/tours/${tour.id}`">
                                                     <Eye class="h-4 w-4" />
                                                 </Link>
                                             </Button>
@@ -221,7 +221,7 @@ const formatCurrency = (amount: number, currency: string = 'BDT') => {
                                                 size="icon-sm"
                                                 as-child
                                             >
-                                                <Link :href="`/admin/tours/${tour.id}/edit`">
+                                                <Link :href="`/cp/tours/${tour.id}/edit`">
                                                     <Edit class="h-4 w-4" />
                                                 </Link>
                                             </Button>
@@ -259,7 +259,7 @@ const formatCurrency = (amount: number, currency: string = 'BDT') => {
                                 variant="outline"
                                 size="sm"
                                 :disabled="tours.current_page === 1"
-                                @click="router.get(tours.current_page > 1 ? `/admin/tours?page=${tours.current_page - 1}` : '#')"
+                                @click="router.get(tours.current_page > 1 ? `/cp/tours?page=${tours.current_page - 1}` : '#')"
                             >
                                 Previous
                             </Button>
@@ -267,7 +267,7 @@ const formatCurrency = (amount: number, currency: string = 'BDT') => {
                                 variant="outline"
                                 size="sm"
                                 :disabled="tours.current_page === tours.last_page"
-                                @click="router.get(tours.current_page < tours.last_page ? `/admin/tours?page=${tours.current_page + 1}` : '#')"
+                                @click="router.get(tours.current_page < tours.last_page ? `/cp/tours?page=${tours.current_page + 1}` : '#')"
                             >
                                 Next
                             </Button>

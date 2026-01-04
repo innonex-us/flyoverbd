@@ -45,12 +45,12 @@ const props = defineProps<Props>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Admin',
-        href: '/admin/dashboard',
+        title: 'Dashboard',
+        href: '/cp/dashboard',
     },
     {
         title: 'Tour Packages',
-        href: '/admin/tours',
+        href: '/cp/tours',
     },
     {
         title: 'Edit',
@@ -86,7 +86,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.put(`/admin/tours/${props.tour.id}`, {
+    form.put(`/cp/tours/${props.tour.id}`, {
         preserveScroll: true,
     });
 };
@@ -104,7 +104,7 @@ const submit = () => {
                     <p class="text-muted-foreground">Update tour package information</p>
                 </div>
                 <Button variant="outline" as-child>
-                    <Link href="/admin/tours">
+                    <Link href="/cp/tours">
                         <ArrowLeft class="mr-2 h-4 w-4" />
                         Back
                     </Link>
@@ -391,7 +391,7 @@ const submit = () => {
                             variant="outline"
                             as-child
                         >
-                            <Link href="/admin/tours">Cancel</Link>
+                            <Link href="/cp/tours">Cancel</Link>
                         </Button>
                         <Button
                             type="submit"

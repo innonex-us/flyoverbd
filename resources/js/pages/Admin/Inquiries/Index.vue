@@ -40,8 +40,8 @@ const props = defineProps<Props>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Admin',
-        href: '/admin/dashboard',
+        title: 'Dashboard',
+        href: '/cp/dashboard',
     },
     {
         title: 'Inquiries',
@@ -54,7 +54,7 @@ const type = ref(props.filters.type || 'all');
 const status = ref(props.filters.status || 'all');
 
 const handleSearch = () => {
-    router.get('/admin/inquiries', {
+    router.get('/cp/inquiries', {
         search: search.value || undefined,
         type: type.value !== 'all' ? type.value : undefined,
         status: status.value !== 'all' ? status.value : undefined,
@@ -198,7 +198,7 @@ const getStatusColor = (status: string) => {
                                                 size="icon-sm"
                                                 as-child
                                             >
-                                                <Link :href="`/admin/inquiries/${inquiry.id}`">
+                                                <Link :href="`/cp/inquiries/${inquiry.id}`">
                                                     <Eye class="h-4 w-4" />
                                                 </Link>
                                             </Button>
@@ -229,7 +229,7 @@ const getStatusColor = (status: string) => {
                                 variant="outline"
                                 size="sm"
                                 :disabled="inquiries.current_page === 1"
-                                @click="router.get(inquiries.current_page > 1 ? `/admin/inquiries?page=${inquiries.current_page - 1}` : '#')"
+                                @click="router.get(inquiries.current_page > 1 ? `/cp/inquiries?page=${inquiries.current_page - 1}` : '#')"
                             >
                                 Previous
                             </Button>
@@ -237,7 +237,7 @@ const getStatusColor = (status: string) => {
                                 variant="outline"
                                 size="sm"
                                 :disabled="inquiries.current_page === inquiries.last_page"
-                                @click="router.get(inquiries.current_page < inquiries.last_page ? `/admin/inquiries?page=${inquiries.current_page + 1}` : '#')"
+                                @click="router.get(inquiries.current_page < inquiries.last_page ? `/cp/inquiries?page=${inquiries.current_page + 1}` : '#')"
                             >
                                 Next
                             </Button>

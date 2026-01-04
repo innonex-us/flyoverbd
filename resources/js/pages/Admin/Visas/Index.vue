@@ -38,8 +38,8 @@ const props = defineProps<Props>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Admin',
-        href: '/admin/dashboard',
+        title: 'Dashboard',
+        href: '/cp/dashboard',
     },
     {
         title: 'Visa Requirements',
@@ -51,7 +51,7 @@ const search = ref(props.filters.search || '');
 const status = ref(props.filters.status || 'all');
 
 const handleSearch = () => {
-    router.get('/admin/visas', {
+    router.get('/cp/visas', {
         search: search.value || undefined,
         status: status.value !== 'all' ? status.value : undefined,
     }, {
@@ -62,7 +62,7 @@ const handleSearch = () => {
 
 const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this visa requirement?')) {
-        router.delete(`/admin/visas/${id}`, {
+        router.delete(`/cp/visas/${id}`, {
             preserveScroll: true,
         });
     }
@@ -90,7 +90,7 @@ const formatCurrency = (amount: number | null, currency: string = 'BDT') => {
                     <p class="text-muted-foreground">Manage visa requirements by country</p>
                 </div>
                 <Button as-child>
-                    <Link href="/admin/visas/create">
+                    <Link href="/cp/visas/create">
                         <Plus class="mr-2 h-4 w-4" />
                         Add Visa Requirement
                     </Link>
@@ -189,7 +189,7 @@ const formatCurrency = (amount: number | null, currency: string = 'BDT') => {
                                                 size="icon-sm"
                                                 as-child
                                             >
-                                                <Link :href="`/admin/visas/${visa.id}/edit`">
+                                                <Link :href="`/cp/visas/${visa.id}/edit`">
                                                     <Edit class="h-4 w-4" />
                                                 </Link>
                                             </Button>
@@ -227,7 +227,7 @@ const formatCurrency = (amount: number | null, currency: string = 'BDT') => {
                                 variant="outline"
                                 size="sm"
                                 :disabled="visas.current_page === 1"
-                                @click="router.get(visas.current_page > 1 ? `/admin/visas?page=${visas.current_page - 1}` : '#')"
+                                @click="router.get(visas.current_page > 1 ? `/cp/visas?page=${visas.current_page - 1}` : '#')"
                             >
                                 Previous
                             </Button>
@@ -235,7 +235,7 @@ const formatCurrency = (amount: number | null, currency: string = 'BDT') => {
                                 variant="outline"
                                 size="sm"
                                 :disabled="visas.current_page === visas.last_page"
-                                @click="router.get(visas.current_page < visas.last_page ? `/admin/visas?page=${visas.current_page + 1}` : '#')"
+                                @click="router.get(visas.current_page < visas.last_page ? `/cp/visas?page=${visas.current_page + 1}` : '#')"
                             >
                                 Next
                             </Button>

@@ -58,8 +58,8 @@ class CreateAdminUser extends Command
         $this->line("Email: {$email}");
         $this->line("Password: {$password}");
         $this->newLine();
-        $this->info("You can now login at: /login");
-        $this->info("Admin Dashboard: /admin/dashboard");
+        $this->info("You can now login at: /access/login");
+        $this->info("Admin Dashboard: /cp/dashboard");
 
         return Command::SUCCESS;
     }

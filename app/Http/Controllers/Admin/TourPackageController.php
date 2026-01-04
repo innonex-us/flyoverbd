@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\TourPackage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -66,7 +67,8 @@ class TourPackageController extends Controller
             'itinerary' => 'nullable|string',
             'highlights' => 'nullable|string',
             'images' => 'nullable|array',
-            'thumbnail' => 'nullable|string',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'price' => 'required|numeric|min:0',
             'currency' => 'nullable|string|max:3',
             'duration_days' => 'required|integer|min:1',
@@ -88,6 +90,27 @@ class TourPackageController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['title']);
+        }
+
+        // Handle thumbnail upload
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailPath = $thumbnail->store('tours/thumbnails', 'public');
+            $validated['thumbnail'] = Storage::url($thumbnailPath);
+        } else {
+            unset($validated['thumbnail']);
+        }
+
+        // Handle images upload
+        $uploadedImages = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('tours/images', 'public');
+                $uploadedImages[] = Storage::url($imagePath);
+            }
+            $validated['images'] = $uploadedImages;
+        } else {
+            unset($validated['images']);
         }
 
         TourPackage::create($validated);
@@ -134,7 +157,8 @@ class TourPackageController extends Controller
             'itinerary' => 'nullable|string',
             'highlights' => 'nullable|string',
             'images' => 'nullable|array',
-            'thumbnail' => 'nullable|string',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'price' => 'required|numeric|min:0',
             'currency' => 'nullable|string|max:3',
             'duration_days' => 'required|integer|min:1',
@@ -152,10 +176,59 @@ class TourPackageController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
+            'remove_thumbnail' => 'nullable|boolean',
+            'remove_images' => 'nullable|array',
         ]);
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['title']);
+        }
+
+        // Handle thumbnail upload or removal
+        if ($request->hasFile('thumbnail')) {
+            // Delete old thumbnail if exists
+            if ($tour->thumbnail) {
+                $oldPath = str_replace('/storage/', '', $tour->thumbnail);
+                Storage::disk('public')->delete($oldPath);
+            }
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailPath = $thumbnail->store('tours/thumbnails', 'public');
+            $validated['thumbnail'] = Storage::url($thumbnailPath);
+        } elseif ($request->boolean('remove_thumbnail') && $tour->thumbnail) {
+            $oldPath = str_replace('/storage/', '', $tour->thumbnail);
+            Storage::disk('public')->delete($oldPath);
+            $validated['thumbnail'] = null;
+        } else {
+            unset($validated['thumbnail']);
+        }
+
+        // Handle images upload
+        $currentImages = $tour->images ?? [];
+        $uploadedImages = [];
+        
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('tours/images', 'public');
+                $uploadedImages[] = Storage::url($imagePath);
+            }
+        }
+
+        // Remove images that are marked for removal
+        $imagesToRemove = $request->input('remove_images', []);
+        $currentImages = array_filter($currentImages, function($image) use ($imagesToRemove) {
+            return !in_array($image, $imagesToRemove);
+        });
+
+        // Delete removed images from storage
+        foreach ($imagesToRemove as $imageToRemove) {
+            $oldPath = str_replace('/storage/', '', $imageToRemove);
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        // Merge current images with newly uploaded ones
+        $validated['images'] = array_merge($currentImages, $uploadedImages);
+        if (empty($validated['images'])) {
+            $validated['images'] = null;
         }
 
         $tour->update($validated);
@@ -170,6 +243,21 @@ class TourPackageController extends Controller
     public function destroy(string $id)
     {
         $tour = TourPackage::findOrFail($id);
+
+        // Delete thumbnail
+        if ($tour->thumbnail) {
+            $oldPath = str_replace('/storage/', '', $tour->thumbnail);
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        // Delete images
+        if ($tour->images) {
+            foreach ($tour->images as $image) {
+                $oldPath = str_replace('/storage/', '', $image);
+                Storage::disk('public')->delete($oldPath);
+            }
+        }
+
         $tour->delete();
 
         return redirect()->route('admin.tours.index')

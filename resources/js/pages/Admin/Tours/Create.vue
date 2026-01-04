@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ArrowLeft } from 'lucide-vue-next';
+import { ArrowLeft, X } from 'lucide-vue-next';
+import { ref } from 'vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -24,14 +25,19 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+const thumbnailFile = ref<File | null>(null);
+const thumbnailPreview = ref<string | null>(null);
+const additionalImages = ref<File[]>([]);
+const additionalImagesPreview = ref<string[]>([]);
+
 const form = useForm({
     title: '',
     slug: '',
     description: '',
     itinerary: '',
     highlights: '',
-    images: [] as string[],
-    thumbnail: '',
+    images: [] as File[],
+    thumbnail: null as File | null,
     price: 0,
     currency: 'BDT',
     duration_days: 1,
@@ -51,9 +57,50 @@ const form = useForm({
     meta_keywords: '',
 });
 
+const handleThumbnailChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+        thumbnailFile.value = target.files[0];
+        form.thumbnail = target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            thumbnailPreview.value = e.target?.result as string;
+        };
+        reader.readAsDataURL(target.files[0]);
+    }
+};
+
+const removeThumbnail = () => {
+    thumbnailFile.value = null;
+    thumbnailPreview.value = null;
+    form.thumbnail = null;
+};
+
+const handleAdditionalImagesChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files) {
+        Array.from(target.files).forEach((file) => {
+            additionalImages.value.push(file);
+            form.images.push(file);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                additionalImagesPreview.value.push(e.target?.result as string);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+};
+
+const removeAdditionalImage = (index: number) => {
+    additionalImages.value.splice(index, 1);
+    additionalImagesPreview.value.splice(index, 1);
+    form.images.splice(index, 1);
+};
+
 const submit = () => {
     form.post('/cp/tours', {
         preserveScroll: true,
+        forceFormData: true,
     });
 };
 </script>
@@ -252,6 +299,89 @@ const submit = () => {
                                         type="date"
                                     />
                                 </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <!-- Media -->
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Media</CardTitle>
+                        </CardHeader>
+                        <CardContent class="space-y-4">
+                            <!-- Thumbnail Upload -->
+                            <div class="grid gap-2">
+                                <Label for="thumbnail">Thumbnail Image</Label>
+                                <div v-if="thumbnailPreview" class="relative">
+                                    <img
+                                        :src="thumbnailPreview"
+                                        alt="Thumbnail preview"
+                                        class="h-48 w-full rounded-lg object-cover"
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="destructive"
+                                        size="icon"
+                                        class="absolute right-2 top-2"
+                                        @click="removeThumbnail"
+                                    >
+                                        <X class="h-4 w-4" />
+                                    </Button>
+                                </div>
+                                <div v-else>
+                                    <Input
+                                        id="thumbnail"
+                                        type="file"
+                                        accept="image/*"
+                                        @change="handleThumbnailChange"
+                                    />
+                                    <p class="mt-1 text-xs text-muted-foreground">
+                                        Upload a thumbnail image (max 2MB, jpeg, png, jpg, gif, webp)
+                                    </p>
+                                </div>
+                                <p v-if="form.errors.thumbnail" class="text-sm text-destructive">
+                                    {{ form.errors.thumbnail }}
+                                </p>
+                            </div>
+
+                            <!-- Additional Images Upload -->
+                            <div class="grid gap-2">
+                                <Label>Additional Images</Label>
+                                <div v-if="additionalImagesPreview.length > 0" class="grid grid-cols-2 gap-4 md:grid-cols-4 mb-4">
+                                    <div
+                                        v-for="(preview, index) in additionalImagesPreview"
+                                        :key="index"
+                                        class="relative"
+                                    >
+                                        <img
+                                            :src="preview"
+                                            :alt="`Image ${index + 1}`"
+                                            class="h-32 w-full rounded-lg object-cover"
+                                        />
+                                        <Button
+                                            type="button"
+                                            variant="destructive"
+                                            size="icon"
+                                            class="absolute right-2 top-2"
+                                            @click="removeAdditionalImage(index)"
+                                        >
+                                            <X class="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                </div>
+                                <Input
+                                    id="additional_images"
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    @change="handleAdditionalImagesChange"
+                                />
+                                <p class="text-xs text-muted-foreground">
+                                    Upload additional images (max 2MB each, jpeg, png, jpg, gif, webp)
+                                </p>
+                                <p v-if="form.errors.images" class="text-sm text-destructive">
+                                    {{ form.errors.images }}
+                                </p>
                             </div>
                         </CardContent>
                     </Card>

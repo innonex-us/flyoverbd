@@ -12,6 +12,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show');
 
+// Public Booking Routes
+Route::get('/tours/{slug}/book', [App\Http\Controllers\BookingController::class, 'create'])->name('bookings.create');
+Route::post('/bookings', [App\Http\Controllers\BookingController::class, 'store'])->name('bookings.store');
+Route::get('/bookings/success/{reference}', [App\Http\Controllers\BookingController::class, 'success'])->name('bookings.success');
+
 // Public Visa Routes
 Route::get('/visas', [VisaController::class, 'index'])->name('visas.index');
 Route::get('/visas/{slug}', [VisaController::class, 'show'])->name('visas.show');

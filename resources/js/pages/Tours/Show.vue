@@ -106,14 +106,8 @@ const handleFavorite = () => {
 };
 
 const handleBookNow = () => {
-    // Navigate to contact page with tour pre-filled
-    router.visit('/contact', {
-        query: {
-            tour_id: props.tour.id,
-            tour_title: props.tour.title,
-            type: 'booking',
-        },
-    });
+    // Navigate to booking form
+    router.visit(`/tours/${props.tour.slug}/book`);
 };
 
 const handleContactUs = () => {

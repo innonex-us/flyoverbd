@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TourPackage;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Laravel\Fortify\Features;
 
 class TourController extends Controller
 {
@@ -52,6 +53,7 @@ class TourController extends Controller
         return Inertia::render('Tours/Index', [
             'tours' => $tours,
             'filters' => $request->only(['search', 'destination']),
+            'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
 
@@ -112,6 +114,7 @@ class TourController extends Controller
         return Inertia::render('Tours/Show', [
             'tour' => $tourData,
             'relatedTours' => $relatedTours,
+            'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
 }

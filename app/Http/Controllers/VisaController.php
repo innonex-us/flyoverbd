@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\VisaRequirement;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Laravel\Fortify\Features;
 
 class VisaController extends Controller
 {
@@ -41,6 +42,7 @@ class VisaController extends Controller
         return Inertia::render('Visas/Index', [
             'visas' => $visas,
             'filters' => $request->only(['search']),
+            'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
 
@@ -90,6 +92,7 @@ class VisaController extends Controller
         return Inertia::render('Visas/Show', [
             'visa' => $visaData,
             'relatedVisas' => $relatedVisas,
+            'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
 }

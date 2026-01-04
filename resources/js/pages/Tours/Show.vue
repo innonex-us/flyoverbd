@@ -54,8 +54,17 @@ const props = withDefaults(defineProps<Props>(), {
     canRegister: true,
 });
 
-const mainImage = computed(() => props.tour.thumbnail || props.tour.images[0] || null);
-const otherImages = computed(() => props.tour.images.filter(img => img !== mainImage.value));
+const mainImage = computed(() => {
+    if (props.tour.thumbnail) return props.tour.thumbnail;
+    if (props.tour.images && props.tour.images.length > 0) return props.tour.images[0];
+    return null;
+});
+
+const otherImages = computed(() => {
+    if (!props.tour.images || props.tour.images.length === 0) return [];
+    const main = mainImage.value;
+    return props.tour.images.filter(img => img && img !== main);
+});
 
 const includedItems = computed(() => {
     if (!props.tour.included) return [];
@@ -75,7 +84,7 @@ const highlightsList = computed(() => {
 
 <template>
     <Head :title="tour.title">
-        <meta name="description" :content="tour.description.substring(0, 160)" />
+        <meta name="description" :content="tour.description ? tour.description.substring(0, 160) : 'Tour package details'" />
     </Head>
 
     <div class="min-h-screen bg-gray-50">

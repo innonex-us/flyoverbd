@@ -33,13 +33,13 @@ defineProps<{
                 <!-- Desktop Navigation -->
                 <div class="hidden items-center space-x-1 md:flex">
                     <Link 
-                        href="#tours" 
+                        href="/tours" 
                         class="rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-red-50 hover:text-red-600"
                     >
                         Tours
                     </Link>
                     <Link 
-                        href="#visas" 
+                        href="/visas" 
                         class="rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-red-50 hover:text-red-600"
                     >
                         Visa Services
@@ -83,14 +83,14 @@ defineProps<{
         >
             <div class="space-y-1 px-4 pb-4 pt-2">
                 <Link
-                    href="#tours"
+                    href="/tours"
                     class="block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-700 transition-all hover:bg-red-50 hover:text-red-600"
                     @click="toggleMobileMenu"
                 >
                     Tours
                 </Link>
                 <Link
-                    href="#visas"
+                    href="/visas"
                     class="block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-700 transition-all hover:bg-red-50 hover:text-red-600"
                     @click="toggleMobileMenu"
                 >

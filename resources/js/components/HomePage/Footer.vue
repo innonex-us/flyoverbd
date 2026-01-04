@@ -39,12 +39,12 @@ import { Plane, Facebook, Instagram, Twitter, Youtube } from 'lucide-vue-next';
                     <h3 class="text-sm font-bold uppercase tracking-wider text-white">Services</h3>
                     <ul class="mt-6 space-y-3">
                         <li>
-                            <Link href="#tours" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/tours" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 Tour Packages
                             </Link>
                         </li>
                         <li>
-                            <Link href="#visas" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/visas" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 Visa Services
                             </Link>
                         </li>

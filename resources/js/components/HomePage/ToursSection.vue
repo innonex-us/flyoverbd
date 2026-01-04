@@ -36,7 +36,7 @@ withDefaults(defineProps<Props>(), {
                     <p class="mt-3 text-lg text-gray-600">Discover amazing destinations with our carefully curated tours</p>
                 </div>
                 <Link
-                    href="#"
+                    href="/tours"
                     class="hidden items-center text-sm font-bold text-red-600 transition-all hover:scale-105 hover:text-red-700 sm:flex"
                 >
                     View All Tours

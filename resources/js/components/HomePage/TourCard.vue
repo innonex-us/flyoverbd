@@ -71,23 +71,22 @@ const truncatedDescription = computed(() => {
                     <span class="ml-1 text-sm font-medium text-gray-500">/person</span>
                 </div>
             </div>
-            <Button 
+            <Link 
                 v-if="slug"
-                as-child
-                class="mt-5 w-full bg-gradient-to-r from-red-600 to-red-700 text-sm font-semibold text-white shadow-md transition-all hover:from-red-700 hover:to-red-800 hover:shadow-lg"
-            >
-                <Link :href="`/tours/${slug}`">
-                    View Details
-                    <ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-            </Button>
-            <Button 
-                v-else
-                class="mt-5 w-full bg-gradient-to-r from-red-600 to-red-700 text-sm font-semibold text-white shadow-md transition-all hover:from-red-700 hover:to-red-800 hover:shadow-lg"
+                :href="`/tours/${slug}`"
+                class="mt-5 flex w-full items-center justify-center rounded-md bg-gradient-to-r from-red-600 to-red-700 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:from-red-700 hover:to-red-800 hover:shadow-lg"
             >
                 View Details
                 <ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
+            </Link>
+            <button 
+                v-else
+                disabled
+                class="mt-5 flex w-full items-center justify-center rounded-md bg-gradient-to-r from-red-600 to-red-700 px-4 py-2.5 text-sm font-semibold text-white shadow-md opacity-50"
+            >
+                View Details
+                <ArrowRight class="ml-2 h-4 w-4" />
+            </button>
         </CardContent>
     </Card>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { router } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -6,6 +7,44 @@ import { MapPin, Calendar, Users, Globe, ChevronDown, Search } from 'lucide-vue-
 import { ref } from 'vue';
 
 const activeTab = ref('tours');
+const destination = ref('');
+const checkIn = ref('');
+const checkOut = ref('');
+const travelers = ref(1);
+const destinationCountry = ref('');
+const nationality = ref('');
+const visaType = ref('Tourist Visa');
+
+const searchTours = (e: Event) => {
+    e.preventDefault();
+    const params: Record<string, string> = {};
+    
+    if (destination.value) {
+        params.destination = destination.value;
+    }
+    if (checkIn.value) {
+        params.check_in = checkIn.value;
+    }
+    if (checkOut.value) {
+        params.check_out = checkOut.value;
+    }
+    if (travelers.value) {
+        params.travelers = travelers.value.toString();
+    }
+    
+    router.get('/tours', params);
+};
+
+const searchVisas = (e: Event) => {
+    e.preventDefault();
+    const params: Record<string, string> = {};
+    
+    if (destinationCountry.value) {
+        params.search = destinationCountry.value;
+    }
+    
+    router.get('/visas', params);
+};
 </script>
 
 <template>
@@ -60,7 +99,7 @@ const activeTab = ref('tours');
 
                 <!-- Search Form -->
                 <div class="rounded-b-2xl rounded-t-none bg-white p-8 shadow-2xl">
-                    <form v-if="activeTab === 'tours'" class="space-y-6">
+                    <form v-if="activeTab === 'tours'" @submit="searchTours" class="space-y-6">
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                             <div class="space-y-2">
                                 <Label for="destination" class="text-sm font-semibold text-gray-700">Destination</Label>
@@ -68,6 +107,7 @@ const activeTab = ref('tours');
                                     <MapPin class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
                                         id="destination"
+                                        v-model="destination"
                                         type="text"
                                         placeholder="Where to?"
                                         class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
@@ -80,6 +120,7 @@ const activeTab = ref('tours');
                                     <Calendar class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
                                         id="checkin"
+                                        v-model="checkIn"
                                         type="date"
                                         class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
                                     />
@@ -91,6 +132,7 @@ const activeTab = ref('tours');
                                     <Calendar class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
                                         id="checkout"
+                                        v-model="checkOut"
                                         type="date"
                                         class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
                                     />
@@ -102,6 +144,7 @@ const activeTab = ref('tours');
                                     <Users class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
                                         id="travelers"
+                                        v-model.number="travelers"
                                         type="number"
                                         placeholder="1"
                                         min="1"
@@ -120,7 +163,7 @@ const activeTab = ref('tours');
                         </Button>
                     </form>
 
-                    <form v-else class="space-y-6">
+                    <form v-else @submit="searchVisas" class="space-y-6">
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             <div class="space-y-2">
                                 <Label for="destination_country" class="text-sm font-semibold text-gray-700">Destination Country</Label>
@@ -128,6 +171,7 @@ const activeTab = ref('tours');
                                     <Globe class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
                                         id="destination_country"
+                                        v-model="destinationCountry"
                                         type="text"
                                         placeholder="Select country"
                                         class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
@@ -140,6 +184,7 @@ const activeTab = ref('tours');
                                     <MapPin class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
                                         id="nationality"
+                                        v-model="nationality"
                                         type="text"
                                         placeholder="Your nationality"
                                         class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
@@ -152,6 +197,7 @@ const activeTab = ref('tours');
                                     <ChevronDown class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
                                     <select
                                         id="visa_type"
+                                        v-model="visaType"
                                         class="h-12 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 pl-3 pr-10 text-sm focus:border-red-500 focus:ring-red-500"
                                     >
                                         <option>Tourist Visa</option>

@@ -1,0 +1,132 @@
+---
+alwaysApply: true
+---
+
+# Project Proposal: Visa & Tour Management Web Application
+
+**Date:** January 4, 2026  
+**Client:** Flyover BD  
+**Developer:** Innonexus LTD (Md Rokon Uzzaman)
+
+## Executive Summary
+
+This is a high-performance, professional web application focused exclusively on **Visa Assistance** and **Tour Management**. The application should provide a user experience similar to industry leaders like GoZayan, with a strong emphasis on SEO optimization.
+
+## Core Objectives
+
+1. **User-Centric Design:** Implement the specific design layout agreed upon during the meeting
+2. **Performance:** Fast-loading application using modern technologies
+3. **SEO Priority:** Full responsibility for ensuring the site structure is optimized for Search Engines (Google), ensuring high visibility for services
+
+## Technology Stack
+
+### Backend
+- **Framework:** Laravel (PHP Framework)
+  - Ensures robust security
+  - Fast data processing
+  - Easy scalability
+
+### Frontend
+- **Framework:** Vue.js
+  - Single Page Application (SPA) feel
+  - Pages load instantly without refreshing
+  - Premium user experience
+
+### Database
+- **MySQL**
+
+## Key Features
+
+### A. User Front-End (Public View)
+
+#### Tour Management Section
+- Search and filter functionality for tour packages
+- Detailed itinerary views
+- Image galleries
+- Pricing information
+- Booking inquiry forms
+
+#### Visa Assistance Section
+- Country-wise visa requirement database
+- Document checklists
+- Application guidelines
+- Consultation request forms
+
+#### Responsive Design
+- Fully mobile-optimized
+- Looks great on phones, tablets, and desktops
+
+### B. Admin Dashboard (CMS)
+
+- Secure login for Flyover BD administrators
+- Add, edit, or delete Tour Packages (prices, images, descriptions)
+- Update Visa requirements and information
+- Manage customer inquiries and bookings
+
+### C. SEO Implementation (High Priority)
+
+- Schema markup for Tours and Events (helps Google understand packages)
+- Meta-tag management for every page
+- Sitemap generation
+- Optimization for Google Core Web Vitals (Speed and Stability)
+
+## Project Timeline
+
+**Total Duration:** 3 Weeks
+
+- **Week 1:** Database Architecture, Backend Setup (Laravel), and UI Skeleton
+- **Week 2:** Frontend Development (Vue.js), API Integration, and Admin Panel functionality
+- **Week 3:** Content upload (demo data), SEO Optimization, Testing, and Final Deployment
+
+## Development Guidelines
+
+### Code Quality Standards
+- Follow Laravel best practices and conventions
+- Use Vue.js composition API where appropriate
+- Ensure all code is well-documented
+- Implement proper error handling and validation
+
+### SEO Requirements
+- Every page must have proper meta tags (title, description, keywords)
+- Implement structured data (Schema.org) for tours and visa information
+- Ensure fast page load times (Core Web Vitals)
+- Generate and maintain XML sitemap
+- Use semantic HTML5 elements
+- Optimize images for web (proper formats, lazy loading)
+
+### Security Requirements
+- Implement Laravel's built-in security features
+- Use CSRF protection for all forms
+- Sanitize all user inputs
+- Implement proper authentication and authorization for admin panel
+- Use prepared statements for database queries
+
+### Performance Requirements
+- Optimize database queries (use eager loading, indexes)
+- Implement caching where appropriate
+- Minimize JavaScript and CSS bundle sizes
+- Use lazy loading for images
+- Implement proper pagination for listings
+
+### User Experience Requirements
+- Ensure smooth navigation (SPA feel with Vue.js)
+- Implement loading states for async operations
+- Provide clear error messages
+- Ensure forms are user-friendly with proper validation
+- Mobile-first responsive design approach
+
+## Project Structure
+
+The application should follow Laravel + Inertia.js + Vue.js architecture:
+- Backend API/Controllers in `app/Http/Controllers`
+- Frontend components in `resources/js/components`
+- Pages in `resources/js/pages`
+- Models in `app/Models`
+- Migrations in `database/migrations`
+
+## Notes
+
+- The design layout should match the specific design agreed upon during the meeting
+- SEO is a high priority - ensure all technical SEO aspects are properly implemented
+- The application should be production-ready upon completion
+- All features should be thoroughly tested before deployment

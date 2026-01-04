@@ -45,13 +45,13 @@ defineProps<{
                         Visa Services
                     </Link>
                     <Link 
-                        href="#about" 
+                        href="/about" 
                         class="rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-red-50 hover:text-red-600"
                     >
                         About Us
                     </Link>
                     <Link 
-                        href="#contact" 
+                        href="/contact" 
                         class="rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-red-50 hover:text-red-600"
                     >
                         Contact
@@ -97,14 +97,14 @@ defineProps<{
                     Visa Services
                 </Link>
                 <Link
-                    href="#about"
+                    href="/about"
                     class="block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-700 transition-all hover:bg-red-50 hover:text-red-600"
                     @click="toggleMobileMenu"
                 >
                     About Us
                 </Link>
                 <Link
-                    href="#contact"
+                    href="/contact"
                     class="block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-700 transition-all hover:bg-red-50 hover:text-red-600"
                     @click="toggleMobileMenu"
                 >

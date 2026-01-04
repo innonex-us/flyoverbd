@@ -1,0 +1,113 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Blog;
+use Inertia\Inertia;
+
+class PageController extends Controller
+{
+    /**
+     * Display the About Us page.
+     */
+    public function about()
+    {
+        return Inertia::render('Pages/About');
+    }
+
+    /**
+     * Display the Contact page.
+     */
+    public function contact()
+    {
+        return Inertia::render('Pages/Contact');
+    }
+
+    /**
+     * Display the Careers page.
+     */
+    public function careers()
+    {
+        return Inertia::render('Pages/Careers');
+    }
+
+    /**
+     * Display the Help Center / FAQ page.
+     */
+    public function help()
+    {
+        return Inertia::render('Pages/Help');
+    }
+
+    /**
+     * Display the Privacy Policy page.
+     */
+    public function privacy()
+    {
+        return Inertia::render('Pages/Privacy');
+    }
+
+    /**
+     * Display the Terms of Service page.
+     */
+    public function terms()
+    {
+        return Inertia::render('Pages/Terms');
+    }
+
+    /**
+     * Display the Blog listing page.
+     */
+    public function blog()
+    {
+        $blogs = Blog::where('is_published', true)
+            ->orderBy('published_at', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(12)
+            ->through(function ($blog) {
+                return [
+                    'id' => $blog->id,
+                    'title' => $blog->title,
+                    'slug' => $blog->slug,
+                    'excerpt' => $blog->excerpt,
+                    'featured_image' => $blog->featured_image ? asset('storage/' . $blog->featured_image) : null,
+                    'author' => $blog->author,
+                    'published_at' => $blog->published_at?->format('F d, Y'),
+                    'category' => $blog->category,
+                    'views' => $blog->views,
+                ];
+            });
+
+        return Inertia::render('Pages/Blog', [
+            'blogs' => $blogs,
+        ]);
+    }
+
+    /**
+     * Handle contact form submission.
+     */
+    public function submitContact(\Illuminate\Http\Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        // Create inquiry
+        \App\Models\Inquiry::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'subject' => $validated['subject'],
+            'message' => $validated['message'],
+            'type' => 'general',
+            'status' => 'new',
+        ]);
+
+        return redirect()->back()->with('success', 'Thank you! Your message has been sent successfully.');
+    }
+}
+

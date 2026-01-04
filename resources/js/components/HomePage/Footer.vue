@@ -64,24 +64,24 @@ import { Plane, Facebook, Instagram, Twitter, Youtube } from 'lucide-vue-next';
                     <h3 class="text-sm font-bold uppercase tracking-wider text-white">Company</h3>
                     <ul class="mt-6 space-y-3">
                         <li>
-                            <a href="#about" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/about" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 About Us
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="#contact" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/contact" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 Contact
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="#" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/blog" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 Blog
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="#" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/careers" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 Careers
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -89,24 +89,24 @@ import { Plane, Facebook, Instagram, Twitter, Youtube } from 'lucide-vue-next';
                     <h3 class="text-sm font-bold uppercase tracking-wider text-white">Support</h3>
                     <ul class="mt-6 space-y-3">
                         <li>
-                            <a href="#" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/help" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 Help Center
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="#" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/privacy" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 Privacy Policy
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="#" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/terms" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 Terms of Service
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="#" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
+                            <Link href="/help" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
                                 FAQ
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

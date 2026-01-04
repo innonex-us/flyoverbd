@@ -8,20 +8,23 @@ defineProps<{
 </script>
 
 <template>
-    <section class="bg-red-600 py-16">
-        <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+    <section class="relative overflow-hidden bg-gradient-to-r from-red-600 via-red-700 to-red-800 py-20">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+        <div class="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
                 Ready to Start Your Journey?
             </h2>
-            <p class="mt-4 text-lg text-red-100">
-                Contact us today for personalized travel assistance
+            <p class="mt-6 text-lg font-medium text-red-50 sm:text-xl">
+                Contact us today for personalized travel assistance and expert guidance
             </p>
-            <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+            <div class="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
                 <Button
                     as-child
-                    variant="secondary"
                     size="lg"
-                    class="bg-white text-red-600 hover:bg-red-50"
+                    class="h-14 bg-white px-8 text-base font-bold text-red-600 shadow-xl transition-all hover:scale-105 hover:bg-red-50 hover:shadow-2xl"
                 >
                     <Link href="#contact">
                         Contact Us
@@ -30,9 +33,8 @@ defineProps<{
                 <Button
                     v-if="canRegister && !$page.props.auth.user"
                     as-child
-                    variant="outline"
                     size="lg"
-                    class="border-2 border-white text-white hover:bg-red-700"
+                    class="h-14 border-2 border-white bg-transparent px-8 text-base font-bold text-white backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/10"
                 >
                     <Link href="/access/register">
                         Create Account

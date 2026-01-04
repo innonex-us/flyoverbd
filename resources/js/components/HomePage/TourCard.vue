@@ -20,35 +20,47 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-    <Card class="group overflow-hidden transition-all hover:shadow-xl">
-        <div class="aspect-video bg-gradient-to-br from-red-100 to-red-200 relative">
+    <Card class="group overflow-hidden border-gray-200 transition-all duration-300 hover:scale-[1.02] hover:border-red-300 hover:shadow-2xl">
+        <div class="relative aspect-video overflow-hidden bg-gradient-to-br from-red-100 via-red-50 to-red-200">
             <div v-if="image" class="absolute inset-0">
-                <img :src="image" :alt="title" class="h-full w-full object-cover" />
+                <img 
+                    :src="image" 
+                    :alt="title" 
+                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                />
             </div>
-            <div v-else class="absolute inset-0 flex items-center justify-center">
-                <Plane class="h-16 w-16 text-red-600 opacity-20" />
+            <div v-else class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-100 to-red-200">
+                <Plane class="h-20 w-20 text-red-600 opacity-20 transition-transform group-hover:scale-110" />
             </div>
-            <div v-if="featured" class="absolute top-4 right-4">
-                <span class="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white">
-                    Featured
+            <!-- Overlay gradient -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></div>
+            <div v-if="featured" class="absolute top-4 right-4 z-10">
+                <span class="rounded-full bg-gradient-to-r from-red-600 to-red-700 px-4 py-1.5 text-xs font-bold text-white shadow-lg">
+                    ⭐ Featured
+                </span>
+            </div>
+            <!-- Duration badge -->
+            <div class="absolute bottom-4 left-4 z-10">
+                <span class="rounded-lg bg-white/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-gray-900 shadow-md">
+                    <MapPin class="mr-1 inline h-3.5 w-3.5" />
+                    {{ duration }}
                 </span>
             </div>
         </div>
         <CardContent class="p-6">
-            <h3 class="text-xl font-semibold text-gray-900">{{ title }}</h3>
-            <p class="mt-2 text-sm text-gray-600">
+            <h3 class="text-xl font-bold text-gray-900 transition-colors group-hover:text-red-600">{{ title }}</h3>
+            <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-gray-600">
                 {{ description }}
             </p>
-            <div class="mt-4 flex items-center justify-between">
+            <div class="mt-5 flex items-baseline justify-between border-t border-gray-100 pt-4">
                 <div>
-                    <span class="text-2xl font-bold text-red-600">{{ currency === 'BDT' ? '৳' : currency }} {{ price.toLocaleString() }}</span>
-                    <span class="text-sm text-gray-500">/person</span>
+                    <span class="text-3xl font-extrabold text-red-600">{{ currency === 'BDT' ? '৳' : currency }} {{ price.toLocaleString() }}</span>
+                    <span class="ml-1 text-sm font-medium text-gray-500">/person</span>
                 </div>
-                <span class="text-sm text-gray-500">{{ duration }}</span>
             </div>
-            <Button class="mt-4 w-full bg-red-600 hover:bg-red-700 text-white">
+            <Button class="mt-5 w-full bg-gradient-to-r from-red-600 to-red-700 text-sm font-semibold text-white shadow-md transition-all hover:from-red-700 hover:to-red-800 hover:shadow-lg">
                 View Details
-                <ArrowRight class="ml-2 h-4 w-4" />
+                <ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
         </CardContent>
     </Card>

@@ -43,22 +43,22 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-    <section id="tours" class="bg-gray-50 py-16">
+    <section id="tours" class="bg-white py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between">
+            <div class="mb-12 flex items-end justify-between">
                 <div>
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900">Featured Tour Packages</h2>
-                    <p class="mt-2 text-gray-600">Discover amazing destinations with our curated tours</p>
+                    <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Featured Tour Packages</h2>
+                    <p class="mt-3 text-lg text-gray-600">Discover amazing destinations with our carefully curated tours</p>
                 </div>
                 <Link
                     href="#"
-                    class="hidden text-sm font-semibold text-red-600 hover:text-red-700 sm:block"
+                    class="hidden items-center text-sm font-bold text-red-600 transition-all hover:scale-105 hover:text-red-700 sm:flex"
                 >
-                    View All
-                    <ArrowRight class="ml-1 inline h-4 w-4" />
+                    View All Tours
+                    <ArrowRight class="ml-2 h-4 w-4 transition-transform hover:translate-x-1" />
                 </Link>
             </div>
-            <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 <TourCard
                     v-for="(tour, index) in tours"
                     :key="index"

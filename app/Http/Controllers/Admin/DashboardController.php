@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Models\Booking;
 use App\Models\Inquiry;
 use App\Models\TourPackage;
@@ -22,6 +23,12 @@ class DashboardController extends Controller
             'visas' => [
                 'total' => VisaRequirement::count(),
                 'active' => VisaRequirement::where('is_active', true)->count(),
+            ],
+            'blogs' => [
+                'total' => Blog::count(),
+                'published' => Blog::where('is_published', true)->count(),
+                'draft' => Blog::where('is_published', false)->count(),
+                'featured' => Blog::where('is_featured', true)->count(),
             ],
             'inquiries' => [
                 'total' => Inquiry::count(),

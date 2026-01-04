@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InquiryController;
@@ -22,5 +23,8 @@ Route::middleware(['auth', 'verified'])->prefix('cp')->name('admin.')->group(fun
 
     // Bookings
     Route::resource('bookings', BookingController::class);
+
+    // Blogs
+    Route::resource('blogs', BlogController::class);
 });
 

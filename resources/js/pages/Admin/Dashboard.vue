@@ -11,6 +11,7 @@ import {
     Calendar,
     TrendingUp,
     ArrowRight,
+    FileText,
 } from 'lucide-vue-next';
 
 interface Props {
@@ -23,6 +24,12 @@ interface Props {
         visas: {
             total: number;
             active: number;
+        };
+        blogs: {
+            total: number;
+            published: number;
+            draft: number;
+            featured: number;
         };
         inquiries: {
             total: number;
@@ -64,7 +71,7 @@ const formatCurrency = (amount: number) => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-6 overflow-x-auto rounded-xl p-4">
             <!-- Stats Grid -->
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
                 <!-- Tours Card -->
                 <Card>
                     <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -89,6 +96,20 @@ const formatCurrency = (amount: number) => {
                         <div class="text-2xl font-bold">{{ stats.visas.total }}</div>
                         <p class="text-xs text-muted-foreground">
                             {{ stats.visas.active }} active
+                        </p>
+                    </CardContent>
+                </Card>
+
+                <!-- Blogs Card -->
+                <Card>
+                    <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle class="text-sm font-medium">Blog Posts</CardTitle>
+                        <FileText class="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div class="text-2xl font-bold">{{ stats.blogs.total }}</div>
+                        <p class="text-xs text-muted-foreground">
+                            {{ stats.blogs.published }} published, {{ stats.blogs.draft }} draft
                         </p>
                     </CardContent>
                 </Card>
@@ -225,7 +246,7 @@ const formatCurrency = (amount: number) => {
                     <CardTitle>Quick Actions</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div class="grid gap-4 md:grid-cols-4">
+                    <div class="grid gap-4 md:grid-cols-5">
                         <Button as-child>
                             <Link href="/cp/tours/create">
                                 <Package class="mr-2 h-4 w-4" />
@@ -236,6 +257,12 @@ const formatCurrency = (amount: number) => {
                             <Link href="/cp/visas/create">
                                 <Globe class="mr-2 h-4 w-4" />
                                 Add Visa Requirement
+                            </Link>
+                        </Button>
+                        <Button variant="outline" as-child>
+                            <Link href="/cp/blogs/create">
+                                <FileText class="mr-2 h-4 w-4" />
+                                Add Blog Post
                             </Link>
                         </Button>
                         <Button variant="outline" as-child>

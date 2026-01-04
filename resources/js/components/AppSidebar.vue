@@ -22,6 +22,7 @@ import {
     Globe,
     MessageSquare,
     Calendar,
+    FileText,
 } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
@@ -54,6 +55,11 @@ const mainNavItems = computed<NavItem[]>(() => {
                 title: 'Visa Requirements',
                 href: '/cp/visas',
                 icon: Globe,
+            },
+            {
+                title: 'Blogs',
+                href: '/cp/blogs',
+                icon: FileText,
             },
             {
                 title: 'Inquiries',

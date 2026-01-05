@@ -7,6 +7,7 @@ import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
 import VisaServiceCard from '@/components/HomePage/VisaServiceCard.vue';
+import WhatsAppButton from '@/components/HomePage/WhatsAppButton.vue';
 import { Search, Globe } from 'lucide-vue-next';
 import { ref } from 'vue';
 
@@ -121,6 +122,7 @@ const performSearch = () => {
         </div>
 
         <Footer />
+        <WhatsAppButton />
     </div>
 </template>
 

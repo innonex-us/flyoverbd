@@ -9,6 +9,7 @@ import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
 import TourCard from '@/components/HomePage/TourCard.vue';
+import WhatsAppButton from '@/components/HomePage/WhatsAppButton.vue';
 import { Search, X, MapPin, Calendar, Users } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 
@@ -252,6 +253,7 @@ const clearFilters = () => {
         </div>
 
         <Footer />
+        <WhatsAppButton />
     </div>
 </template>
 

@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
+import WhatsAppButton from '@/components/HomePage/WhatsAppButton.vue';
 import { Card, CardContent } from '@/components/ui/card';
 import { Calendar, User, ArrowRight } from 'lucide-vue-next';
 
@@ -120,6 +121,7 @@ withDefaults(defineProps<Props>(), {
         </div>
 
         <Footer />
+        <WhatsAppButton />
     </div>
 </template>
 

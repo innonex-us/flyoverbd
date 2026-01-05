@@ -8,6 +8,7 @@ import ToursSection from '@/components/HomePage/ToursSection.vue';
 import VisasSection from '@/components/HomePage/VisasSection.vue';
 import CTASection from '@/components/HomePage/CTASection.vue';
 import Footer from '@/components/HomePage/Footer.vue';
+import WhatsAppButton from '@/components/HomePage/WhatsAppButton.vue';
 
 interface Tour {
     id: number;
@@ -66,5 +67,6 @@ const props = withDefaults(
         <VisasSection :visa-services="visaServices" />
         <CTASection :can-register="canRegister" />
         <Footer />
+        <WhatsAppButton />
     </div>
 </template>

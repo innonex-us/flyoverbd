@@ -6,6 +6,7 @@ import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
 import TourCard from '@/components/HomePage/TourCard.vue';
+import WhatsAppButton from '@/components/HomePage/WhatsAppButton.vue';
 import { MapPin, Calendar, Users, Check, X, ArrowLeft, Share2, Heart } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 
@@ -318,6 +319,7 @@ const handleContactUs = () => {
         </div>
 
         <Footer />
+        <WhatsAppButton />
     </div>
 </template>
 

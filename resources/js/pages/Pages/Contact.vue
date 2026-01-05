@@ -3,6 +3,7 @@ import { Head, useForm, usePage } from '@inertiajs/vue3';
 import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
+import WhatsAppButton from '@/components/HomePage/WhatsAppButton.vue';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -229,6 +230,7 @@ const submit = () => {
         </div>
 
         <Footer />
+        <WhatsAppButton />
     </div>
 </template>
 

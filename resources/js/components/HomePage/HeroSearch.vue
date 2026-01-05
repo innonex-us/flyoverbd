@@ -17,31 +17,30 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const activeTab = ref('tours');
-const destination = ref('');
-const checkIn = ref('');
-const checkOut = ref('');
-const travelers = ref(1);
+const country = ref('');
+const startDate = ref('');
+const endDate = ref('');
+const participants = ref(1);
 const destinationCountry = ref('');
 const visaType = ref('');
 const countrySearch = ref('');
 const showCountryDropdown = ref(false);
-const showVisaTypeDropdown = ref(false);
 
 const searchTours = (e: Event) => {
     e.preventDefault();
     const params: Record<string, string> = {};
     
-    if (destination.value) {
-        params.destination = destination.value;
+    if (country.value) {
+        params.destination = country.value;
     }
-    if (checkIn.value) {
-        params.check_in = checkIn.value;
+    if (startDate.value) {
+        params.start_date = startDate.value;
     }
-    if (checkOut.value) {
-        params.check_out = checkOut.value;
+    if (endDate.value) {
+        params.end_date = endDate.value;
     }
-    if (travelers.value) {
-        params.travelers = travelers.value.toString();
+    if (participants.value) {
+        params.participants = participants.value.toString();
     }
     
     router.get('/tours', params);
@@ -68,10 +67,6 @@ const clearCountry = () => {
     showCountryDropdown.value = false;
 };
 
-const selectVisaType = (type: string) => {
-    visaType.value = type;
-    showVisaTypeDropdown.value = false;
-};
 
 const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
@@ -165,49 +160,49 @@ const searchVisas = (e: Event) => {
                     <form v-if="activeTab === 'tours'" @submit="searchTours" class="space-y-6">
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                             <div class="space-y-2">
-                                <Label for="destination" class="text-sm font-semibold text-gray-700">Destination</Label>
+                                <Label for="country" class="text-sm font-semibold text-gray-700">Country</Label>
                                 <div class="relative">
                                     <MapPin class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
-                                        id="destination"
-                                        v-model="destination"
+                                        id="country"
+                                        v-model="country"
                                         type="text"
-                                        placeholder="Where to?"
+                                        placeholder="Search by country name"
                                         class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
                                     />
                                 </div>
                             </div>
                             <div class="space-y-2">
-                                <Label for="checkin" class="text-sm font-semibold text-gray-700">Check In</Label>
+                                <Label for="start_date" class="text-sm font-semibold text-gray-700">Start Date</Label>
                                 <div class="relative">
                                     <Calendar class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
-                                        id="checkin"
-                                        v-model="checkIn"
+                                        id="start_date"
+                                        v-model="startDate"
                                         type="date"
                                         class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
                                     />
                                 </div>
                             </div>
                             <div class="space-y-2">
-                                <Label for="checkout" class="text-sm font-semibold text-gray-700">Check Out</Label>
+                                <Label for="end_date" class="text-sm font-semibold text-gray-700">End Date</Label>
                                 <div class="relative">
                                     <Calendar class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
-                                        id="checkout"
-                                        v-model="checkOut"
+                                        id="end_date"
+                                        v-model="endDate"
                                         type="date"
                                         class="h-12 border-gray-300 pl-10 focus:border-red-500 focus:ring-red-500"
                                     />
                                 </div>
                             </div>
                             <div class="space-y-2">
-                                <Label for="travelers" class="text-sm font-semibold text-gray-700">Travelers</Label>
+                                <Label for="participants" class="text-sm font-semibold text-gray-700">Participants</Label>
                                 <div class="relative">
                                     <Users class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                                     <Input
-                                        id="travelers"
-                                        v-model.number="travelers"
+                                        id="participants"
+                                        v-model.number="participants"
                                         type="number"
                                         placeholder="1"
                                         min="1"

@@ -33,15 +33,15 @@ const formatDescription = (visa: VisaService) => {
 </script>
 
 <template>
-    <section id="visas" class="bg-gradient-to-b from-gray-50 to-white py-20">
+    <section id="visas" class="bg-gradient-to-b from-gray-50 to-white py-12 sm:py-16 lg:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mb-12 text-center">
-                <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Visa Services</h2>
-                <p class="mt-4 text-lg text-gray-600">
+            <div class="mb-8 text-center sm:mb-12">
+                <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl">Visa Services</h2>
+                <p class="mt-2 text-base text-gray-600 sm:mt-4 sm:text-lg">
                     Get expert help with visa applications for countries worldwide
                 </p>
             </div>
-            <div v-if="visaServices.length > 0" class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div v-if="visaServices.length > 0" class="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 lg:grid-cols-4">
                 <VisaServiceCard
                     v-for="visa in visaServices"
                     :key="visa.id"

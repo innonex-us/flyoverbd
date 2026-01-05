@@ -28,12 +28,12 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-    <section id="tours" class="bg-white py-20">
+    <section id="tours" class="bg-white py-12 sm:py-16 lg:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mb-12 flex items-end justify-between">
+            <div class="mb-8 flex flex-col gap-4 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Featured Tour Packages</h2>
-                    <p class="mt-3 text-lg text-gray-600">Discover amazing destinations with our carefully curated tours</p>
+                    <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl">Featured Tour Packages</h2>
+                    <p class="mt-2 text-base text-gray-600 sm:mt-3 sm:text-lg">Discover amazing destinations with our carefully curated tours</p>
                 </div>
                 <Link
                     href="/tours"
@@ -43,7 +43,7 @@ withDefaults(defineProps<Props>(), {
                     <ArrowRight class="ml-2 h-4 w-4 transition-transform hover:translate-x-1" />
                 </Link>
             </div>
-            <div v-if="tours.length > 0" class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div v-if="tours.length > 0" class="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 lg:grid-cols-3">
                 <TourCard
                     v-for="tour in tours"
                     :key="tour.id"

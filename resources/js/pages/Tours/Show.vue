@@ -181,12 +181,12 @@ const handleContactUs = () => {
 
                     <!-- Tour Details -->
                     <Card class="bg-white text-gray-900">
-                        <CardContent class="p-8">
+                        <CardContent class="p-4 sm:p-6 lg:p-8">
                             <div class="mb-6">
                                 <div class="flex items-start justify-between">
                                     <div>
-                                        <h1 class="text-3xl font-extrabold text-gray-900">{{ tour.title }}</h1>
-                                        <div class="mt-2 flex items-center space-x-4 text-sm text-gray-600">
+                                        <h1 class="text-xl font-extrabold text-gray-900 sm:text-2xl lg:text-3xl">{{ tour.title }}</h1>
+                                        <div class="mt-2 flex flex-wrap items-center gap-3 text-xs text-gray-600 sm:space-x-4 sm:text-sm">
                                             <span v-if="tour.destination" class="flex items-center">
                                                 <MapPin class="mr-1 h-4 w-4" />
                                                 {{ tour.destination }}
@@ -218,12 +218,12 @@ const handleContactUs = () => {
                             </div>
 
                             <div class="prose max-w-none">
-                                <h2 class="text-2xl font-bold text-gray-900">Description</h2>
-                                <p class="mt-4 text-gray-700 leading-relaxed">{{ tour.description }}</p>
+                                <h2 class="text-lg font-bold text-gray-900 sm:text-xl lg:text-2xl">Description</h2>
+                                <p class="mt-3 text-sm text-gray-700 leading-relaxed sm:mt-4 sm:text-base">{{ tour.description }}</p>
                             </div>
 
-                            <div v-if="highlightsList.length > 0" class="mt-8">
-                                <h2 class="text-2xl font-bold text-gray-900">Highlights</h2>
+                            <div v-if="highlightsList.length > 0" class="mt-6 sm:mt-8">
+                                <h2 class="text-lg font-bold text-gray-900 sm:text-xl lg:text-2xl">Highlights</h2>
                                 <div class="mt-4 grid gap-3 sm:grid-cols-2">
                                     <div v-for="(highlight, index) in highlightsList" :key="index" class="flex items-center text-gray-700">
                                         <Check class="mr-2 h-5 w-5 flex-shrink-0 text-red-600" />
@@ -232,14 +232,14 @@ const handleContactUs = () => {
                                 </div>
                             </div>
 
-                            <div v-if="tour.itinerary" class="mt-8">
-                                <h2 class="text-2xl font-bold text-gray-900">Itinerary</h2>
-                                <div class="mt-4 whitespace-pre-line text-gray-700">{{ tour.itinerary }}</div>
+                            <div v-if="tour.itinerary" class="mt-6 sm:mt-8">
+                                <h2 class="text-lg font-bold text-gray-900 sm:text-xl lg:text-2xl">Itinerary</h2>
+                                <div class="mt-3 whitespace-pre-line text-sm text-gray-700 sm:mt-4 sm:text-base">{{ tour.itinerary }}</div>
                             </div>
 
-                            <div v-if="includedItems.length > 0 || excludedItems.length > 0" class="mt-8 grid gap-8 sm:grid-cols-2">
+                            <div v-if="includedItems.length > 0 || excludedItems.length > 0" class="mt-6 grid gap-6 sm:mt-8 sm:grid-cols-2 sm:gap-8">
                                 <div v-if="includedItems.length > 0">
-                                    <h3 class="text-xl font-bold text-gray-900">What's Included</h3>
+                                    <h3 class="text-base font-bold text-gray-900 sm:text-lg lg:text-xl">What's Included</h3>
                                     <ul class="mt-4 space-y-2">
                                         <li v-for="(item, index) in includedItems" :key="index" class="flex items-start text-gray-700">
                                             <Check class="mr-2 h-5 w-5 flex-shrink-0 text-green-600" />
@@ -248,7 +248,7 @@ const handleContactUs = () => {
                                     </ul>
                                 </div>
                                 <div v-if="excludedItems.length > 0">
-                                    <h3 class="text-xl font-bold text-gray-900">What's Excluded</h3>
+                                    <h3 class="text-base font-bold text-gray-900 sm:text-lg lg:text-xl">What's Excluded</h3>
                                     <ul class="mt-4 space-y-2">
                                         <li v-for="(item, index) in excludedItems" :key="index" class="flex items-start text-gray-700">
                                             <X class="mr-2 h-5 w-5 flex-shrink-0 text-red-600" />
@@ -258,9 +258,9 @@ const handleContactUs = () => {
                                 </div>
                             </div>
 
-                            <div v-if="tour.terms_conditions" class="mt-8">
-                                <h2 class="text-2xl font-bold text-gray-900">Terms & Conditions</h2>
-                                <div class="mt-4 whitespace-pre-line text-gray-700">{{ tour.terms_conditions }}</div>
+                            <div v-if="tour.terms_conditions" class="mt-6 sm:mt-8">
+                                <h2 class="text-lg font-bold text-gray-900 sm:text-xl lg:text-2xl">Terms & Conditions</h2>
+                                <div class="mt-3 whitespace-pre-line text-sm text-gray-700 sm:mt-4 sm:text-base">{{ tour.terms_conditions }}</div>
                             </div>
                         </CardContent>
                     </Card>
@@ -268,14 +268,14 @@ const handleContactUs = () => {
 
                 <!-- Sidebar -->
                 <div class="lg:col-span-1">
-                    <Card class="sticky top-24 bg-white text-gray-900">
-                        <CardContent class="p-6">
-                            <div class="mb-6">
+                    <Card class="sticky top-4 bg-white text-gray-900 sm:top-24">
+                        <CardContent class="p-4 sm:p-6">
+                            <div class="mb-4 sm:mb-6">
                                 <div class="flex items-baseline">
-                                    <span class="text-4xl font-extrabold text-red-600">
+                                    <span class="text-2xl font-extrabold text-red-600 sm:text-3xl lg:text-4xl">
                                         {{ tour.currency === 'BDT' ? '৳' : tour.currency }} {{ tour.price.toLocaleString() }}
                                     </span>
-                                    <span class="ml-2 text-sm text-gray-500">/person</span>
+                                    <span class="ml-1 text-xs text-gray-500 sm:ml-2 sm:text-sm">/person</span>
                                 </div>
                             </div>
 
@@ -313,9 +313,9 @@ const handleContactUs = () => {
             </div>
 
             <!-- Related Tours -->
-            <div v-if="relatedTours.length > 0" class="mt-16">
-                <h2 class="mb-8 text-3xl font-extrabold text-gray-900">Related Tours</h2>
-                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div v-if="relatedTours.length > 0" class="mt-8 sm:mt-12 lg:mt-16">
+                <h2 class="mb-6 text-xl font-extrabold text-gray-900 sm:mb-8 sm:text-2xl lg:text-3xl">Related Tours</h2>
+                <div class="grid grid-cols-2 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     <TourCard
                         v-for="relatedTour in relatedTours"
                         :key="relatedTour.id"

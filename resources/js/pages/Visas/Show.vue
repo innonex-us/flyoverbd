@@ -122,7 +122,7 @@ const handleContactUs = () => {
                 <!-- Main Content -->
                 <div class="lg:col-span-2 space-y-8">
                     <Card class="bg-white text-gray-900">
-                        <CardContent class="p-8">
+                        <CardContent class="p-4 sm:p-6 lg:p-8">
                             <div class="mb-6 flex items-start justify-between">
                                 <div>
                                     <div class="flex items-center space-x-3">
@@ -130,8 +130,8 @@ const handleContactUs = () => {
                                             <Globe class="h-8 w-8 text-red-600" />
                                         </div>
                                         <div>
-                                            <h1 class="text-3xl font-extrabold text-gray-900">{{ visa.country }} Visa</h1>
-                                            <p v-if="visa.country_code" class="mt-1 text-sm text-gray-500">{{ visa.country_code }}</p>
+                                            <h1 class="text-xl font-extrabold text-gray-900 sm:text-2xl lg:text-3xl">{{ visa.country }} Visa</h1>
+                                            <p v-if="visa.country_code" class="mt-1 text-xs text-gray-500 sm:text-sm">{{ visa.country_code }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -146,12 +146,12 @@ const handleContactUs = () => {
                             </div>
 
                             <div v-if="visa.description" class="prose max-w-none">
-                                <p class="text-lg text-gray-700 leading-relaxed">{{ visa.description }}</p>
+                                <p class="text-sm text-gray-700 leading-relaxed sm:text-base lg:text-lg">{{ visa.description }}</p>
                             </div>
 
                             <!-- Required Documents -->
-                            <div class="mt-8">
-                                <h2 class="mb-4 text-2xl font-bold text-gray-900">Required Documents</h2>
+                            <div class="mt-6 sm:mt-8">
+                                <h2 class="mb-3 text-lg font-bold text-gray-900 sm:mb-4 sm:text-xl lg:text-2xl">Required Documents</h2>
                                 <div class="space-y-3">
                                     <div 
                                         v-for="(document, index) in visa.required_documents" 
@@ -165,8 +165,8 @@ const handleContactUs = () => {
                             </div>
 
                             <!-- Application Guidelines -->
-                            <div v-if="guidelinesList.length > 0" class="mt-8">
-                                <h2 class="mb-4 text-2xl font-bold text-gray-900">Application Guidelines</h2>
+                            <div v-if="guidelinesList.length > 0" class="mt-6 sm:mt-8">
+                                <h2 class="mb-3 text-lg font-bold text-gray-900 sm:mb-4 sm:text-xl lg:text-2xl">Application Guidelines</h2>
                                 <div class="space-y-3">
                                     <div 
                                         v-for="(guideline, index) in guidelinesList" 
@@ -182,18 +182,18 @@ const handleContactUs = () => {
                             </div>
 
                             <!-- Eligibility Criteria -->
-                            <div v-if="visa.eligibility_criteria" class="mt-8">
-                                <h2 class="mb-4 text-2xl font-bold text-gray-900">Eligibility Criteria</h2>
-                                <div class="rounded-lg border border-gray-200 bg-gray-50 p-6">
-                                    <p class="whitespace-pre-line text-gray-700">{{ visa.eligibility_criteria }}</p>
+                            <div v-if="visa.eligibility_criteria" class="mt-6 sm:mt-8">
+                                <h2 class="mb-3 text-lg font-bold text-gray-900 sm:mb-4 sm:text-xl lg:text-2xl">Eligibility Criteria</h2>
+                                <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 sm:p-6">
+                                    <p class="whitespace-pre-line text-sm text-gray-700 sm:text-base">{{ visa.eligibility_criteria }}</p>
                                 </div>
                             </div>
 
                             <!-- Important Notes -->
-                            <div v-if="visa.important_notes" class="mt-8">
-                                <h2 class="mb-4 text-2xl font-bold text-gray-900">Important Notes</h2>
-                                <div class="rounded-lg border border-red-200 bg-red-50 p-6">
-                                    <p class="whitespace-pre-line text-gray-700">{{ visa.important_notes }}</p>
+                            <div v-if="visa.important_notes" class="mt-6 sm:mt-8">
+                                <h2 class="mb-3 text-lg font-bold text-gray-900 sm:mb-4 sm:text-xl lg:text-2xl">Important Notes</h2>
+                                <div class="rounded-lg border border-red-200 bg-red-50 p-4 sm:p-6">
+                                    <p class="whitespace-pre-line text-sm text-gray-700 sm:text-base">{{ visa.important_notes }}</p>
                                 </div>
                             </div>
                         </CardContent>
@@ -202,15 +202,15 @@ const handleContactUs = () => {
 
                 <!-- Sidebar -->
                 <div class="lg:col-span-1">
-                    <Card class="sticky top-24 bg-white text-gray-900">
-                        <CardContent class="p-6">
-                            <div class="mb-6">
+                    <Card class="sticky top-4 bg-white text-gray-900 sm:top-24">
+                        <CardContent class="p-4 sm:p-6">
+                            <div class="mb-4 sm:mb-6">
                                 <div v-if="visa.visa_fee" class="flex items-baseline">
-                                    <span class="text-4xl font-extrabold text-red-600">
+                                    <span class="text-2xl font-extrabold text-red-600 sm:text-3xl lg:text-4xl">
                                         {{ visa.currency === 'BDT' ? '৳' : visa.currency }} {{ visa.visa_fee.toLocaleString() }}
                                     </span>
                                 </div>
-                                <p v-else class="text-lg font-semibold text-gray-600">Contact for pricing</p>
+                                <p v-else class="text-sm font-semibold text-gray-600 sm:text-base lg:text-lg">Contact for pricing</p>
                             </div>
 
                             <div class="space-y-4 border-t border-gray-200 pt-6">
@@ -249,9 +249,9 @@ const handleContactUs = () => {
             </div>
 
             <!-- Related Visas -->
-            <div v-if="relatedVisas.length > 0" class="mt-16">
-                <h2 class="mb-8 text-3xl font-extrabold text-gray-900">Other Visa Services</h2>
-                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div v-if="relatedVisas.length > 0" class="mt-8 sm:mt-12 lg:mt-16">
+                <h2 class="mb-6 text-xl font-extrabold text-gray-900 sm:mb-8 sm:text-2xl lg:text-3xl">Other Visa Services</h2>
+                <div class="grid grid-cols-2 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     <VisaServiceCard
                         v-for="relatedVisa in relatedVisas"
                         :key="relatedVisa.id"

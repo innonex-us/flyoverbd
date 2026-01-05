@@ -63,25 +63,25 @@ const performSearch = () => {
         <TopBar />
         <Navigation :can-register="canRegister" />
         
-        <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <div class="mb-8">
-                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">Visa Services</h1>
-                <p class="mt-2 text-lg text-gray-600">Get expert help with visa applications for countries worldwide</p>
+        <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+            <div class="mb-6 sm:mb-8">
+                <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl">Visa Services</h1>
+                <p class="mt-2 text-base text-gray-600 sm:text-lg">Get expert help with visa applications for countries worldwide</p>
             </div>
 
             <!-- Search -->
-            <Card class="mb-8 bg-white text-gray-900">
-                <CardContent class="p-6">
-                    <form @submit.prevent="performSearch" class="flex gap-4">
+            <Card class="mb-6 bg-white text-gray-900 sm:mb-8">
+                <CardContent class="p-4 sm:p-6">
+                    <form @submit.prevent="performSearch" class="flex flex-col gap-3 sm:flex-row sm:gap-4">
                         <div class="flex-1">
                             <Input
                                 v-model="search"
                                 type="text"
                                 placeholder="Search by country..."
-                                class="w-full"
+                                class="w-full h-10 text-sm sm:h-12 sm:text-base"
                             />
                         </div>
-                        <Button type="submit" class="bg-red-600 hover:bg-red-700">
+                        <Button type="submit" class="w-full bg-red-600 text-sm hover:bg-red-700 sm:w-auto sm:text-base">
                             <Search class="mr-2 h-4 w-4" />
                             Search
                         </Button>
@@ -90,7 +90,7 @@ const performSearch = () => {
             </Card>
 
             <!-- Visas Grid -->
-            <div v-if="visas.data.length > 0" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div v-if="visas.data.length > 0" class="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 lg:grid-cols-4">
                 <VisaServiceCard
                     v-for="visa in visas.data"
                     :key="visa.id"
@@ -101,19 +101,19 @@ const performSearch = () => {
                     :description="visa.description || `Complete assistance for ${visa.country} visa applications`"
                 />
             </div>
-            <div v-else class="py-12 text-center">
-                <p class="text-lg text-gray-500">No visa services found. Try adjusting your search criteria.</p>
+            <div v-else class="py-8 text-center sm:py-12">
+                <p class="text-sm text-gray-500 sm:text-base lg:text-lg">No visa services found. Try adjusting your search criteria.</p>
             </div>
 
             <!-- Pagination -->
-            <div v-if="visas.links && visas.links.length > 3" class="mt-8 flex justify-center">
-                <div class="flex space-x-2">
+            <div v-if="visas.links && visas.links.length > 3" class="mt-6 flex justify-center sm:mt-8">
+                <div class="flex flex-wrap justify-center gap-1 sm:space-x-2">
                     <Link
                         v-for="(link, index) in visas.links"
                         :key="index"
                         :href="link.url || '#'"
                         :class="[
-                            'px-4 py-2 rounded-md text-sm font-medium transition-colors',
+                            'px-2 py-1.5 rounded-md text-xs font-medium transition-colors sm:px-4 sm:py-2 sm:text-sm',
                             link.active
                                 ? 'bg-red-600 text-white'
                                 : 'bg-white text-gray-700 hover:bg-gray-100',

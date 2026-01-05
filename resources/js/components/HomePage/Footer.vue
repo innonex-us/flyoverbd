@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { Plane, Facebook, Instagram, Twitter, Youtube } from 'lucide-vue-next';
+import { Facebook, Instagram, Twitter, Youtube } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -9,13 +9,11 @@ import { Plane, Facebook, Instagram, Twitter, Youtube } from 'lucide-vue-next';
             <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
                 <div class="lg:col-span-1">
                     <div class="flex items-center space-x-3">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-red-600 to-red-700 shadow-lg">
-                            <Plane class="h-7 w-7 text-white" />
-                        </div>
-                        <div>
-                            <span class="text-xl font-extrabold">Flyover BD</span>
-                            <p class="text-xs font-medium text-gray-400">Travel & Visa</p>
-                        </div>
+                        <img 
+                            src="/logo.png" 
+                            alt="Flyover BD" 
+                            class="h-12 w-auto"
+                        />
                     </div>
                     <p class="mt-6 text-sm leading-relaxed text-gray-400">
                         Your trusted partner for visa assistance and tour management services worldwide.
@@ -78,11 +76,6 @@ import { Plane, Facebook, Instagram, Twitter, Youtube } from 'lucide-vue-next';
                                 Blog
                             </Link>
                         </li>
-                        <li>
-                            <Link href="/careers" class="text-sm text-gray-400 transition-all hover:translate-x-1 hover:text-white">
-                                Careers
-                            </Link>
-                        </li>
                     </ul>
                 </div>
                 <div>
@@ -112,13 +105,15 @@ import { Plane, Facebook, Instagram, Twitter, Youtube } from 'lucide-vue-next';
                 </div>
             </div>
             <div class="mt-12 border-t border-gray-800 pt-8">
-                <div class="flex flex-col items-center justify-between sm:flex-row">
+                <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
                     <p class="text-sm text-gray-400">
                         &copy; {{ new Date().getFullYear() }} Flyover BD. All rights reserved.
                     </p>
-                    <p class="mt-4 text-sm text-gray-400 sm:mt-0">
-                        Made with <span class="text-red-600">❤</span> in Bangladesh
-                    </p>
+                    <div class="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
+                        <p class="text-sm text-gray-400">
+                            Developed by <a href="https://innonexus.net" target="_blank" rel="noopener noreferrer" class="text-red-500 hover:text-red-400 transition-colors">Innonexus.net</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

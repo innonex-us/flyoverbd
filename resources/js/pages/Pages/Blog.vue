@@ -55,7 +55,7 @@ const props = defineProps<Props>();
                 <Card
                     v-for="blog in blogs.data"
                     :key="blog.id"
-                    class="group overflow-hidden transition-all hover:shadow-xl"
+                    class="group overflow-hidden bg-white text-gray-900 transition-all hover:shadow-xl"
                 >
                     <div v-if="blog.featured_image" class="aspect-video overflow-hidden bg-gray-200">
                         <img
@@ -115,8 +115,9 @@ const props = defineProps<Props>();
                                 : 'bg-white text-gray-700 hover:bg-gray-100',
                             !link.url ? 'opacity-50 cursor-not-allowed' : ''
                         ]"
-                        v-html="link.label"
-                    />
+                    >
+                        <span v-html="link.label"></span>
+                    </Link>
                 </div>
             </div>
         </div>

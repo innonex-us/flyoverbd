@@ -35,7 +35,7 @@ const props = withDefaults(
             </div>
 
             <!-- Mission Section -->
-            <Card class="mb-12">
+            <Card class="mb-12 bg-white text-gray-900">
                 <CardContent class="p-8">
                     <h2 class="mb-4 text-3xl font-bold text-gray-900">Our Mission</h2>
                     <p class="mb-4 text-lg leading-relaxed text-gray-700">
@@ -55,7 +55,7 @@ const props = withDefaults(
             <div class="mb-12">
                 <h2 class="mb-8 text-center text-3xl font-bold text-gray-900">Our Core Values</h2>
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    <Card>
+                    <Card class="bg-white text-gray-900">
                         <CardContent class="p-6 text-center">
                             <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
                                 <Heart class="h-8 w-8 text-red-600" />
@@ -64,7 +64,7 @@ const props = withDefaults(
                             <p class="text-gray-600">We are passionate about travel and helping you achieve your dreams.</p>
                         </CardContent>
                     </Card>
-                    <Card>
+                    <Card class="bg-white text-gray-900">
                         <CardContent class="p-6 text-center">
                             <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
                                 <Target class="h-8 w-8 text-red-600" />
@@ -73,7 +73,7 @@ const props = withDefaults(
                             <p class="text-gray-600">We strive for excellence in every service we provide.</p>
                         </CardContent>
                     </Card>
-                    <Card>
+                    <Card class="bg-white text-gray-900">
                         <CardContent class="p-6 text-center">
                             <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
                                 <Users class="h-8 w-8 text-red-600" />
@@ -82,7 +82,7 @@ const props = withDefaults(
                             <p class="text-gray-600">We conduct our business with honesty and transparency.</p>
                         </CardContent>
                     </Card>
-                    <Card>
+                    <Card class="bg-white text-gray-900">
                         <CardContent class="p-6 text-center">
                             <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
                                 <Award class="h-8 w-8 text-red-600" />
@@ -95,7 +95,7 @@ const props = withDefaults(
             </div>
 
             <!-- Why Choose Us Section -->
-            <Card>
+            <Card class="bg-white text-gray-900">
                 <CardContent class="p-8">
                     <h2 class="mb-6 text-3xl font-bold text-gray-900">Why Choose Flyover BD?</h2>
                     <div class="space-y-4">

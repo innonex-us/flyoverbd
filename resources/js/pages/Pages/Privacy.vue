@@ -23,7 +23,7 @@ import { Card, CardContent } from '@/components/ui/card';
                 <p class="mt-4 text-sm text-gray-500">Last updated: {{ new Date().toLocaleDateString() }}</p>
             </div>
 
-            <Card>
+            <Card class="bg-white text-gray-900">
                 <CardContent class="p-8 prose max-w-none">
                     <section class="mb-8">
                         <h2 class="mb-4 text-2xl font-bold text-gray-900">1. Introduction</h2>

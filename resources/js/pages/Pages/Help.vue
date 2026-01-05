@@ -72,7 +72,7 @@ const faqs = [
                 <Card
                     v-for="(faq, index) in faqs"
                     :key="index"
-                    class="overflow-hidden"
+                    class="overflow-hidden bg-white text-gray-900"
                 >
                     <button
                         @click="openFaq = openFaq === index ? null : index"
@@ -98,7 +98,7 @@ const faqs = [
             </div>
 
             <!-- Contact Support -->
-            <Card class="mt-12">
+            <Card class="mt-12 bg-white text-gray-900">
                 <CardContent class="p-8 text-center">
                     <h2 class="mb-4 text-2xl font-bold text-gray-900">Still Need Help?</h2>
                     <p class="mb-6 text-gray-600">

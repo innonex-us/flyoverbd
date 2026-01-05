@@ -43,14 +43,6 @@ class PageController extends Controller
     }
 
     /**
-     * Display the Careers page.
-     */
-    public function careers()
-    {
-        return Inertia::render('Pages/Careers', []);
-    }
-
-    /**
      * Display the Help Center / FAQ page.
      */
     public function help()

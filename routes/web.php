@@ -24,7 +24,6 @@ Route::get('/visas/{slug}', [VisaController::class, 'show'])->name('visas.show')
 Route::get('/about', [App\Http\Controllers\PageController::class, 'about'])->name('pages.about');
 Route::get('/contact', [App\Http\Controllers\PageController::class, 'contact'])->name('pages.contact');
 Route::post('/contact/submit', [App\Http\Controllers\PageController::class, 'submitContact'])->name('pages.contact.submit');
-Route::get('/careers', [App\Http\Controllers\PageController::class, 'careers'])->name('pages.careers');
 Route::get('/help', [App\Http\Controllers\PageController::class, 'help'])->name('pages.help');
 Route::get('/privacy', [App\Http\Controllers\PageController::class, 'privacy'])->name('pages.privacy');
 Route::get('/terms', [App\Http\Controllers\PageController::class, 'terms'])->name('pages.terms');

@@ -33,9 +33,9 @@ const formatDescription = (visa: VisaService) => {
 </script>
 
 <template>
-    <section id="visas" class="bg-gradient-to-b from-gray-50 to-white py-12 sm:py-16 lg:py-20">
+    <section id="visas" class="bg-gradient-to-b from-gray-50 to-white py-8 sm:py-10 lg:py-12">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mb-8 text-center sm:mb-12">
+            <div class="mb-6 text-center sm:mb-8">
                 <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl">Visa Services</h2>
                 <p class="mt-2 text-base text-gray-600 sm:mt-4 sm:text-lg">
                     Get expert help with visa applications for countries worldwide
@@ -52,7 +52,7 @@ const formatDescription = (visa: VisaService) => {
                     :description="formatDescription(visa)"
                 />
             </div>
-            <div v-else class="py-12 text-center">
+            <div v-else class="py-8 text-center">
                 <p class="text-lg text-gray-500">No visa services available at the moment. Please check back later.</p>
             </div>
         </div>

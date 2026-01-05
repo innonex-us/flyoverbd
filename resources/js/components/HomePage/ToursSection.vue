@@ -28,9 +28,9 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-    <section id="tours" class="bg-white py-12 sm:py-16 lg:py-20">
+    <section id="tours" class="bg-white py-8 sm:py-10 lg:py-12">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mb-8 flex flex-col gap-4 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+            <div class="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                     <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl">Featured Tour Packages</h2>
                     <p class="mt-2 text-base text-gray-600 sm:mt-3 sm:text-lg">Discover amazing destinations with our carefully curated tours</p>
@@ -58,7 +58,7 @@ withDefaults(defineProps<Props>(), {
                     :image="tour.image || tour.thumbnail"
                 />
             </div>
-            <div v-else class="py-12 text-center">
+            <div v-else class="py-8 text-center">
                 <p class="text-lg text-gray-500">No tours available at the moment. Please check back later.</p>
             </div>
         </div>

@@ -1,0 +1,1 @@
+import{q as r}from"./index-KXJrcCIR.js";const o=t=>({url:o.url(t),method:"post"});o.definition={methods:["post"],url:"/access/two-factor-challenge"};o.url=t=>o.definition.url+r(t);o.post=t=>({url:o.url(t),method:"post"});const s=t=>({action:o.url(t),method:"post"});s.post=t=>({action:o.url(t),method:"post"});o.form=s;const l={store:Object.assign(o,o)};export{l,o as s};

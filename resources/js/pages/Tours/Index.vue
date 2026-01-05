@@ -11,7 +11,7 @@ import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
 import TourCard from '@/components/HomePage/TourCard.vue';
 import WhatsAppButton from '@/components/HomePage/WhatsAppButton.vue';
-import { Search, X, MapPin, Calendar, Users } from 'lucide-vue-next';
+import { Search, X, MapPin, Users } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 
 interface Tour {
@@ -37,8 +37,6 @@ interface Props {
     filters?: {
         search?: string;
         destination?: string;
-        start_date?: string;
-        end_date?: string;
         participants?: string;
     };
     canRegister?: boolean;
@@ -51,12 +49,10 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const country = ref(props.filters?.destination || '');
-const startDate = ref(props.filters?.start_date || '');
-const endDate = ref(props.filters?.end_date || '');
 const participants = ref(props.filters?.participants ? parseInt(props.filters.participants) : 1);
 
 const hasActiveFilters = computed(() => {
-    return !!(country.value || startDate.value || endDate.value || (participants.value && participants.value > 1));
+    return !!(country.value || (participants.value && participants.value > 1));
 });
 
 const performSearch = () => {
@@ -64,12 +60,6 @@ const performSearch = () => {
     
     if (country.value) {
         params.destination = country.value;
-    }
-    if (startDate.value) {
-        params.start_date = startDate.value;
-    }
-    if (endDate.value) {
-        params.end_date = endDate.value;
     }
     if (participants.value && participants.value > 1) {
         params.participants = participants.value.toString();
@@ -83,8 +73,6 @@ const performSearch = () => {
 
 const clearFilters = () => {
     country.value = '';
-    startDate.value = '';
-    endDate.value = '';
     participants.value = 1;
     router.get('/tours', {}, {
         preserveState: true,
@@ -114,7 +102,7 @@ const clearFilters = () => {
             <Card class="mb-6 bg-white text-gray-900 sm:mb-8">
                 <CardContent class="p-4 sm:p-6">
                     <form @submit.prevent="performSearch" class="space-y-4 sm:space-y-6">
-                        <div class="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+                        <div class="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5">
                             <div class="space-y-1.5 sm:space-y-2">
                                 <Label for="country" class="text-xs font-semibold text-gray-700 sm:text-sm">Country</Label>
                                 <div class="relative">
@@ -124,30 +112,6 @@ const clearFilters = () => {
                                         v-model="country"
                                         type="text"
                                         placeholder="Country"
-                                        class="h-10 border-gray-300 pl-8 text-sm focus:border-red-500 focus:ring-red-500 sm:h-12 sm:pl-10"
-                                    />
-                                </div>
-                            </div>
-                            <div class="space-y-1.5 sm:space-y-2">
-                                <Label for="start_date" class="text-xs font-semibold text-gray-700 sm:text-sm">Start Date</Label>
-                                <div class="relative">
-                                    <Calendar class="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 sm:left-3 sm:h-5 sm:w-5" />
-                                    <Input
-                                        id="start_date"
-                                        v-model="startDate"
-                                        type="date"
-                                        class="h-10 border-gray-300 pl-8 text-sm focus:border-red-500 focus:ring-red-500 sm:h-12 sm:pl-10"
-                                    />
-                                </div>
-                            </div>
-                            <div class="space-y-1.5 sm:space-y-2">
-                                <Label for="end_date" class="text-xs font-semibold text-gray-700 sm:text-sm">End Date</Label>
-                                <div class="relative">
-                                    <Calendar class="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 sm:left-3 sm:h-5 sm:w-5" />
-                                    <Input
-                                        id="end_date"
-                                        v-model="endDate"
-                                        type="date"
                                         class="h-10 border-gray-300 pl-8 text-sm focus:border-red-500 focus:ring-red-500 sm:h-12 sm:pl-10"
                                     />
                                 </div>
@@ -168,7 +132,7 @@ const clearFilters = () => {
                             </div>
                         </div>
                         <div class="flex flex-col gap-2 sm:flex-row sm:gap-3">
-                            <Button type="submit" class="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-sm hover:from-red-700 hover:to-red-800 sm:text-base">
+                            <Button type="submit" class="flex-1 bg-linear-to-r from-red-600 to-red-700 text-sm hover:from-red-700 hover:to-red-800 sm:text-base">
                                 <Search class="mr-2 h-4 w-4" />
                                 <span class="hidden sm:inline">Search Tours</span>
                                 <span class="sm:hidden">Search</span>
@@ -192,18 +156,6 @@ const clearFilters = () => {
                         <Badge v-if="country" variant="secondary" class="gap-2">
                             Country: {{ country }}
                             <button @click="country = ''; performSearch()" class="ml-1 hover:text-red-600">
-                                <X class="h-3 w-3" />
-                            </button>
-                        </Badge>
-                        <Badge v-if="startDate" variant="secondary" class="gap-2">
-                            Start: {{ startDate }}
-                            <button @click="startDate = ''; performSearch()" class="ml-1 hover:text-red-600">
-                                <X class="h-3 w-3" />
-                            </button>
-                        </Badge>
-                        <Badge v-if="endDate" variant="secondary" class="gap-2">
-                            End: {{ endDate }}
-                            <button @click="endDate = ''; performSearch()" class="ml-1 hover:text-red-600">
                                 <X class="h-3 w-3" />
                             </button>
                         </Badge>
@@ -251,8 +203,9 @@ const clearFilters = () => {
                                 : 'bg-white text-gray-700 hover:bg-gray-100',
                             !link.url ? 'opacity-50 cursor-not-allowed' : ''
                         ]"
-                        v-html="link.label"
-                    />
+                    >
+                        <span v-html="link.label"></span>
+                    </Link>
                 </div>
             </div>
         </div>

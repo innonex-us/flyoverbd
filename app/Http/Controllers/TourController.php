@@ -32,22 +32,6 @@ class TourController extends Controller
             $query->where('destination', 'like', "%{$request->destination}%");
         }
 
-        // Filter by start date
-        if ($request->has('start_date')) {
-            $query->where(function ($q) use ($request) {
-                $q->whereNull('start_date')
-                    ->orWhere('start_date', '<=', $request->start_date);
-            });
-        }
-
-        // Filter by end date
-        if ($request->has('end_date')) {
-            $query->where(function ($q) use ($request) {
-                $q->whereNull('end_date')
-                    ->orWhere('end_date', '>=', $request->end_date);
-            });
-        }
-
         // Filter by participants (show tours that can accommodate the requested number)
         // If tour has max_participants, it must be >= requested
         // We show tours even if min_participants > requested (user can book for minimum)
@@ -86,7 +70,7 @@ class TourController extends Controller
 
         return Inertia::render('Tours/Index', [
             'tours' => $tours,
-            'filters' => $request->only(['search', 'destination', 'start_date', 'end_date', 'participants']),
+            'filters' => $request->only(['search', 'destination', 'participants']),
             'canRegister' => Features::enabled(Features::registration()),
             'seoMeta' => $seoMeta,
         ]);

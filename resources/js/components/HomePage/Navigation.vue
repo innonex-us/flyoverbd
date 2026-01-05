@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Plane, BookOpen, FileText, Home, Mail, LogIn, Info } from 'lucide-vue-next';
+import { Plane, BookOpen, FileText, Home, Mail } from 'lucide-vue-next';
 import { computed } from 'vue';
 import { urlIsActive, toUrl } from '@/lib/utils';
 import type { InertiaLinkProps } from '@inertiajs/vue3';
@@ -28,7 +28,6 @@ const isActive = (href: NonNullable<InertiaLinkProps['href']>) => {
 const navItems = [
     { href: '/tours', label: 'Tours', icon: Plane },
     { href: '/visas', label: 'Visa Services', icon: BookOpen },
-    { href: '/about', label: 'About', icon: Info },
 ];
 
 // Mobile bottom navigation items
@@ -86,17 +85,9 @@ const mobileNavItems = [
                         />
                     </Link>
                     
-                    <!-- Sign Up / Dashboard Button -->
+                    <!-- Dashboard Button -->
                     <Link
-                        v-if="canRegister && !$page.props.auth.user"
-                        href="/access/register"
-                        class="ml-3 flex items-center gap-2 rounded-lg bg-gradient-to-r from-red-600 via-red-600 to-red-700 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:from-red-700 hover:via-red-700 hover:to-red-800 hover:shadow-xl hover:scale-105 active:scale-95"
-                    >
-                        <LogIn class="h-4 w-4 transition-transform group-hover:scale-110" />
-                        <span>Sign Up</span>
-                    </Link>
-                    <Link
-                        v-else-if="$page.props.auth.user"
+                        v-if="$page.props.auth.user"
                         href="/cp/dashboard"
                         class="ml-3 flex items-center gap-2 rounded-lg bg-gradient-to-r from-red-600 via-red-600 to-red-700 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:from-red-700 hover:via-red-700 hover:to-red-800 hover:shadow-xl hover:scale-105 active:scale-95"
                     >

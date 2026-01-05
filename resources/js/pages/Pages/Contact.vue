@@ -94,7 +94,7 @@ const submit = () => {
             <div class="grid gap-8 lg:grid-cols-3">
                 <!-- Contact Information -->
                 <div class="lg:col-span-1">
-                    <Card>
+                    <Card class="bg-white text-gray-900">
                         <CardContent class="p-6">
                             <h2 class="mb-6 text-2xl font-bold text-gray-900">Get in Touch</h2>
                             <div class="space-y-6">
@@ -139,7 +139,7 @@ const submit = () => {
 
                 <!-- Contact Form -->
                 <div class="lg:col-span-2">
-                    <Card>
+                    <Card class="bg-white text-gray-900">
                         <CardContent class="p-8">
                             <h2 class="mb-6 text-2xl font-bold text-gray-900">Send us a Message</h2>
                             

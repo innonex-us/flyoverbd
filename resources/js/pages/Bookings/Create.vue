@@ -83,7 +83,7 @@ const submit = () => {
             <div class="grid gap-8 lg:grid-cols-3">
                 <!-- Booking Form -->
                 <div class="lg:col-span-2">
-                    <Card>
+                    <Card class="bg-white text-gray-900">
                         <CardContent class="p-8">
                             <h2 class="mb-6 text-2xl font-bold text-gray-900">Booking Information</h2>
                             
@@ -215,7 +215,7 @@ const submit = () => {
 
                 <!-- Booking Summary -->
                 <div class="lg:col-span-1">
-                    <Card class="sticky top-24">
+                    <Card class="sticky top-24 bg-white text-gray-900">
                         <CardContent class="p-6">
                             <h3 class="mb-6 text-xl font-bold text-gray-900">Booking Summary</h3>
                             

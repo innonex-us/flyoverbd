@@ -104,7 +104,7 @@ const searchVisas = (e: Event) => {
 </script>
 
 <template>
-    <section class="relative overflow-hidden py-16 lg:py-24" style="background-image: url('/background_image.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <section class="relative overflow-hidden py-24 lg:py-32 xl:py-40" style="background-image: url('/background_image.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <!-- Background Overlay -->
         <!-- <div class="absolute inset-0 bg-gradient-to-br from-red-600/80 via-red-700/80 to-red-800/80"></div> -->
         <!-- Background Pattern -->

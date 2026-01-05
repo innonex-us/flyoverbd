@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\TourPackage;
 use App\Models\VisaRequirement;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class TourAndVisaSeeder extends Seeder
 {
@@ -138,8 +137,18 @@ class TourAndVisaSeeder extends Seeder
             ],
         ];
 
+        $toursCreated = 0;
+        $toursSkipped = 0;
+
         foreach ($tours as $tour) {
-            TourPackage::create($tour);
+            $existingTour = TourPackage::where('slug', $tour['slug'])->first();
+
+            if (! $existingTour) {
+                TourPackage::create($tour);
+                $toursCreated++;
+            } else {
+                $toursSkipped++;
+            }
         }
 
         // Seed Visa Requirements
@@ -338,11 +347,22 @@ class TourAndVisaSeeder extends Seeder
             ],
         ];
 
+        $visasCreated = 0;
+        $visasSkipped = 0;
+
         foreach ($visas as $visa) {
-            VisaRequirement::create($visa);
+            $existingVisa = VisaRequirement::where('slug', $visa['slug'])->first();
+
+            if (! $existingVisa) {
+                VisaRequirement::create($visa);
+                $visasCreated++;
+            } else {
+                $visasSkipped++;
+            }
         }
 
-        $this->command->info('Successfully seeded ' . count($tours) . ' tours and ' . count($visas) . ' visa requirements!');
+        $this->command->info('Tour Packages: '.$toursCreated.' created, '.$toursSkipped.' already existed');
+        $this->command->info('Visa Requirements: '.$visasCreated.' created, '.$visasSkipped.' already existed');
+        $this->command->info('Seeding completed successfully!');
     }
 }
-

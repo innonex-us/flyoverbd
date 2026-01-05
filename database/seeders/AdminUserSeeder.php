@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,7 +16,7 @@ class AdminUserSeeder extends Seeder
         // Check if admin user already exists
         $admin = User::where('email', 'admin@flyoverbd.com')->first();
 
-        if (!$admin) {
+        if (! $admin) {
             User::create([
                 'name' => 'Admin User',
                 'email' => 'admin@flyoverbd.com',

@@ -30,6 +30,11 @@ Route::get('/terms', [App\Http\Controllers\PageController::class, 'terms'])->nam
 Route::get('/blog', [App\Http\Controllers\PageController::class, 'blog'])->name('pages.blog');
 Route::get('/blog/{slug}', [App\Http\Controllers\PageController::class, 'blogShow'])->name('pages.blog.show');
 
+// Block registration (registration is disabled)
+Route::match(['get', 'post'], '/access/register', function () {
+    abort(404, 'Registration is not available.');
+})->name('register');
+
 // SEO Routes
 Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 

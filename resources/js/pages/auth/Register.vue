@@ -7,8 +7,17 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import { login } from '@/routes';
-import { store } from '@/routes/register';
-import { Form, Head } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
+
+// Registration is disabled - this page should not be accessible
+// Using useForm as fallback since register route doesn't exist
+const form = useForm({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+});
 </script>
 
 <template>
@@ -19,7 +28,7 @@ import { Form, Head } from '@inertiajs/vue3';
         <Head title="Register" />
 
         <Form
-            v-bind="store.form()"
+            :use="form"
             :reset-on-success="['password', 'password_confirmation']"
             v-slot="{ errors, processing }"
             class="flex flex-col gap-6"

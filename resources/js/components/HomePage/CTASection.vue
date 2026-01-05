@@ -2,9 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 
-defineProps<{
-    canRegister?: boolean;
-}>();
+// No props needed
 </script>
 
 <template>
@@ -28,16 +26,6 @@ defineProps<{
                 >
                     <Link href="#contact">
                         Contact Us
-                    </Link>
-                </Button>
-                <Button
-                    v-if="canRegister && !$page.props.auth.user"
-                    as-child
-                    size="lg"
-                    class="h-14 border-2 border-white bg-transparent px-8 text-base font-bold text-white backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/10"
-                >
-                    <Link href="/access/register">
-                        Create Account
                     </Link>
                 </Button>
             </div>

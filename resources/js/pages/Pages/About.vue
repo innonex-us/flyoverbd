@@ -8,12 +8,9 @@ import { Users, Target, Award, Heart } from 'lucide-vue-next';
 
 const props = withDefaults(
     defineProps<{
-        canRegister?: boolean;
         seoMeta?: Record<string, any>;
     }>(),
-    {
-        canRegister: true,
-    },
+    {},
 );
 </script>
 
@@ -26,7 +23,7 @@ const props = withDefaults(
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />
-        <Navigation :can-register="canRegister" />
+        <Navigation />
         
         <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
             <!-- Hero Section -->

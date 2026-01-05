@@ -7,7 +7,6 @@ use App\Models\Inquiry;
 use App\Services\SeoService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 class PageController extends Controller
 {
@@ -23,7 +22,6 @@ class PageController extends Controller
         ];
 
         return Inertia::render('Pages/About', [
-            'canRegister' => Features::enabled(Features::registration()),
             'seoMeta' => $seoMeta,
         ]);
     }
@@ -40,7 +38,6 @@ class PageController extends Controller
         ];
 
         return Inertia::render('Pages/Contact', [
-            'canRegister' => Features::enabled(Features::registration()),
             'seoMeta' => $seoMeta,
         ]);
     }
@@ -50,9 +47,7 @@ class PageController extends Controller
      */
     public function careers()
     {
-        return Inertia::render('Pages/Careers', [
-            'canRegister' => Features::enabled(Features::registration()),
-        ]);
+        return Inertia::render('Pages/Careers', []);
     }
 
     /**
@@ -60,9 +55,7 @@ class PageController extends Controller
      */
     public function help()
     {
-        return Inertia::render('Pages/Help', [
-            'canRegister' => Features::enabled(Features::registration()),
-        ]);
+        return Inertia::render('Pages/Help', []);
     }
 
     /**
@@ -70,9 +63,7 @@ class PageController extends Controller
      */
     public function privacy()
     {
-        return Inertia::render('Pages/Privacy', [
-            'canRegister' => Features::enabled(Features::registration()),
-        ]);
+        return Inertia::render('Pages/Privacy', []);
     }
 
     /**
@@ -80,9 +71,7 @@ class PageController extends Controller
      */
     public function terms()
     {
-        return Inertia::render('Pages/Terms', [
-            'canRegister' => Features::enabled(Features::registration()),
-        ]);
+        return Inertia::render('Pages/Terms', []);
     }
 
     /**
@@ -123,7 +112,6 @@ class PageController extends Controller
 
         return Inertia::render('Pages/Blog', [
             'blogs' => $blogs,
-            'canRegister' => Features::enabled(Features::registration()),
             'seoMeta' => $seoMeta,
         ]);
     }
@@ -196,7 +184,6 @@ class PageController extends Controller
         return Inertia::render('Pages/BlogShow', [
             'blog' => $blogData,
             'relatedBlogs' => $relatedBlogs,
-            'canRegister' => Features::enabled(Features::registration()),
             'seoMeta' => $seoMeta,
             'articleSchema' => $articleSchema,
             'breadcrumbs' => $breadcrumbs,

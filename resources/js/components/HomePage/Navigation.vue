@@ -5,9 +5,7 @@ import { computed } from 'vue';
 import { urlIsActive, toUrl } from '@/lib/utils';
 import type { InertiaLinkProps } from '@inertiajs/vue3';
 
-defineProps<{
-    canRegister?: boolean;
-}>();
+// No props needed
 
 const page = usePage();
 

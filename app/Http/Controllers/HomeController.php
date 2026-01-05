@@ -6,7 +6,6 @@ use App\Models\TourPackage;
 use App\Models\VisaRequirement;
 use App\Services\SeoService;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 class HomeController extends Controller
 {
@@ -76,7 +75,6 @@ class HomeController extends Controller
         $organizationSchema = SeoService::organizationSchema();
 
         return Inertia::render('Welcome', [
-            'canRegister' => Features::enabled(Features::registration()),
             'featuredTours' => $featuredTours,
             'visaServices' => $visaServices,
             'visaCountries' => $visaCountries,

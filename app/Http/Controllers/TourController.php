@@ -6,7 +6,6 @@ use App\Models\TourPackage;
 use App\Services\SeoService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 class TourController extends Controller
 {
@@ -71,7 +70,6 @@ class TourController extends Controller
         return Inertia::render('Tours/Index', [
             'tours' => $tours,
             'filters' => $request->only(['search', 'destination', 'participants']),
-            'canRegister' => Features::enabled(Features::registration()),
             'seoMeta' => $seoMeta,
         ]);
     }
@@ -141,7 +139,6 @@ class TourController extends Controller
         return Inertia::render('Tours/Show', [
             'tour' => $tourData,
             'relatedTours' => $relatedTours,
-            'canRegister' => Features::enabled(Features::registration()),
             'seoMeta' => $seoMeta,
             'tourSchema' => $tourSchema,
             'breadcrumbs' => $breadcrumbs,

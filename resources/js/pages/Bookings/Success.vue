@@ -21,12 +21,9 @@ interface Booking {
 
 interface Props {
     booking: Booking;
-    canRegister?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-    canRegister: true,
-});
+const props = defineProps<Props>();
 
 const formatCurrency = (amount: number) => {
     const currency = props.booking.currency === 'BDT' ? '৳' : props.booking.currency;
@@ -41,7 +38,7 @@ const formatCurrency = (amount: number) => {
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />
-        <Navigation :can-register="canRegister" />
+        <Navigation />
         
         <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
             <div class="text-center">

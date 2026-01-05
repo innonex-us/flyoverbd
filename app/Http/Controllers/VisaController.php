@@ -6,7 +6,6 @@ use App\Models\VisaRequirement;
 use App\Services\SeoService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 class VisaController extends Controller
 {
@@ -54,7 +53,6 @@ class VisaController extends Controller
         return Inertia::render('Visas/Index', [
             'visas' => $visas,
             'filters' => $request->only(['search']),
-            'canRegister' => Features::enabled(Features::registration()),
             'seoMeta' => $seoMeta,
         ]);
     }
@@ -113,7 +111,6 @@ class VisaController extends Controller
         return Inertia::render('Visas/Show', [
             'visa' => $visaData,
             'relatedVisas' => $relatedVisas,
-            'canRegister' => Features::enabled(Features::registration()),
             'seoMeta' => $seoMeta,
             'visaSchema' => $visaSchema,
             'breadcrumbs' => $breadcrumbs,

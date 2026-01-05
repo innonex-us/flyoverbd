@@ -37,14 +37,12 @@ interface RelatedVisa {
 interface Props {
     visa: Visa;
     relatedVisas: RelatedVisa[];
-    canRegister?: boolean;
     seoMeta?: Record<string, any>;
     visaSchema?: Record<string, any>;
     breadcrumbs?: Array<{ title: string; href?: string }>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    canRegister: true,
 });
 
 const guidelinesList = computed(() => {
@@ -109,7 +107,7 @@ const handleContactUs = () => {
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />
-        <Navigation :can-register="canRegister" />
+        <Navigation />
         
         <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
             <!-- Back Button -->

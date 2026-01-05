@@ -38,14 +38,12 @@ interface RelatedBlog {
 interface Props {
     blog: Blog;
     relatedBlogs: RelatedBlog[];
-    canRegister?: boolean;
     seoMeta?: Record<string, any>;
     articleSchema?: Record<string, any>;
     breadcrumbs?: Array<{ title: string; href?: string }>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    canRegister: true,
 });
 
 const handleShare = () => {
@@ -85,7 +83,7 @@ const handleShare = () => {
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />
-        <Navigation :can-register="canRegister" />
+        <Navigation />
         
         <div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
             <!-- Back Button -->

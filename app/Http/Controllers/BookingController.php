@@ -6,7 +6,6 @@ use App\Models\Booking;
 use App\Models\TourPackage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 class BookingController extends Controller
 {
@@ -29,7 +28,6 @@ class BookingController extends Controller
                 'max_participants' => $tour->max_participants,
                 'min_participants' => $tour->min_participants ?? 1,
             ],
-            'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
 
@@ -111,7 +109,6 @@ class BookingController extends Controller
                 'travel_date' => $booking->travel_date?->format('F d, Y'),
                 'booking_status' => $booking->booking_status,
             ],
-            'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
 }

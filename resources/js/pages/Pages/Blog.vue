@@ -26,13 +26,10 @@ interface Props {
         links: any;
         meta: any;
     };
-    canRegister?: boolean;
     seoMeta?: Record<string, any>;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-    canRegister: true,
-});
+const props = defineProps<Props>();
 </script>
 
 <template>
@@ -44,7 +41,7 @@ const props = withDefaults(defineProps<Props>(), {
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />
-        <Navigation :can-register="canRegister" />
+        <Navigation />
         
         <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
             <div class="mb-12 text-center">

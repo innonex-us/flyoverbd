@@ -53,7 +53,7 @@ Route::get('/setup.php', function () {
     $output[] = '.success { color: #00ff00; }';
     $output[] = '.error { color: #ff0000; }';
     $output[] = '.info { color: #ffff00; }';
-    $output[] = 'pre { background: #000; padding: 15px; border-radius: 5px; }';
+    $output[] = 'pre { background: #000; padding: 15px; border-radius: 5px; white-space: pre-wrap; }';
     $output[] = '</style>';
     $output[] = '</head>';
     $output[] = '<body>';
@@ -66,12 +66,20 @@ Route::get('/setup.php', function () {
         // Run migrations
         $output[] = 'Running database migrations...'."\n";
         Artisan::call('migrate', ['--force' => true]);
+        $migrationOutput = trim(Artisan::output());
+        if ($migrationOutput) {
+            $output[] = htmlspecialchars($migrationOutput)."\n";
+        }
         $output[] = '<span class="success">✓ Migrations completed successfully.</span>'."\n\n";
 
         // Create storage link
         $output[] = 'Creating storage link...'."\n";
         try {
             Artisan::call('storage:link');
+            $linkOutput = trim(Artisan::output());
+            if ($linkOutput) {
+                $output[] = htmlspecialchars($linkOutput)."\n";
+            }
             $output[] = '<span class="success">✓ Storage link created successfully.</span>'."\n\n";
         } catch (Exception $e) {
             if (str_contains($e->getMessage(), 'already exists')) {
@@ -84,6 +92,10 @@ Route::get('/setup.php', function () {
         $output[] = '<span class="success">Setup completed successfully!</span>'."\n";
     } catch (Exception $e) {
         $output[] = '<span class="error">✗ Error: '.htmlspecialchars($e->getMessage()).'</span>'."\n";
+        if ($e->getTraceAsString()) {
+            $output[] = "\n".'<span class="error">Stack trace:</span>'."\n";
+            $output[] = htmlspecialchars($e->getTraceAsString())."\n";
+        }
     }
 
     $output[] = '</pre>';

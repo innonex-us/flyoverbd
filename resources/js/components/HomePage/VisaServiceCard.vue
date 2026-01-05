@@ -20,7 +20,7 @@ withDefaults(defineProps<Props>(), {
     <Card 
         v-if="slug"
         as-child
-        class="group text-center transition-all duration-300 hover:scale-105 hover:border-red-300 hover:shadow-xl cursor-pointer"
+        class="group text-center bg-white text-gray-900 transition-all duration-300 hover:scale-105 hover:border-red-300 hover:shadow-xl cursor-pointer"
     >
         <Link :href="`/visas/${slug}`">
             <CardContent class="p-8">
@@ -34,7 +34,7 @@ withDefaults(defineProps<Props>(), {
             </CardContent>
         </Link>
     </Card>
-    <Card v-else class="group text-center transition-all duration-300 hover:scale-105 hover:border-red-300 hover:shadow-xl">
+    <Card v-else class="group text-center bg-white text-gray-900 transition-all duration-300 hover:scale-105 hover:border-red-300 hover:shadow-xl">
         <CardContent class="p-8">
             <div v-if="icon" class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-red-50 to-red-100 shadow-lg transition-all group-hover:from-red-100 group-hover:to-red-200 group-hover:shadow-xl">
                 <component :is="icon" class="h-10 w-10 text-red-600 transition-transform group-hover:scale-110" />

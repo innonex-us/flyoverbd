@@ -70,7 +70,7 @@ const performSearch = () => {
             </div>
 
             <!-- Search -->
-            <Card class="mb-8">
+            <Card class="mb-8 bg-white text-gray-900">
                 <CardContent class="p-6">
                     <form @submit.prevent="performSearch" class="flex gap-4">
                         <div class="flex-1">

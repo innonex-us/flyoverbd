@@ -121,7 +121,7 @@ const handleContactUs = () => {
             <div class="grid gap-8 lg:grid-cols-3">
                 <!-- Main Content -->
                 <div class="lg:col-span-2 space-y-8">
-                    <Card>
+                    <Card class="bg-white text-gray-900">
                         <CardContent class="p-8">
                             <div class="mb-6 flex items-start justify-between">
                                 <div>
@@ -202,7 +202,7 @@ const handleContactUs = () => {
 
                 <!-- Sidebar -->
                 <div class="lg:col-span-1">
-                    <Card class="sticky top-24">
+                    <Card class="sticky top-24 bg-white text-gray-900">
                         <CardContent class="p-6">
                             <div class="mb-6">
                                 <div v-if="visa.visa_fee" class="flex items-baseline">

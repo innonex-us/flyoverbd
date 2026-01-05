@@ -180,7 +180,7 @@ const handleContactUs = () => {
                     </div>
 
                     <!-- Tour Details -->
-                    <Card>
+                    <Card class="bg-white text-gray-900">
                         <CardContent class="p-8">
                             <div class="mb-6">
                                 <div class="flex items-start justify-between">
@@ -268,7 +268,7 @@ const handleContactUs = () => {
 
                 <!-- Sidebar -->
                 <div class="lg:col-span-1">
-                    <Card class="sticky top-24">
+                    <Card class="sticky top-24 bg-white text-gray-900">
                         <CardContent class="p-6">
                             <div class="mb-6">
                                 <div class="flex items-baseline">

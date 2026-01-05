@@ -111,7 +111,7 @@ const clearFilters = () => {
             </div>
 
             <!-- Search and Filters -->
-            <Card class="mb-8">
+            <Card class="mb-8 bg-white text-gray-900">
                 <CardContent class="p-6">
                     <form @submit.prevent="performSearch" class="space-y-6">
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

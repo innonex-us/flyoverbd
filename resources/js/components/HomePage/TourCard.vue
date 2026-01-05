@@ -33,7 +33,7 @@ const truncatedDescription = computed(() => {
 </script>
 
 <template>
-    <Card class="group overflow-hidden border-gray-200 transition-all duration-300 hover:scale-[1.02] hover:border-red-300 hover:shadow-2xl">
+    <Card class="group overflow-hidden border-gray-200 bg-white text-gray-900 transition-all duration-300 hover:scale-[1.02] hover:border-red-300 hover:shadow-2xl">
         <div class="relative aspect-video overflow-hidden bg-gradient-to-br from-red-100 via-red-50 to-red-200">
             <div v-if="image" class="absolute inset-0">
                 <img 

@@ -245,7 +245,7 @@ const searchVisas = (e: Event) => {
                                     <select
                                         id="visa_type"
                                         v-model="visaType"
-                                        class="h-10 w-full rounded-md border border-gray-300 bg-transparent px-2 py-2 pl-2 pr-8 text-sm focus:border-red-500 focus:ring-red-500 sm:h-12 sm:px-3 sm:pr-10"
+                                        class="h-10 w-full appearance-none rounded-md border border-gray-300 bg-white px-2 py-2 pl-2 pr-8 text-sm text-gray-900 focus:border-red-500 focus:ring-red-500 sm:h-12 sm:px-3 sm:pr-10"
                                     >
                                         <option value="">All Types</option>
                                         <option

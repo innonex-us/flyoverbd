@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { Phone, Mail, HelpCircle, BookOpen, LogIn } from 'lucide-vue-next';
+import { Phone, Mail, HelpCircle, BookOpen } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -38,14 +38,6 @@ import { Phone, Mail, HelpCircle, BookOpen, LogIn } from 'lucide-vue-next';
                     >
                         <HelpCircle class="h-3.5 w-3.5 transition-transform group-hover:scale-110" />
                         <span>Help</span>
-                    </Link>
-                    <Link
-                        v-if="!$page.props.auth.user"
-                        href="/access/login"
-                        class="group flex items-center gap-1.5 rounded-lg border border-white/30 bg-white/10 px-3 py-1.5 font-semibold backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-105"
-                    >
-                        <LogIn class="h-3.5 w-3.5 transition-transform group-hover:scale-110" />
-                        <span>Sign In</span>
                     </Link>
                 </div>
             </div>

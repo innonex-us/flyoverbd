@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
+import SeoMeta from '@/components/SeoMeta.vue';
 import { Card, CardContent } from '@/components/ui/card';
 import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
@@ -16,6 +17,7 @@ interface Blog {
     images: string[];
     author?: string | null;
     published_at?: string | null;
+    published_at_formatted?: string | null;
     category?: string | null;
     tags: string[];
     views: number;
@@ -37,6 +39,9 @@ interface Props {
     blog: Blog;
     relatedBlogs: RelatedBlog[];
     canRegister?: boolean;
+    seoMeta?: Record<string, any>;
+    articleSchema?: Record<string, any>;
+    breadcrumbs?: Array<{ title: string; href?: string }>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -62,10 +67,21 @@ const handleShare = () => {
 </script>
 
 <template>
-    <Head :title="blog.meta_title || blog.title">
-        <meta name="description" :content="blog.meta_description || blog.excerpt || blog.content?.substring(0, 160) || 'Blog post'" />
-        <meta v-if="blog.meta_keywords" name="keywords" :content="blog.meta_keywords" />
-    </Head>
+    <SeoMeta
+        :title="seoMeta?.title"
+        :description="seoMeta?.description"
+        :keywords="seoMeta?.keywords"
+        :og-title="seoMeta?.og_title"
+        :og-description="seoMeta?.og_description"
+        :og-type="seoMeta?.og_type"
+        :og-url="seoMeta?.og_url"
+        :og-image="seoMeta?.og_image"
+        :canonical="seoMeta?.canonical"
+        :article-published-time="seoMeta?.article_published_time"
+        :article-author="seoMeta?.article_author"
+        :schema="articleSchema"
+        :breadcrumbs="breadcrumbs"
+    />
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />
@@ -94,9 +110,9 @@ const handleShare = () => {
                             <User class="mr-2 h-4 w-4" />
                             {{ blog.author }}
                         </span>
-                        <span v-if="blog.published_at" class="flex items-center">
+                        <span v-if="blog.published_at_formatted" class="flex items-center">
                             <Calendar class="mr-2 h-4 w-4" />
-                            {{ blog.published_at }}
+                            {{ blog.published_at_formatted }}
                         </span>
                         <span class="flex items-center">
                             <Eye class="mr-2 h-4 w-4" />

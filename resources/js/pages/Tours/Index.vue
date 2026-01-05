@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
+import SeoMeta from '@/components/SeoMeta.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -41,6 +42,7 @@ interface Props {
         participants?: string;
     };
     canRegister?: boolean;
+    seoMeta?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -92,9 +94,11 @@ const clearFilters = () => {
 </script>
 
 <template>
-    <Head title="Tour Packages - Flyover BD">
-        <meta name="description" content="Browse our amazing tour packages. Discover destinations worldwide with Flyover BD." />
-    </Head>
+    <SeoMeta
+        :title="seoMeta?.title"
+        :description="seoMeta?.description"
+        :canonical="seoMeta?.canonical"
+    />
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />

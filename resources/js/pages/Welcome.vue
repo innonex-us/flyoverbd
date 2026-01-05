@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import SeoMeta from '@/components/SeoMeta.vue';
 import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
 import HeroSearch from '@/components/HomePage/HeroSearch.vue';
-import FeaturesSection from '@/components/HomePage/FeaturesSection.vue';
 import ToursSection from '@/components/HomePage/ToursSection.vue';
 import VisasSection from '@/components/HomePage/VisasSection.vue';
 import CTASection from '@/components/HomePage/CTASection.vue';
@@ -42,6 +41,8 @@ const props = withDefaults(
         visaServices?: VisaService[];
         visaCountries?: string[];
         visaTypes?: string[];
+        seoMeta?: Record<string, any>;
+        organizationSchema?: Record<string, any>;
     }>(),
     {
         canRegister: true,
@@ -54,15 +55,23 @@ const props = withDefaults(
 </script>
 
 <template>
-    <Head title="Flyover BD - Visa & Tour Management">
-        <meta name="description" content="Professional visa assistance and tour management services. Explore amazing destinations with Flyover BD." />
-    </Head>
+    <SeoMeta
+        :title="seoMeta?.title"
+        :description="seoMeta?.description"
+        :keywords="seoMeta?.keywords"
+        :og-title="seoMeta?.og_title"
+        :og-description="seoMeta?.og_description"
+        :og-type="seoMeta?.og_type"
+        :og-url="seoMeta?.og_url"
+        :og-image="seoMeta?.og_image"
+        :canonical="seoMeta?.canonical"
+        :schema="organizationSchema"
+    />
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />
         <Navigation :can-register="canRegister" />
         <HeroSearch :visa-countries="visaCountries" :visa-types="visaTypes" />
-        <!-- <FeaturesSection /> -->
         <ToursSection :tours="featuredTours" />
         <VisasSection :visa-services="visaServices" />
         <CTASection :can-register="canRegister" />

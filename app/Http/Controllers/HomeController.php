@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TourPackage;
 use App\Models\VisaRequirement;
+use App\Services\SeoService;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
@@ -71,12 +72,17 @@ class HomeController extends Controller
             ->values()
             ->toArray();
 
+        $seoMeta = SeoService::defaultMeta();
+        $organizationSchema = SeoService::organizationSchema();
+
         return Inertia::render('Welcome', [
             'canRegister' => Features::enabled(Features::registration()),
             'featuredTours' => $featuredTours,
             'visaServices' => $visaServices,
             'visaCountries' => $visaCountries,
             'visaTypes' => $visaTypes,
+            'seoMeta' => $seoMeta,
+            'organizationSchema' => $organizationSchema,
         ]);
     }
 }

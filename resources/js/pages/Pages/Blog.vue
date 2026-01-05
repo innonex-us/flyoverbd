@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
+import SeoMeta from '@/components/SeoMeta.vue';
 import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
@@ -26,17 +27,20 @@ interface Props {
         meta: any;
     };
     canRegister?: boolean;
+    seoMeta?: Record<string, any>;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     canRegister: true,
 });
 </script>
 
 <template>
-    <Head title="Blog - Flyover BD">
-        <meta name="description" content="Read our latest travel tips, visa updates, and destination guides." />
-    </Head>
+    <SeoMeta
+        :title="seoMeta?.title"
+        :description="seoMeta?.description"
+        :canonical="seoMeta?.canonical"
+    />
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />

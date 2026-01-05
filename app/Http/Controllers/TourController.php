@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TourPackage;
+use App\Services\SeoService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -77,10 +78,17 @@ class TourController extends Controller
                 ];
             });
 
+        $seoMeta = [
+            'title' => 'Tour Packages - Flyover BD',
+            'description' => 'Explore our amazing tour packages. Discover destinations around the world with professional tour management services.',
+            'canonical' => config('app.url', 'https://flyoverbd.com').'/tours',
+        ];
+
         return Inertia::render('Tours/Index', [
             'tours' => $tours,
             'filters' => $request->only(['search', 'destination', 'start_date', 'end_date', 'participants']),
             'canRegister' => Features::enabled(Features::registration()),
+            'seoMeta' => $seoMeta,
         ]);
     }
 
@@ -138,10 +146,21 @@ class TourController extends Controller
             'meta_description' => $tour->meta_description,
         ];
 
+        $seoMeta = SeoService::tourMeta($tourData);
+        $tourSchema = SeoService::tourSchema($tourData);
+        $breadcrumbs = [
+            ['title' => 'Home', 'href' => '/'],
+            ['title' => 'Tours', 'href' => '/tours'],
+            ['title' => $tourData['title'], 'href' => '#'],
+        ];
+
         return Inertia::render('Tours/Show', [
             'tour' => $tourData,
             'relatedTours' => $relatedTours,
             'canRegister' => Features::enabled(Features::registration()),
+            'seoMeta' => $seoMeta,
+            'tourSchema' => $tourSchema,
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 }

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\VisaRequirement;
-use Inertia\Inertia;
+use App\Services\SeoService;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
 class VisaController extends Controller
@@ -44,10 +45,17 @@ class VisaController extends Controller
                 ];
             });
 
+        $seoMeta = [
+            'title' => 'Visa Assistance Services - Flyover BD',
+            'description' => 'Get professional visa assistance for countries around the world. Expert guidance and support for your visa applications.',
+            'canonical' => config('app.url', 'https://flyoverbd.com').'/visas',
+        ];
+
         return Inertia::render('Visas/Index', [
             'visas' => $visas,
             'filters' => $request->only(['search']),
             'canRegister' => Features::enabled(Features::registration()),
+            'seoMeta' => $seoMeta,
         ]);
     }
 
@@ -94,11 +102,21 @@ class VisaController extends Controller
             'meta_description' => $visa->meta_description,
         ];
 
+        $seoMeta = SeoService::visaMeta($visaData);
+        $visaSchema = SeoService::visaSchema($visaData);
+        $breadcrumbs = [
+            ['title' => 'Home', 'href' => '/'],
+            ['title' => 'Visas', 'href' => '/visas'],
+            ['title' => $visaData['country'].' Visa', 'href' => '#'],
+        ];
+
         return Inertia::render('Visas/Show', [
             'visa' => $visaData,
             'relatedVisas' => $relatedVisas,
             'canRegister' => Features::enabled(Features::registration()),
+            'seoMeta' => $seoMeta,
+            'visaSchema' => $visaSchema,
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 }
-

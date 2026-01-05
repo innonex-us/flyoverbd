@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Inquiry;
+use App\Services\SeoService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -15,8 +16,15 @@ class PageController extends Controller
      */
     public function about()
     {
+        $seoMeta = [
+            'title' => 'About Us - Flyover BD',
+            'description' => 'Learn about Flyover BD - Your trusted partner for visa assistance and tour management services in Bangladesh.',
+            'canonical' => config('app.url', 'https://flyoverbd.com').'/about',
+        ];
+
         return Inertia::render('Pages/About', [
             'canRegister' => Features::enabled(Features::registration()),
+            'seoMeta' => $seoMeta,
         ]);
     }
 
@@ -25,8 +33,15 @@ class PageController extends Controller
      */
     public function contact()
     {
+        $seoMeta = [
+            'title' => 'Contact Us - Flyover BD',
+            'description' => 'Get in touch with Flyover BD for visa assistance and tour inquiries. We are here to help you with your travel needs.',
+            'canonical' => config('app.url', 'https://flyoverbd.com').'/contact',
+        ];
+
         return Inertia::render('Pages/Contact', [
             'canRegister' => Features::enabled(Features::registration()),
+            'seoMeta' => $seoMeta,
         ]);
     }
 
@@ -100,9 +115,16 @@ class PageController extends Controller
                 ];
             });
 
+        $seoMeta = [
+            'title' => 'Travel Blog - Flyover BD',
+            'description' => 'Read travel tips, visa guides, and destination insights from Flyover BD.',
+            'canonical' => config('app.url', 'https://flyoverbd.com').'/blog',
+        ];
+
         return Inertia::render('Pages/Blog', [
             'blogs' => $blogs,
             'canRegister' => Features::enabled(Features::registration()),
+            'seoMeta' => $seoMeta,
         ]);
     }
 
@@ -153,7 +175,8 @@ class PageController extends Controller
                     : asset('storage/'.$image);
             }, $blog->images) : [],
             'author' => $blog->author,
-            'published_at' => $blog->published_at?->format('F d, Y'),
+            'published_at' => $blog->published_at?->toIso8601String(),
+            'published_at_formatted' => $blog->published_at?->format('F d, Y'),
             'category' => $blog->category,
             'tags' => $blog->tags ?? [],
             'views' => $blog->views,
@@ -162,10 +185,21 @@ class PageController extends Controller
             'meta_keywords' => $blog->meta_keywords,
         ];
 
+        $seoMeta = SeoService::blogMeta($blogData);
+        $articleSchema = SeoService::articleSchema($blogData);
+        $breadcrumbs = [
+            ['title' => 'Home', 'href' => '/'],
+            ['title' => 'Blog', 'href' => '/blog'],
+            ['title' => $blogData['title'], 'href' => '#'],
+        ];
+
         return Inertia::render('Pages/BlogShow', [
             'blog' => $blogData,
             'relatedBlogs' => $relatedBlogs,
             'canRegister' => Features::enabled(Features::registration()),
+            'seoMeta' => $seoMeta,
+            'articleSchema' => $articleSchema,
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 

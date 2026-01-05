@@ -4,7 +4,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\VisaController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -31,6 +30,9 @@ Route::get('/privacy', [App\Http\Controllers\PageController::class, 'privacy'])-
 Route::get('/terms', [App\Http\Controllers\PageController::class, 'terms'])->name('pages.terms');
 Route::get('/blog', [App\Http\Controllers\PageController::class, 'blog'])->name('pages.blog');
 Route::get('/blog/{slug}', [App\Http\Controllers\PageController::class, 'blogShow'])->name('pages.blog.show');
+
+// SEO Routes
+Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('dashboard', function () {
     // Redirect to admin dashboard

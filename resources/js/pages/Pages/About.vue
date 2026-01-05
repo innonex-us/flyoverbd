@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import SeoMeta from '@/components/SeoMeta.vue';
 import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
 import { Card, CardContent } from '@/components/ui/card';
 import { Users, Target, Award, Heart } from 'lucide-vue-next';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         canRegister?: boolean;
+        seoMeta?: Record<string, any>;
     }>(),
     {
         canRegister: true,
@@ -17,9 +18,11 @@ withDefaults(
 </script>
 
 <template>
-    <Head title="About Us - Flyover BD">
-        <meta name="description" content="Learn about Flyover BD - Your trusted partner for visa assistance and tour management services." />
-    </Head>
+    <SeoMeta
+        :title="seoMeta?.title"
+        :description="seoMeta?.description"
+        :canonical="seoMeta?.canonical"
+    />
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />

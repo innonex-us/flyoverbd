@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
+import SeoMeta from '@/components/SeoMeta.vue';
 import TopBar from '@/components/HomePage/TopBar.vue';
 import Navigation from '@/components/HomePage/Navigation.vue';
 import Footer from '@/components/HomePage/Footer.vue';
@@ -11,9 +12,10 @@ import { Label } from '@/components/ui/label';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from 'lucide-vue-next';
 import { computed } from 'vue';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         canRegister?: boolean;
+        seoMeta?: Record<string, any>;
     }>(),
     {
         canRegister: true,
@@ -71,9 +73,11 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Contact Us - Flyover BD">
-        <meta name="description" content="Get in touch with Flyover BD. We're here to help with all your travel and visa needs." />
-    </Head>
+    <SeoMeta
+        :title="seoMeta?.title"
+        :description="seoMeta?.description"
+        :canonical="seoMeta?.canonical"
+    />
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />

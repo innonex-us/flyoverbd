@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
+import SeoMeta from '@/components/SeoMeta.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import TopBar from '@/components/HomePage/TopBar.vue';
@@ -49,6 +50,9 @@ interface Props {
     tour: Tour;
     relatedTours: RelatedTour[];
     canRegister?: boolean;
+    seoMeta?: Record<string, any>;
+    tourSchema?: Record<string, any>;
+    breadcrumbs?: Array<{ title: string; href?: string }>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -123,9 +127,19 @@ const handleContactUs = () => {
 </script>
 
 <template>
-    <Head :title="tour.title">
-        <meta name="description" :content="tour.description ? tour.description.substring(0, 160) : 'Tour package details'" />
-    </Head>
+    <SeoMeta
+        :title="seoMeta?.title"
+        :description="seoMeta?.description"
+        :keywords="seoMeta?.keywords"
+        :og-title="seoMeta?.og_title"
+        :og-description="seoMeta?.og_description"
+        :og-type="seoMeta?.og_type"
+        :og-url="seoMeta?.og_url"
+        :og-image="seoMeta?.og_image"
+        :canonical="seoMeta?.canonical"
+        :schema="tourSchema"
+        :breadcrumbs="breadcrumbs"
+    />
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />

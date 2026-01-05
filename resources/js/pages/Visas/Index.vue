@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
+import SeoMeta from '@/components/SeoMeta.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -31,6 +32,7 @@ interface Props {
         search?: string;
     };
     canRegister?: boolean;
+    seoMeta?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -51,9 +53,11 @@ const performSearch = () => {
 </script>
 
 <template>
-    <Head title="Visa Services - Flyover BD">
-        <meta name="description" content="Get expert visa assistance for countries worldwide. Complete support for all visa types." />
-    </Head>
+    <SeoMeta
+        :title="seoMeta?.title"
+        :description="seoMeta?.description"
+        :canonical="seoMeta?.canonical"
+    />
 
     <div class="min-h-screen bg-gray-50">
         <TopBar />

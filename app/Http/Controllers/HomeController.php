@@ -10,6 +10,22 @@ use Inertia\Inertia;
 class HomeController extends Controller
 {
     /**
+     * Get the asset URL for a storage path.
+     */
+    private function getStorageUrl(?string $path): ?string
+    {
+        if (! $path) {
+            return null;
+        }
+
+        if (str_starts_with($path, '/storage/')) {
+            return asset($path);
+        }
+
+        return asset('storage/'.$path);
+    }
+
+    /**
      * Display the home page with real data.
      */
     public function index()
@@ -31,8 +47,8 @@ class HomeController extends Controller
                     'duration' => $tour->duration_days ? $tour->duration_days.' Days' : 'N/A',
                     'duration_days' => $tour->duration_days,
                     'featured' => $tour->is_featured,
-                    'thumbnail' => $tour->thumbnail ? asset('storage/'.$tour->thumbnail) : null,
-                    'image' => $tour->thumbnail ? asset('storage/'.$tour->thumbnail) : null,
+                    'thumbnail' => $this->getStorageUrl($tour->thumbnail),
+                    'image' => $this->getStorageUrl($tour->thumbnail),
                     'destination' => $tour->destination,
                 ];
             });

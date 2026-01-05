@@ -10,6 +10,22 @@ use Inertia\Inertia;
 class TourController extends Controller
 {
     /**
+     * Get the asset URL for a storage path.
+     */
+    private function getStorageUrl(?string $path): ?string
+    {
+        if (! $path) {
+            return null;
+        }
+
+        if (str_starts_with($path, '/storage/')) {
+            return asset($path);
+        }
+
+        return asset('storage/'.$path);
+    }
+
+    /**
      * Display a listing of tours.
      */
     public function index(Request $request)
@@ -56,7 +72,7 @@ class TourController extends Controller
                     'duration' => $tour->duration_days ? $tour->duration_days.' Days' : 'N/A',
                     'duration_days' => $tour->duration_days,
                     'featured' => $tour->is_featured,
-                    'thumbnail' => $tour->thumbnail ? asset('storage/'.$tour->thumbnail) : null,
+                    'thumbnail' => $this->getStorageUrl($tour->thumbnail),
                     'destination' => $tour->destination,
                 ];
             });
@@ -97,7 +113,7 @@ class TourController extends Controller
                     'price' => (float) $relatedTour->price,
                     'currency' => $relatedTour->currency ?? 'BDT',
                     'duration' => $relatedTour->duration_days ? $relatedTour->duration_days.' Days' : 'N/A',
-                    'thumbnail' => $relatedTour->thumbnail ? asset('storage/'.$relatedTour->thumbnail) : null,
+                    'thumbnail' => $this->getStorageUrl($relatedTour->thumbnail),
                 ];
             });
 
@@ -119,8 +135,8 @@ class TourController extends Controller
             'max_participants' => $tour->max_participants,
             'min_participants' => $tour->min_participants,
             'featured' => $tour->is_featured,
-            'thumbnail' => $tour->thumbnail ? asset('storage/'.$tour->thumbnail) : null,
-            'images' => $tour->images ? array_map(fn ($img) => asset('storage/'.$img), $tour->images) : [],
+            'thumbnail' => $this->getStorageUrl($tour->thumbnail),
+            'images' => $tour->images ? array_map(fn ($img) => $this->getStorageUrl($img), $tour->images) : [],
             'included' => $tour->included,
             'excluded' => $tour->excluded,
             'terms_conditions' => $tour->terms_conditions,

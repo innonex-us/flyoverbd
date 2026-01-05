@@ -75,17 +75,24 @@ class PageController extends Controller
      */
     public function blog()
     {
-        $blogs = Blog::where('is_published', true)
+        $blogs = Blog::query()
             ->orderBy('published_at', 'desc')
             ->orderBy('created_at', 'desc')
             ->paginate(12)
             ->through(function ($blog) {
+                $featuredImage = null;
+                if ($blog->featured_image) {
+                    $featuredImage = str_starts_with($blog->featured_image, '/storage/')
+                        ? asset($blog->featured_image)
+                        : asset('storage/'.$blog->featured_image);
+                }
+
                 return [
                     'id' => $blog->id,
                     'title' => $blog->title,
                     'slug' => $blog->slug,
                     'excerpt' => $blog->excerpt,
-                    'featured_image' => $blog->featured_image ? asset('storage/' . $blog->featured_image) : null,
+                    'featured_image' => $featuredImage,
                     'author' => $blog->author,
                     'published_at' => $blog->published_at?->format('F d, Y'),
                     'category' => $blog->category,
@@ -95,6 +102,69 @@ class PageController extends Controller
 
         return Inertia::render('Pages/Blog', [
             'blogs' => $blogs,
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
+    }
+
+    /**
+     * Display a single blog post.
+     */
+    public function blogShow(string $slug)
+    {
+        $blog = Blog::where('slug', $slug)->firstOrFail();
+
+        // Increment views
+        $blog->increment('views');
+
+        // Get related blogs (same category, excluding current)
+        $relatedBlogs = Blog::where('category', $blog->category)
+            ->where('id', '!=', $blog->id)
+            ->limit(3)
+            ->get()
+            ->map(function ($relatedBlog) {
+                return [
+                    'id' => $relatedBlog->id,
+                    'title' => $relatedBlog->title,
+                    'slug' => $relatedBlog->slug,
+                    'excerpt' => $relatedBlog->excerpt,
+                    'featured_image' => $relatedBlog->featured_image
+                        ? (str_starts_with($relatedBlog->featured_image, '/storage/')
+                            ? asset($relatedBlog->featured_image)
+                            : asset('storage/'.$relatedBlog->featured_image))
+                        : null,
+                    'published_at' => $relatedBlog->published_at?->format('F d, Y'),
+                ];
+            });
+
+        $blogData = [
+            'id' => $blog->id,
+            'title' => $blog->title,
+            'slug' => $blog->slug,
+            'excerpt' => $blog->excerpt,
+            'content' => $blog->content,
+            'featured_image' => $blog->featured_image
+                ? (str_starts_with($blog->featured_image, '/storage/')
+                    ? asset($blog->featured_image)
+                    : asset('storage/'.$blog->featured_image))
+                : null,
+            'images' => $blog->images ? array_map(function ($image) {
+                return str_starts_with($image, '/storage/')
+                    ? asset($image)
+                    : asset('storage/'.$image);
+            }, $blog->images) : [],
+            'author' => $blog->author,
+            'published_at' => $blog->published_at?->format('F d, Y'),
+            'category' => $blog->category,
+            'tags' => $blog->tags ?? [],
+            'views' => $blog->views,
+            'meta_title' => $blog->meta_title,
+            'meta_description' => $blog->meta_description,
+            'meta_keywords' => $blog->meta_keywords,
+        ];
+
+        return Inertia::render('Pages/BlogShow', [
+            'blog' => $blogData,
+            'relatedBlogs' => $relatedBlogs,
             'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
@@ -133,4 +203,3 @@ class PageController extends Controller
         return redirect()->back()->with('success', 'Thank you! Your message has been sent successfully.');
     }
 }
-

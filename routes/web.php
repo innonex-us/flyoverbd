@@ -30,6 +30,7 @@ Route::get('/help', [App\Http\Controllers\PageController::class, 'help'])->name(
 Route::get('/privacy', [App\Http\Controllers\PageController::class, 'privacy'])->name('pages.privacy');
 Route::get('/terms', [App\Http\Controllers\PageController::class, 'terms'])->name('pages.terms');
 Route::get('/blog', [App\Http\Controllers\PageController::class, 'blog'])->name('pages.blog');
+Route::get('/blog/{slug}', [App\Http\Controllers\PageController::class, 'blogShow'])->name('pages.blog.show');
 
 Route::get('dashboard', function () {
     // Redirect to admin dashboard

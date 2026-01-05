@@ -57,14 +57,23 @@ const props = defineProps<Props>();
                     :key="blog.id"
                     class="group overflow-hidden bg-white text-gray-900 transition-all hover:shadow-xl"
                 >
-                    <div v-if="blog.featured_image" class="aspect-video overflow-hidden bg-gray-200">
+                    <div class="relative aspect-video overflow-hidden bg-gradient-to-br from-red-100 to-red-200">
                         <img
+                            v-if="blog.featured_image"
                             :src="blog.featured_image"
                             :alt="blog.title"
                             class="h-full w-full object-cover transition-transform group-hover:scale-110"
                         />
+                        <div v-else class="absolute inset-0 flex items-center justify-center">
+                            <div class="flex items-center justify-center rounded-lg bg-white/90 backdrop-blur-sm p-6 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:bg-white/95">
+                                <img 
+                                    src="/logo.png" 
+                                    alt="Flyover BD" 
+                                    class="h-16 w-auto opacity-80 transition-opacity duration-300 group-hover:opacity-100" 
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <div v-else class="aspect-video bg-gradient-to-br from-red-100 to-red-200" />
                     <CardContent class="p-6">
                         <div v-if="blog.category" class="mb-2">
                             <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-600">

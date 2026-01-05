@@ -10,12 +10,16 @@ import { Phone, Mail } from 'lucide-vue-next';
                 <div class="flex items-center space-x-6">
                     <a href="tel:+8801234567890" class="flex items-center space-x-2 transition-all hover:scale-105 hover:text-red-50">
                         <Phone class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                        <span class="font-medium">+880 1234 567890</span>
+                        <span class="font-medium">+880 9611-677989</span>
                     </a>
                     <a href="mailto:info@flyoverbd.com" class="flex items-center space-x-2 transition-all hover:scale-105 hover:text-red-50">
                         <Mail class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                         <span class="font-medium">info@flyoverbd.com</span>
                     </a>
+                    <!-- <a href="mailto:info.flyoverbd@gmail.com" class="flex items-center space-x-2 transition-all hover:scale-105 hover:text-red-50">
+                        <Mail class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        <span class="font-medium">info.flyoverbd@gmail.com</span>
+                    </a> -->
                 </div>
                 <div class="hidden items-center space-x-5 md:flex">
                     <a href="#" class="font-medium transition-all hover:scale-105 hover:text-red-50">Help Center</a>

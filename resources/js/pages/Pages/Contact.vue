@@ -97,8 +97,8 @@ const submit = () => {
                                     <Phone class="mr-4 h-6 w-6 flex-shrink-0 text-red-600" />
                                     <div>
                                         <h3 class="font-semibold text-gray-900">Phone</h3>
-                                        <p class="text-gray-600">+880 1234 567890</p>
-                                        <p class="text-gray-600">+880 1234 567891</p>
+                                        <p class="text-gray-600">+880 9611-677989</p>
+                                        <!-- <p class="text-gray-600">+880 1234 567891</p> -->
                                     </div>
                                 </div>
                                 <div class="flex items-start">
@@ -106,7 +106,7 @@ const submit = () => {
                                     <div>
                                         <h3 class="font-semibold text-gray-900">Email</h3>
                                         <p class="text-gray-600">info@flyoverbd.com</p>
-                                        <p class="text-gray-600">support@flyoverbd.com</p>
+                                        <p class="text-gray-600">info.flyoverbd@gmail.com</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
@@ -114,8 +114,8 @@ const submit = () => {
                                     <div>
                                         <h3 class="font-semibold text-gray-900">Address</h3>
                                         <p class="text-gray-600">
-                                            Dhaka, Bangladesh<br />
-                                            Office Hours: 9:00 AM - 6:00 PM
+                                            House 45, Road 13, Block D, Banani, Dhaka-1213<br />
+                                            Office Hours: 10:00 AM - 7:00 PM
                                         </p>
                                     </div>
                                 </div>
@@ -123,9 +123,8 @@ const submit = () => {
                                     <Clock class="mr-4 h-6 w-6 flex-shrink-0 text-red-600" />
                                     <div>
                                         <h3 class="font-semibold text-gray-900">Business Hours</h3>
-                                        <p class="text-gray-600">Sunday - Thursday: 9:00 AM - 6:00 PM</p>
-                                        <p class="text-gray-600">Friday: 9:00 AM - 1:00 PM</p>
-                                        <p class="text-gray-600">Saturday: Closed</p>
+                                        <p class="text-gray-600">Saturday - Thursday: 10:00 AM - 7:00 PM</p>
+                                        <p class="text-gray-600">Friday: Closed</p>
                                     </div>
                                 </div>
                             </div>

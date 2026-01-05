@@ -28,18 +28,14 @@ const isActive = (href: NonNullable<InertiaLinkProps['href']>) => {
 const navItems = [
     { href: '/tours', label: 'Tours', icon: Plane },
     { href: '/visas', label: 'Visa Services', icon: BookOpen },
-    { href: '/blog', label: 'Blog', icon: FileText },
     { href: '/about', label: 'About', icon: Info },
-    { href: '/contact', label: 'Contact', icon: Mail },
 ];
 
-// Mobile bottom navigation items (limited to 5 for better UX)
+// Mobile bottom navigation items
 const mobileNavItems = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/tours', label: 'Tours', icon: Plane },
     { href: '/visas', label: 'Visa', icon: BookOpen },
-    { href: '/blog', label: 'Blog', icon: FileText },
-    { href: '/contact', label: 'Contact', icon: Mail },
 ];
 </script>
 

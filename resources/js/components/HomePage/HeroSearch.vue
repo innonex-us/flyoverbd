@@ -3,7 +3,7 @@ import { router } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { MapPin, Calendar, Users, Globe, ChevronDown, Search, X } from 'lucide-vue-next';
+import { MapPin, Plane, Calendar, Users, Globe, ChevronDown, Search, X } from 'lucide-vue-next';
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 interface Props {
@@ -104,21 +104,23 @@ const searchVisas = (e: Event) => {
 </script>
 
 <template>
-    <section class="relative overflow-hidden bg-gradient-to-br from-red-600 via-red-700 to-red-800 py-16 lg:py-24">
+    <section class="relative overflow-hidden py-16 lg:py-24" style="background-image: url('/background_image.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <!-- Background Overlay -->
+        <!-- <div class="absolute inset-0 bg-gradient-to-br from-red-600/80 via-red-700/80 to-red-800/80"></div> -->
         <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-10">
             <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
         </div>
         
         <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
+            <!-- <div class="text-center">
                 <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
                     Plan Your Perfect Journey
                 </h1>
                 <p class="mt-6 text-lg font-medium text-red-50 sm:text-xl">
                     Discover amazing destinations and get expert visa assistance
                 </p>
-            </div>
+            </div> -->
 
             <!-- Service Tabs -->
             <div class="mt-12">
@@ -133,7 +135,7 @@ const searchVisas = (e: Event) => {
                         ]"
                     >
                         <div class="flex items-center space-x-2">
-                            <MapPin :class="['h-5 w-5 transition-transform', activeTab === 'tours' ? 'text-red-600' : '']" />
+                            <Plane :class="['h-5 w-5 transition-transform', activeTab === 'tours' ? 'text-red-600' : '']" />
                             <span>Tours</span>
                         </div>
                     </button>
@@ -147,7 +149,12 @@ const searchVisas = (e: Event) => {
                         ]"
                     >
                         <div class="flex items-center space-x-2">
-                            <Globe :class="['h-5 w-5 transition-transform', activeTab === 'visas' ? 'text-red-600' : '']" />
+                            <img 
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAACWUlEQVR4nO2avW7UQBDHf6K4JDSYAgTp8gKhgAroQEI08Aa5VGmiVERECTUEXgB4CEiegAgIygctke6OD4lEuRR8BKGjXxTpb2kVGZ+9vvWai0cayTPeWc3P3t0ZS4YTIA3gCXAAmMDaBZaVU255XAEAc0wfuYB0FXyV8HLNejO5JX4KVRHjmk8N4klMDcIJB4mAaWAVaAN/pG35mhpTVj7kDRwFFoBfGerBIXBfMb7ycQocB7YTEn5lXa8l3N8CLlYFZBzY1divwEtdfwLGrHnG5DMaE8fsZoQxPkFGrTexqbX/UfadhHnu6roDnD0WOxISZEFjPgPngCvWUz6VMM+Rb0/2ZeA88EX2fCiQyNrYt+R7IPtpyjzPZS/Jvm0dAFEIkGndf2354v0xkzLPjOwXlm9dvmaBfJwDV3V/1vLtyHcjZZ6bsj9YvjnrECgdJN7Uk5bvp3wTKfNMyP5u+S7J1y6Qj3NgL0Phy6u9YQH5HQKkk7C0fuRYWt8SllarQD7OgSvDstmbuv9mAMfvO/mmCuTjHBipiNkFcUn2swwFcTGhIJ4JAYJa8UG1KPcGkE+hpnFL47bVCHZyNI3vZW+EbhpRC2635P9q40/rzcWbes9q/S/QX4xvkBhmM6EurPX5sNrICFEaCFoa89YBkKaH2hMjHvMpHBjpaF5RgetJW1pSU31Op8qA+BJTg1CDeBFTg1CDVB+koe9q41nXywBplQDy1jdISDE1CDWIFzE1CEMC0lXg0e8ToeW6ctl3CV4uoV7k1YcuIA3BxG8mpO4Lwuk3p/9K/gI5HHNwyRPgDAAAAABJRU5ErkJggg==" 
+                                alt="passport" 
+                                class="h-5 w-5 transition-all"
+                                :style="activeTab === 'visas' ? { filter: 'brightness(0) saturate(100%) invert(27%) sepia(91%) saturate(7498%) hue-rotate(350deg) brightness(98%) contrast(118%)' } : { filter: 'brightness(0) invert(1)' }"
+                            />
                             <span>Visa Services</span>
                         </div>
                     </button>

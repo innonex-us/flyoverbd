@@ -61,7 +61,7 @@ const props = withDefaults(
         <TopBar />
         <Navigation :can-register="canRegister" />
         <HeroSearch :visa-countries="visaCountries" :visa-types="visaTypes" />
-        <FeaturesSection />
+        <!-- <FeaturesSection /> -->
         <ToursSection :tours="featuredTours" />
         <VisasSection :visa-services="visaServices" />
         <CTASection :can-register="canRegister" />

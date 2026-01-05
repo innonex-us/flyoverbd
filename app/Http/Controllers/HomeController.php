@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\TourPackage;
 use App\Models\VisaRequirement;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
@@ -29,11 +28,11 @@ class HomeController extends Controller
                     'description' => $tour->description,
                     'price' => (float) $tour->price,
                     'currency' => $tour->currency ?? 'BDT',
-                    'duration' => $tour->duration_days ? $tour->duration_days . ' Days' : 'N/A',
+                    'duration' => $tour->duration_days ? $tour->duration_days.' Days' : 'N/A',
                     'duration_days' => $tour->duration_days,
                     'featured' => $tour->is_featured,
-                    'thumbnail' => $tour->thumbnail ? asset('storage/' . $tour->thumbnail) : null,
-                    'image' => $tour->thumbnail ? asset('storage/' . $tour->thumbnail) : null,
+                    'thumbnail' => $tour->thumbnail ? asset('storage/'.$tour->thumbnail) : null,
+                    'image' => $tour->thumbnail ? asset('storage/'.$tour->thumbnail) : null,
                     'destination' => $tour->destination,
                 ];
             });
@@ -65,10 +64,11 @@ class HomeController extends Controller
 
         $visaTypes = VisaRequirement::where('is_active', true)
             ->whereNotNull('visa_type')
-            ->select('visa_type')
-            ->distinct()
             ->orderBy('visa_type', 'asc')
+            ->get()
             ->pluck('visa_type')
+            ->unique()
+            ->values()
             ->toArray();
 
         return Inertia::render('Welcome', [
@@ -80,4 +80,3 @@ class HomeController extends Controller
         ]);
     }
 }
-

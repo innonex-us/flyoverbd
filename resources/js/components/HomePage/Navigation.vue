@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Plane, Menu, X, ChevronDown } from 'lucide-vue-next';
+import { Menu, X, ChevronDown } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 import { urlIsActive, toUrl } from '@/lib/utils';
 import type { InertiaLinkProps } from '@inertiajs/vue3';
@@ -47,13 +47,11 @@ const navItems = [
                 <!-- Logo -->
                 <div class="flex items-center">
                     <Link href="/" class="group flex items-center space-x-3 transition-transform hover:scale-105">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-red-600 to-red-700 shadow-lg transition-transform group-hover:scale-110">
-                            <Plane class="h-7 w-7 text-white" />
-                        </div>
-                        <div>
-                            <span class="text-2xl font-extrabold tracking-tight text-gray-900">Flyover BD</span>
-                            <p class="text-xs font-medium text-gray-500">Travel & Visa Services</p>
-                        </div>
+                        <img 
+                            src="/logo.png" 
+                            alt="Flyover BD" 
+                            class="h-10 w-auto transition-transform group-hover:scale-110"
+                        />
                     </Link>
                 </div>
                 

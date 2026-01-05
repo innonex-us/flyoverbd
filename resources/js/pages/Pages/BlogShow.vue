@@ -137,7 +137,7 @@ const handleShare = () => {
                 </div>
 
                 <!-- Content -->
-                <Card>
+                <Card class="bg-white text-gray-900">
                     <CardContent class="p-8">
                         <div v-if="blog.excerpt" class="mb-6 text-xl font-medium text-gray-700 italic">
                             {{ blog.excerpt }}
@@ -179,7 +179,7 @@ const handleShare = () => {
                     <Card
                         v-for="relatedBlog in relatedBlogs"
                         :key="relatedBlog.id"
-                        class="group overflow-hidden transition-all hover:shadow-xl"
+                        class="group overflow-hidden bg-white text-gray-900 transition-all hover:shadow-xl"
                     >
                         <div v-if="relatedBlog.featured_image" class="aspect-video overflow-hidden bg-gray-200">
                             <img
@@ -188,7 +188,7 @@ const handleShare = () => {
                                 class="h-full w-full object-cover transition-transform group-hover:scale-110"
                             />
                         </div>
-                        <div v-else class="aspect-video bg-gradient-to-br from-red-100 to-red-200" />
+                        <div v-else class="aspect-video bg-linear-to-br from-red-100 to-red-200" />
                         <CardContent class="p-6">
                             <h3 class="mb-2 text-xl font-bold text-gray-900 transition-colors group-hover:text-red-600">
                                 {{ relatedBlog.title }}

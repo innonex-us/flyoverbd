@@ -1,15 +1,9 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Menu, X, Plane, BookOpen, FileText, Info, Mail, LogIn } from 'lucide-vue-next';
-import { ref, computed } from 'vue';
+import { Plane, BookOpen, FileText, Home, Mail, LogIn, Info } from 'lucide-vue-next';
+import { computed } from 'vue';
 import { urlIsActive, toUrl } from '@/lib/utils';
 import type { InertiaLinkProps } from '@inertiajs/vue3';
-
-const mobileMenuOpen = ref(false);
-
-const toggleMobileMenu = () => {
-    mobileMenuOpen.value = !mobileMenuOpen.value;
-};
 
 defineProps<{
     canRegister?: boolean;
@@ -30,11 +24,21 @@ const isActive = (href: NonNullable<InertiaLinkProps['href']>) => {
     return false;
 };
 
+// Desktop navigation items
 const navItems = [
     { href: '/tours', label: 'Tours', icon: Plane },
     { href: '/visas', label: 'Visa Services', icon: BookOpen },
     { href: '/blog', label: 'Blog', icon: FileText },
     { href: '/about', label: 'About', icon: Info },
+    { href: '/contact', label: 'Contact', icon: Mail },
+];
+
+// Mobile bottom navigation items (limited to 5 for better UX)
+const mobileNavItems = [
+    { href: '/', label: 'Home', icon: Home },
+    { href: '/tours', label: 'Tours', icon: Plane },
+    { href: '/visas', label: 'Visa', icon: BookOpen },
+    { href: '/blog', label: 'Blog', icon: FileText },
     { href: '/contact', label: 'Contact', icon: Mail },
 ];
 </script>
@@ -104,75 +108,53 @@ const navItems = [
                     </Link>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <button
-                    @click="toggleMobileMenu"
-                    class="relative rounded-lg p-2.5 text-gray-700 transition-all duration-200 hover:bg-gray-100 active:bg-gray-200 md:hidden"
-                    aria-label="Toggle menu"
-                >
-                    <Menu v-if="!mobileMenuOpen" class="h-6 w-6 transition-transform duration-200" />
-                    <X v-else class="h-6 w-6 transition-transform duration-200" />
-                </button>
             </div>
         </div>
+    </nav>
 
-        <!-- Mobile Menu -->
-        <Transition
-            enter-active-class="transition-all duration-300 ease-out"
-            enter-from-class="opacity-0 -translate-y-4"
-            enter-to-class="opacity-100 translate-y-0"
-            leave-active-class="transition-all duration-200 ease-in"
-            leave-from-class="opacity-100 translate-y-0"
-            leave-to-class="opacity-0 -translate-y-4"
-        >
-            <div
-                v-if="mobileMenuOpen"
-                class="border-t border-gray-200 bg-white/98 backdrop-blur-lg shadow-lg md:hidden"
+    <!-- Mobile Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200/80 bg-white/98 backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.08)] md:hidden" style="padding-bottom: env(safe-area-inset-bottom);">
+        <div class="flex h-16 items-center justify-around px-1" style="height: calc(4rem + env(safe-area-inset-bottom));">
+            <Link
+                v-for="item in mobileNavItems"
+                :key="item.href"
+                :href="item.href"
+                :class="[
+                    'relative flex flex-col items-center justify-center gap-0.5 flex-1 rounded-lg py-1.5 transition-all duration-200 active:scale-95 min-w-0',
+                    isActive(item.href)
+                        ? 'text-red-600'
+                        : 'text-gray-600'
+                ]"
             >
-                <div class="space-y-1 px-4 pb-6 pt-4">
-                    <Link
-                        v-for="item in navItems"
-                        :key="item.href"
-                        :href="item.href"
+                <div 
+                    :class="[
+                        'relative flex items-center justify-center rounded-lg p-1.5 transition-all duration-200',
+                        isActive(item.href) ? 'bg-red-50' : ''
+                    ]"
+                >
+                    <component 
+                        :is="item.icon" 
                         :class="[
-                            'flex items-center gap-3 rounded-xl px-4 py-3.5 text-base font-semibold transition-all duration-200',
-                            isActive(item.href)
-                                ? 'bg-gradient-to-r from-red-50 to-red-50/80 text-red-700 shadow-sm'
-                                : 'text-gray-700 active:bg-gray-50 hover:bg-gray-50 hover:text-red-600'
+                            'h-5 w-5 transition-all duration-200',
+                            isActive(item.href) 
+                                ? 'text-red-600' 
+                                : 'text-gray-500'
                         ]"
-                        @click="toggleMobileMenu"
-                    >
-                        <component 
-                            :is="item.icon" 
-                            :class="[
-                                'h-5 w-5 transition-transform',
-                                isActive(item.href) ? 'text-red-600 scale-110' : 'text-gray-500'
-                            ]"
-                        />
-                        {{ item.label }}
-                    </Link>
-                    
-                    <div class="border-t border-gray-200 pt-4">
-                        <Link
-                            v-if="canRegister && !$page.props.auth.user"
-                            href="/access/register"
-                            class="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-700 px-4 py-3.5 text-base font-semibold text-white shadow-lg transition-all duration-200 active:scale-95 hover:from-red-700 hover:to-red-800 hover:shadow-xl"
-                            @click="toggleMobileMenu"
-                        >
-                            <LogIn class="h-5 w-5" />
-                            Sign Up
-                        </Link>
-                        <Link
-                            v-else-if="$page.props.auth.user"
-                            href="/cp/dashboard"
-                            class="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-700 px-4 py-3.5 text-base font-semibold text-white shadow-lg transition-all duration-200 active:scale-95 hover:from-red-700 hover:to-red-800 hover:shadow-xl"
-                            @click="toggleMobileMenu"
-                        >
-                            Dashboard
-                        </Link>
-                    </div>
+                    />
                 </div>
-            </div>
-        </Transition>
+                <span 
+                    :class="[
+                        'text-[10px] font-semibold leading-tight truncate max-w-full px-1',
+                        isActive(item.href) ? 'text-red-600' : 'text-gray-600'
+                    ]"
+                >
+                    {{ item.label }}
+                </span>
+                <span
+                    v-if="isActive(item.href)"
+                    class="absolute -top-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-red-600"
+                />
+            </Link>
+        </div>
     </nav>
 </template>

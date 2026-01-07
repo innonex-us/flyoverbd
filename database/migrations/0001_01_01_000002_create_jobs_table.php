@@ -25,7 +25,7 @@ return new class extends Migration
 
         if (! Schema::hasTable('job_batches')) {
             Schema::create('job_batches', function (Blueprint $table) {
-                $table->string('id')->primary();
+                $table->string('id', 191)->primary();
                 $table->string('name');
                 $table->integer('total_jobs');
                 $table->integer('pending_jobs');

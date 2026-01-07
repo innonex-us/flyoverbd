@@ -11,21 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inquiries', function (Blueprint $table) {
-            $table->id();
-            $table->string('type')->default('general'); // tour, visa, general
-            $table->foreignId('tour_id')->nullable()->constrained('tours')->onDelete('set null');
-            $table->foreignId('visa_requirement_id')->nullable()->constrained('visa_requirements')->onDelete('set null');
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone')->nullable();
-            $table->text('message');
-            $table->enum('status', ['new', 'contacted', 'in_progress', 'resolved', 'closed'])->default('new');
-            $table->text('admin_notes')->nullable();
-            $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
-            $table->timestamp('contacted_at')->nullable();
-            $table->timestamps();
-        });
+        if (! Schema::hasTable('inquiries')) {
+            Schema::create('inquiries', function (Blueprint $table) {
+                $table->id();
+                $table->string('type')->default('general'); // tour, visa, general
+                $table->foreignId('tour_id')->nullable()->constrained('tours')->onDelete('set null');
+                $table->foreignId('visa_requirement_id')->nullable()->constrained('visa_requirements')->onDelete('set null');
+                $table->string('name');
+                $table->string('email');
+                $table->string('phone')->nullable();
+                $table->text('message');
+                $table->enum('status', ['new', 'contacted', 'in_progress', 'resolved', 'closed'])->default('new');
+                $table->text('admin_notes')->nullable();
+                $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
+                $table->timestamp('contacted_at')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
